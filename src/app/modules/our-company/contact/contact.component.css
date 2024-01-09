@@ -1,0 +1,147 @@
+.contact-us{
+    margin: 0;
+    padding: 0 0 15px;
+    background-color: #ffffff;
+}
+.content-contact{
+    padding: 10px 15px 0;
+}
+.content-contact .icon-contact{
+    font-size: 14px;
+    color: #666666;
+}
+.content-contact .title-contact{
+    font-size: 14px;
+    color: #666666;
+    padding-left: 5px;
+}
+.header-contact-us{
+    padding: 15px 15px 0;
+    color: #666666;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+.service-contact{
+    margin-top: 10px;
+}
+.whatsapp-text{
+    color: #28a745 !important;
+    font-weight: bold
+}
+.content-contact a{
+    text-decoration: none !important
+}
+.follow-us{
+    margin-top: 10px;
+    padding: 15px 15px 0;
+    width: 100%
+}
+.follow-us .text-follow{
+    font-size: 14px;
+    font-weight: bold;
+    color: #666666;
+    text-transform: uppercase;
+    margin-right: 10px;
+}
+.follow-us .follow-sosmed{
+    width: 30px;
+    height: 30px;
+    padding: 6px;
+    border-radius: 50%;
+    margin-right: 2px;
+    text-align: center;
+    display: inline-block;
+}
+.follow-us .follow-sosmed a{
+    text-decoration: none;
+    font-size: 14px;
+    color: #ffffff;
+    text-align: center
+}
+.youtube{
+    background-color: #f40000
+}
+.instagram{
+    background-color: #E02189
+}
+.facebook{
+    background-color: #3b5998
+}
+.twitter{
+    background-color: #6ccef4
+}
+.pinterest{
+    background-color: #f01614
+}
+.sub-header-contacts{
+    font-size: 12px;
+    color: #666666;
+    padding: 5px 15px 0;
+}
+.btn-newsletter{
+    padding: 5px 15px 10px;
+}
+.btn-newsletter button{
+    font-size: 12px;
+    width: 100%;
+}
+.payment-methods{
+    margin-top: 10px;
+}
+.payment-methods .title-method{
+    padding: 15px 15px 0;
+    font-size: 14px;
+    color: #666666;
+    font-weight: bold;
+    text-transform: uppercase
+}
+.payment-methods .icon{
+    margin: 10px 15px;
+}
+.payment-methods .icon img{
+    width: 100%;
+}
+
+/* popup */
+.overlay-popup {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 9999999;
+}
+.overlay-popup .popup {
+    position: absolute;
+    border-radius: 5px;
+    width: 90%;
+    height: 250px;
+    background-color: #ffffff;
+    left: 50%;
+    top: 37%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.overlay-popup .popup .header {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+.overlay-popup .popup .header .title {
+    font-size: 16px;
+    text-align: left;
+    font-weight: bold;
+}
+.overlay-popup .popup .header .close {
+    font-size: 16px;
+    text-align: right;
+}
+.mat-form-field {
+    width: 100%;
+}
+textarea.mat-input-element {
+    height: 100px;
+}
+.overlay-popup .popup .content {
+    padding: 15px;
+}

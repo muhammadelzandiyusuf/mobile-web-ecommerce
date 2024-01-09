@@ -1,0 +1,127 @@
+<div class="brand-gallery">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="gallery-detail">
+                    <div class="banner">
+                        <img src="{{ image_domain }}/{{ banner_path }}/{{ banner_image }}" #logo (load)="onLoad()">
+                        <div class="pin-tag" *ngFor="let pin of pinTag; let i = index" [ngStyle]="{'top.px':pin.long, 'left.px':pin.lat}" (click)="getProduct(i)">
+                            <i class="fas fa-tag fa-w-12 fa-lg"></i>
+                        </div>
+                    </div>
+
+                    <div class="box-description">
+                        <div class="title-gallery">{{ title }}</div>
+                        <div class="description-gallery" *ngIf="lang === 'en'" [innerHtml]="content_english"></div>
+                        <div class="description-gallery" *ngIf="lang === 'id'" [innerHtml]="content_indonesia"></div>
+                    </div>
+
+                    <div class="box-description">
+                        <div class="description-gallery">
+                            "{{ 'shopping.term_brand_gallery' | translate }}"
+                        </div>
+                    </div>
+                    
+                    <div class="brand-gallery-next">
+                        <swiper class="swiper" [config]="config">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="brand-design-logo" (click)="getBrand(brandUrl)">
+                                        <div class="image">
+                                            <img src="{{ image_domain }}/{{ brandPath }}/{{ brandImage }}">
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div class="swiper-slide" *ngFor="let design of nextGallery">
+                                    <a href="brand_galleries/{{ brandUrl }}/{{ design.url }}">
+                                        <div class="brand-design">
+                                            <div class="image">
+                                                <img src="{{ image_domain }}/{{ design.thumb_path }}/{{ design.thumb_image }}">
+                                            </div>
+                                            <div class="brand-title">{{ design.title }}</div>
+                                        </div> 
+                                    </a>
+                                </div>
+                                <div class="swiper-slide" *ngFor="let design of prevGallery">
+                                    <a href="brand_galleries/{{ brandUrl }}/{{ design.url }}">
+                                        <div class="brand-design">
+                                            <div class="image">
+                                                <img src="{{ image_domain }}/{{ design.thumb_path }}/{{ design.thumb_image }}">
+                                            </div>
+                                            <div class="brand-title">{{ design.title }}</div>
+                                        </div> 
+                                    </a>
+                                </div>
+                            </div>
+                        </swiper>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="share-this">
+                    <div class="share-button-box">
+                        <div class="share-button fb" (click)="shareButtonFB()">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <div class="share-button wa" (click)="shareButtonWA()">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="share-button tw" (click)="shareButtonTW()">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="share-button pt" (click)="shareButtonPinterest()">
+                            <i class="fab fa-pinterest-p"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div [@dialog] class="overlay-tag-product dialog" *ngIf="visible" (click)="closeTag()">
+    <div class="banner-tag">
+        <div class="close" (click)="closeTag()">
+            <i class="fa fa-close"></i>
+        </div>
+    </div>
+    <div class="content-product-tag" *ngIf="pinEnable">
+        <div class="box-product">
+            <div class="image" (click)="goToProductDetail(product.url)">
+                <img src="{{ product.image_domain }}/{{ product.product_image_path }}/{{ product.product_image_name }}">
+            </div>
+            <div class="content" (click)="goToProductDetail(product.url)">
+                <div class="brand">{{ product.brand_name }}</div> 
+                <div class="name">{{ product.name }}
+                    ({{product.code }})
+                </div>
+                <div *ngIf="product.price > 0">
+                    <div class="normal-price">{{ product.price | currency:'Rp':'true':'4.0-0' }}</div>
+                    <div class="diskon-price">{{ product.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                </div>
+                <div *ngIf="product.price == null || product.price == 0">
+                    <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                </div>
+            </div>
+            <div class="installment" *ngIf="product.stock_status_id == 1" (click)="goToProductDetail(product.url)">
+                <span *ngIf="product.price > 0">
+                    {{ product.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                </span>
+            </div>
+            <div class="installment color-red" *ngIf="product.stock_status_id != 1" (click)="goToProductDetail(product.url)">{{ product.stock_status }}</div>
+            <div class="btn-action">
+                <button class="btn-add-chart" *ngIf="token !== null" (click)="addCart(product.id)">
+                    <i class="fas fa-cart-plus"></i>
+                </button>
+                <button class="btn-add-chart" *ngIf="token === null" (click)="addChartLocal(product.id, product.brand_name, product.discount_price, product.name, product.product_image_path, product.product_image_name)">
+                    <i class="fas fa-cart-plus"></i>
+                </button>
+                <button class="btn-add-wish" *ngIf="token !== null" (click)="addWishlist(product.id)">
+                    <i class="fas fa-heart"></i>
+                </button>
+                <button class="btn-add-wish" *ngIf="token === null" (click)="addWishListLocal(product.id)">
+                    <i class="fas fa-heart"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

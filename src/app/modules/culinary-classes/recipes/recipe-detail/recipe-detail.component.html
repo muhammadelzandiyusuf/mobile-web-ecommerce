@@ -1,0 +1,76 @@
+<div class="exhibition">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="detail-exhibition">
+                    <div class="image">
+                        <img src="{{ imageDomain }}/{{ bannerPath }}/{{ bannerImage }}">
+                    </div>
+                    <div class="main-recipe">
+                        <div class="name-event">{{ title }}</div>
+                        <div class="name-course">{{ courseTitle }}</div>
+                    </div>
+                    <div class="date-time-detail" *ngIf="videoUrl != null">
+                        <div class="title-exhibition">Video</div>
+                        <div class="video-url-exhibition">
+                            <iframe
+                                class="e2e-iframe-trusted-src"
+                                width="100%"
+                                height="{{heightVideo}}"
+                                [src]="videoUrl"
+                                frameborder="0"
+                                allowfullscreen="allowfullscreen"></iframe>
+                        </div>
+                    </div>
+                    <div class="date-time-detail" *ngIf="hostName">
+                        <div class="title-exhibition">{{'culinary.host' | translate}}</div>
+                        <div class="list-host">
+                            <div class="host">
+                                <a (click)="getDetailHost(hostUrl)">{{ hostName }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="date-time-detail">
+                        <div class="title-exhibition">{{'culinary.description' | translate}}</div>
+                        <div class="description-exhibition" [innerHtml]="contentEnglish"></div>
+                    </div>
+                    <div class="date-time-detail" *ngIf="products?.length > 0">
+                        <div class="title-exhibition center">{{'culinary.product_on_this_recipe' | translate}}</div>
+                        <div class="list-host">
+                            <swiper class="swiper" [config]="config">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide" *ngFor="let product of products">
+                                        <div class="box-product" (click)="goProductDetail(product.url)">
+                                            <div class="image-product">
+                                                <img src="{{ product.image_domain }}/{{ product.product_image_path }}/{{ product.product_image_name }}">
+                                            </div>
+                                            <div class="name-product">
+                                                {{ product.name }} {{ product.code }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </swiper>
+                        </div>
+                    </div>
+                    <div class="share-this">
+                        <div class="share-button-box">
+                            <div class="share-button fb" (click)="shareButtonFB()">
+                                <i class="fab fa-facebook-f"></i>
+                            </div>
+                            <div class="share-button wa" (click)="shareButtonWA()">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="share-button tw" (click)="shareButtonTW()">
+                                <i class="fab fa-twitter"></i>
+                            </div>
+                            <div class="share-button pt" (click)="shareButtonPinterest()">
+                                <i class="fab fa-pinterest-p"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

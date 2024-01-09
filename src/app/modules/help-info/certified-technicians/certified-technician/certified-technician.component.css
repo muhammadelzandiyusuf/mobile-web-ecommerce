@@ -1,0 +1,103 @@
+.technician{
+    margin:0;
+    padding:0;
+    min-height: auto;
+    max-height: 1000px;
+    overflow: scroll;
+}
+.technician .filter-province{
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.certified-box{
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #ffffff
+}
+.certified-box .image{
+  padding: 5px;
+}
+.certified-box .image img{
+  width: 100%
+}
+.certified-box .technician-name{
+  font-size: 14px;
+  color: #666666;
+  font-weight: bold;
+  padding: 5px 10px;
+  text-align: center
+}
+.certified-box .technician-staff{
+  font-size: 14px;
+  color: #666666;
+  font-weight: bold;
+  padding: 0 10px 10px;
+  text-align: center
+}
+.certified-box .technician-city{
+  font-size: 14px;
+  color: #666666;
+  padding: 0 10px 0;
+  text-align: center
+}
+.certified-box .technician-rating{
+  font-size: 12px;
+  text-align: center;
+  padding: 5px 10px 10px;
+}
+.form-modal-overlay{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 99999;
+  }
+  .form-modal{
+    position: absolute;
+    background-color: #ffffff;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 70%;
+    overflow: scroll;
+  }
+  .example-icon {
+    padding: 0 14px;
+  }
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  .filter .mat-dialog-container{
+    position: absolute !important;
+    height: 70% !important;
+    bottom: 0 !important; 
+  }
+  .content-filter{
+    margin-top: 60px;
+  }
+  .color-red{
+    color: #ad2825 !important;
+    font-weight: bold
+  }
+  .not-actived{
+    display: none;
+  }
+  .sortby-items {
+    width: 100%;
+  }
+  .example-radio-group {
+    width: 100%;
+    display: inline-flex;
+    flex-direction: column;
+  }
+  .example-radio-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+  }

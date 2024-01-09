@@ -1,0 +1,100 @@
+<div class="technician-product">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="menu-list">
+                    <ul>
+                        <li [ngClass]="{'active-menu': statusActive === 1}" (click)="getOnProgressTechnician(1)">
+                            {{'account.on_progress' | translate}}
+                        </li>
+                        <li [ngClass]="{'active-menu': statusActive === 2}" (click)="getFinishTechnician(2)">
+                            {{'account.finished' | translate}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-product">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" *ngIf="countReview === 0">
+                    <div class="box-not">
+                        <div class="not-found-data">{{'account.there_is_no_technician_review' | translate}}</div>
+                    </div>
+                </div>
+                <div class="col-12" *ngIf="countReview > 0">
+                    <div class="content-technician" *ngFor="let item of reviews">
+                        <mat-accordion>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    {{ item.registration_no }}
+                                </mat-panel-title>
+                                </mat-expansion-panel-header>
+                            
+                                <div class="content-box-review">
+                                    <div class="text-review" *ngIf="statusActive === 1">
+                                        {{ item.created_at.date | date : 'dd MMMM y' }}
+                                    </div>
+                                    <div class="text-review" *ngIf="statusActive === 2">
+                                        {{ item.finished_at | date : 'dd MMMM y' }}
+                                    </div>
+                                    <div class="text-review">
+                                        {{ item.salutation }} {{ item.first_name }} {{ item.last_name }} ({{ item.handphone }})
+                                    </div>
+                                    <div class="text-review">
+                                        {{ item.email }} 
+                                    </div>
+                                    <div class="text-review" *ngIf="lang === 'en'">
+                                        {{ item.name_english }} 
+                                    </div>
+                                    <div class="text-review" *ngIf="lang === 'id'">
+                                        {{ item.name_indonesia }} 
+                                    </div>
+                                </div>
+                                <div class="content-photo">
+                                    <img src="{{ item.asset_domain }}/{{ item.photo_path }}/{{ item.photo_image }}">
+                                    <div class="give-review" *ngIf="item.finished === 'T' && item.reviewed === 'F'">
+                                        <button mat-raised-button class="btn-review" (click)="detailTechnician(item.registration_no)">{{'account.give_a_review' | translate}}</button>
+                                    </div>
+                                    <div class="rivew-rating-technician" *ngIf="item.finished === 'T' && item.reviewed === 'T'">
+                                        <rating [(ngModel)]="item.service_review.rating" [readonly]="true"></rating>
+                                        <div class="text-review-technician">
+                                            {{ item.service_review.text }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-name-review">
+                                    <span>{{ item.staff_id }}</span> {{ item.full_name }}
+                                </div>
+                                <div class="detail-product">
+                                    <div class="text-detail">{{'account.product_list' | translate}}</div>
+                                    <div class="product-review" *ngFor="let list of item.service_products">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <div class="image-review">
+                                                        <img src="{{ item.asset_domain }}/{{ list.product_path }}/{{ list.product_image }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-10">
+                                                    <div class="text-review">
+                                                        <span>{{ list.brand_name }}</span> {{ list.name_english }}
+                                                    </div>
+                                                    <div class="text-review">
+                                                        {{ list.product_model }} ({{ list.serial_number }})
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

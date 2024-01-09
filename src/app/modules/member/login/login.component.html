@@ -1,0 +1,91 @@
+<div class="box-login">
+    <div class="back-login">
+        <mat-icon (click)="back()">keyboard_backspace</mat-icon>
+    </div>
+    <div class="logo">
+        <img src="https://kitchenart.id/images/logo.png">
+    </div>
+    <div class="form">
+        <form class="form-login" [formGroup]="loginForm">
+            <div class="login-form">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2">
+                            <fa name="envelope"></fa>
+                        </div>
+                        <div class="col-10">
+                            <input type="email" name="email" placeholder="Email" class="form-control" [(ngModel)]="model.email" formControlName="email">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="login-form">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2">
+                            <fa name="unlock-alt"></fa>
+                        </div>
+                        <div class="col-10">
+                            <input type="password" name="password" placeholder="Password" class="form-control" [(ngModel)]="model.password" formControlName="password">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <button mat-raised-button="mat-raised-button" class="btn-login" (click)="loginUser()">{{'menu.login' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <button mat-raised-button="mat-raised-button" class="btn-signup" (click)="goRegister()">{{'form.signup' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="btn-forgot">
+                                <a class="fotgot-password" (click)="forgotPassword()">{{'form.forgot_password' | translate}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="btn-sosmed-f">
+                                <button mat-raised-button="mat-raised-button" class="btn-facebook" (click)="socialLoginFb()">
+                                    <img src="/assets/images/facebook.png" />
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="btn-sosmed-g">
+                                <button mat-raised-button="mat-raised-button" class="btn-google" (click)="socialLoginGoogle()">
+                                    <fa name="google"></fa>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="layout-spinner" *ngIf="spinner">
+    <div class="spinner">
+        <img src="assets/images/spin.gif">
+    </div>
+</div>

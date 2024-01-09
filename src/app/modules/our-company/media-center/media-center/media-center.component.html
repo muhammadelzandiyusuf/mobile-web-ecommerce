@@ -1,0 +1,34 @@
+<div class="media-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-12" *ngIf="years.length === 0">
+                <div class="no-product">{{'about.not_content' | translate}}</div>
+            </div>
+            <div class="col-12" *ngIf="years?.length > 0">
+                <div class="media-year">
+                    <div class="year" *ngFor="let item of years" [ngClass]="{'active-year':selectedIndex === item.year}" (click)="getMedia(item.year)">
+                        {{ item.year }}
+                    </div>
+                </div>
+                <div class="media-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6 col-sm-4 col-md-4" *ngFor="let media of medias">
+                                <a href="media_center/{{media.url}}">
+                                    <div class="media">
+                                        <div class="image">
+                                            <img src="{{ media.image_domain }}/{{ media.thumb_path }}/{{ media.thumb_image }}">
+                                        </div>
+                                        <div class="title">
+                                            {{ media.title }}
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+.content{
+    padding: 15px;
+    background-color: #ffffff
+}
+.content .brand{
+    font-size: 20px;
+    color: #999;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.content .title{
+    font-size: 18px;
+    color: #666;
+}

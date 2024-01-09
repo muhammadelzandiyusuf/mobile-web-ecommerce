@@ -1,0 +1,227 @@
+<div class="account profile-page">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-12">
+              <div class="profile-header">
+                  <mat-icon class="back-icon" (click)="backToList()">keyboard_backspace</mat-icon>
+                  <span>{{ 'account.history_order_detail' | translate }}</span>
+              </div>
+          </div>
+          <div class="col-12">
+              <div class="content-history">
+                    <div class="invoice-nomer">
+                        <div class="text-invoice-number">{{ 'account.invoice_number' | translate }}</div>
+                        <div class="invoice-number divider">{{ transactionNo }}</div>
+                        <div class="text-invoice-number">{{ 'account.transaction_status' | translate }}</div>
+                        <div class="invoice-number text-margin" *ngIf="lang === 'en'">{{ messageEnglish }}</div>
+                        <div class="invoice-number text-margin" *ngIf="lang === 'id'">{{ messageIndonesia }}</div>
+                        <div class="invoice-number divider">{{ finishedAt | date: 'd MMMM yyyy' }}</div>
+                        <div class="text-invoice-number">{{ 'account.shipping_address' | translate }}</div>
+                        <div class="invoice-number text-margin">{{ shippingName }}</div>
+                        <div class="invoice-number no-font-weight text-margin">
+                            {{ shippingAddress }}, {{ shippingProvinceName }}, {{ shippingCityName }}, {{ shippingSubdistrictName }}, {{ shippingZip }}
+                        </div>
+                        <div class="invoice-number no-font-weight">Mobile / Telephone : {{ shippingPhone }}</div>
+                        <!-- <div class="print-invoice right" (click)="printPDF()">
+                            {{ 'account.print_invoice' | translate }}
+                        </div> -->
+                    </div>
+
+                    <div class="invoice-nomer">
+                        <div class="text-invoice-number">{{ 'account.total_transaction' | translate }}</div>
+                        <div class="invoice-number divider">{{ grandTotal | currency:'Rp':'true':'4.0-0' }}</div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="text-subtotal">
+                                        Sub Total
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-subtotal right">
+                                        {{ subtotal | currency:'Rp':'true':'4.0-0' }}
+                                    </div>
+                                </div>
+                                <div class="col-6" *ngIf="discountPromo !== 0">
+                                    <div class="text-subtotal promo">
+                                        {{ 'account.discount_promo' | translate }}
+                                    </div>
+                                </div>
+                                <div class="col-6" *ngIf="discountPromo !== 0">
+                                    <div class="text-subtotal promo right">
+                                       - {{ discountPromo | currency:'Rp':'true':'4.0-0' }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-subtotal">
+                                        {{ 'account.shipping_price' | translate }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-subtotal right">
+                                        {{ shippingPrice | currency:'Rp':'true':'4.0-0' }}
+                                    </div>
+                                </div>
+                                <div class="col-6" *ngIf="balanceUsed !== 0">
+                                    <div class="text-subtotal promo">
+                                        {{ 'account.used_balance' | translate }}
+                                    </div>
+                                </div>
+                                <div class="col-6" *ngIf="balanceUsed !== 0">
+                                    <div class="text-subtotal promo right">
+                                        - {{ balanceUsed | currency:'Rp':'true':'4.0-0' }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-subtotal no-border">
+                                        {{ 'account.grand_total' | translate }}
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="text-subtotal no-border right">
+                                        {{ grandTotal | currency:'Rp':'true':'4.0-0' }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="invoice-nomer" *ngIf="methodName != null">
+                        <div class="text-invoice-number">{{ 'account.payment_method' | translate }}</div>
+                        <div class="invoice-number divider">{{ methodName }}</div>
+                        <!-- <div class="invoice-number divider">{{ methodName }} ({{ channelName }})</div> -->
+                        <div *ngIf="paymentMethodId === '1'">
+                            <div class="text-invoice-number">{{ 'account.payment_code' | translate }}</div>
+                            <div class="invoice-number divider">{{ paymentCode }}</div>
+                        </div>
+                        <div *ngIf="paymentMethodId === '3'">
+                            <div class="text-invoice-number">{{ 'account.tenor' | translate }}</div>
+                            <div class="invoice-number divider">{{ paymentTenor }}</div>
+                        </div>
+                        <div *ngIf="paymentSuccess === 'F'">
+                            <div class="text-invoice-number">{{ 'account.message' | translate }}</div>
+                            <div class="invoice-number divider">{{ paymentMessage }}</div>
+                        </div>
+                        <div class="text-invoice-number">{{ 'account.payment_on' | translate }}</div>
+                        <div class="invoice-number">{{ paymentAt | date : 'd MMMM yyyy h:m:s' }}</div>
+                    </div>
+
+                    <div class="invoice-nomer" *ngFor="let product of productOrder">
+                        <div class="product-history">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="image">
+                                            <img src="{{ product.domain_asset }}/{{ product.image_path }}/{{ product.product_image }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="product-name-history" (click)="productDetail(product.product_url)">
+                                            {{ product.product_brand }} {{ product.product_name }} {{ product.product_code }} 
+                                        </div>
+                                        <div class="history-quantity">
+                                            {{ 'account.quantity' | translate }} : {{ product.product_quantity }}
+                                        </div>
+                                        <div class="sub-total-product">
+                                            {{ product.product_total | currency:'Rp':'true':'4.0-0' }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-shipping">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12" *ngIf="productOrderHistory[product.order_product_id]">
+                                        <div class="text-invoice-number">{{ 'account.shipping_status' | translate }}</div>
+                                        <div class="history-product">
+                                            <ul>
+                                                <li *ngFor="let shipping of productOrderHistory[product.order_product_id]">
+                                                    <i class="{{ shipping.icon }}"></i> 
+                                                    <span *ngIf="shipping.icon === 'fa fa-box'">{{ 'account.processing' | translate }}</span>
+                                                    <span *ngIf="shipping.icon === 'fa fa-truck-moving'">{{ 'account.shipped' | translate }}</span>
+                                                    <span *ngIf="shipping.icon === 'fa fa-box-open'">{{ 'account.delivered' | translate }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-12" *ngIf="shipmentOrder[product.order_product_id]">
+                                        <div class="text-invoice-number track-shipping" (click)="trackShipping(shipmentOrder[product.order_product_id].courier, shipmentOrder[product.order_product_id].tracking_number)">{{'account.track_shipping' | translate}}</div>
+                                    </div> -->
+                                    <div class="col-5" *ngIf="shipmentOrder[product.order_product_id]">
+                                        <div class="text-invoice-number">{{'account.shipping_method' | translate}}</div>
+                                        <div class="invoice-number text-upercase">{{ shipmentOrder[product.order_product_id].courier }} {{ shipmentOrder[product.order_product_id].courier_service }}</div>
+                                    </div>
+                                    <div class="col-7" *ngIf="shipmentOrder[product.order_product_id]">
+                                        <div class="text-invoice-number right">{{'account.tracking_number' | translate}}</div>
+                                        <div class="invoice-number right">
+                                            {{ shipmentOrder[product.order_product_id].tracking_number }}
+                                            <span *ngIf="product.cnote_no != null" (click)="getTrackShipping(product.cnote_no)"> {{ 'account.track' | translate }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-shipping" *ngIf="shipmentOrder[product.order_product_id]">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="text-invoice-number">{{'account.shipment_at' | translate}}</div>
+                                        <div class="invoice-number">{{ shipmentOrder[product.order_product_id].shipment_at | date : 'd MMMM yyyy h:m:s' }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-shipping" *ngIf="shipmentOrder[product.order_product_id]">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="text-invoice-number">{{'account.information' | translate}}</div>
+                                        <div class="invoice-number">{{'account.product_has_been_received_at' | translate}} {{ shipmentOrder[product.order_product_id].received_at | date : 'd MMMM yyyy h:m:s' }} {{'account.by' | translate}} {{ shipmentOrder[product.order_product_id].receiver_name }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-shipping"  *ngIf="productReview[product.order_product_id]">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="text-invoice-number">{{'account.reviews' | translate}}</div>
+                                        <div class="invoice-number">
+                                            <div class="rating-review">
+                                                <rating [(ngModel)]="productReview[product.order_product_id].rating" [readonly]="true"></rating>
+                                            </div>
+                                            <div class="text-review">
+                                                {{ productReview[product.order_product_id].description }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="checkout-loading" *ngIf="printInvoice">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>
+<div class="track-popup" *ngIf="trackShow">
+    <div class="header">
+        {{ 'account.track' | translate }}
+        <span (click)="closeTrack()">
+            <i class="fa fa-times"></i>
+        </span>
+    </div>
+    <div class="content">
+        <div class="history-track" *ngFor="let history of historyTrack">
+            <div class="content-history-track">{{ history.date | date: 'd MMMM yyyy h:m' }}</div>
+            <div class="content-history-track">{{ history.desc }}</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,93 @@
+.account-photo-profile{
+    border-bottom: 1px solid #dddddd;
+    -webkit-box-shadow: 0px 2px 3px 0px #ddd;
+    -moz-box-shadow: 0px 2px 3px 0px #ddd;
+    box-shadow: 0px 2px 3px 0px #ddd;
+    margin-top: 55px;
+}
+.image-profile img{
+    width: 130px;
+    height: 130px;
+    margin-left: 15%;
+    padding: 10px;
+    border-radius: 50%;
+}
+.name-text{
+    font-size: 16px;
+    color: #666;
+    padding-top: 10px;
+    font-weight: 500;
+}
+.person-us{
+    font-size: 14px;
+    color: #999;
+    padding-top: 2px;
+}
+.button-edit{
+    margin-top: 10px;
+    width: 100%;
+    padding-right: 30px;
+}
+.edit-btn{
+    border: 1px solid #ddd;
+    padding: 7px;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #666;
+    font-size: 14px;
+}
+.icon-setting{
+    font-size: 12px;
+    height: 0;
+    width: 15px;
+}
+
+.account-personal{
+    width: 100%;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    -webkit-box-shadow: 0px 0px 3px 0px #ddd;
+    -moz-box-shadow: 0px 0px 3px 0px #ddd;
+    box-shadow: 0px 0px 3px 0px #ddd;
+    margin-top: 5px;
+}
+.header-text{
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    text-transform: uppercase
+}
+.header-sub-text{
+    font-size: 12px;
+    color: #999
+}
+.personal-data{
+    margin-top: 10px
+}
+.title-text{
+    font-size: 12px;
+    color: #999
+}
+.title-text-value{
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+.profile-page{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.image-requirement-1{
+    padding: 15px 7px 0 15px;
+}
+.image-requirement-1 img{
+    width: 100%;
+}
+.image-requirement-2{
+    padding: 15px 15px 0 7px;
+}
+.image-requirement-2 img{
+    width: 100%;
+}

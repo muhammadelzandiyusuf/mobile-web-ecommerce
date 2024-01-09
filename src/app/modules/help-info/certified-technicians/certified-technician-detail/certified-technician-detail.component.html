@@ -1,0 +1,111 @@
+<div class="technician-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <div class="photo">
+                    <img src="{{ image_domain }}/{{ image_path }}/{{ image }}">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="full-name">{{ name }}</div>
+                <div class="identitas">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="icon-name">
+                                    <mat-icon mat-list-icon>cake</mat-icon>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="icon-content">
+                                    {{ age }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="icon-name">
+                                    <mat-icon mat-list-icon>featured_play_list</mat-icon>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="icon-content">
+                                    {{ staff_id }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="icon-name">
+                                    <mat-icon mat-list-icon>card_giftcard</mat-icon>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="icon-content">
+                                    {{ date_start_working | date }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="icon-name">
+                                    <mat-icon mat-list-icon>room</mat-icon>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="icon-content">
+                                    {{ city_name }}
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="rating-start">
+                    <rating [(ngModel)]="avg_rating" [readonly]="true"></rating>
+                </div>
+                <div class="technician-skill">
+                    <div class="header-title">{{'account.skill' | translate}}</div>
+                    <div class="navigation-category">
+                        <ul>
+                            <li *ngFor="let category of categories" [ngClass]="{'li-actived':actived === category.id}" (click)="getCategorySkill(category.id)">
+                              <span *ngIf="lang === 'en'">{{ category.name_english }}</span>
+                              <span *ngIf="lang === 'id'">{{ category.name_indonesia }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="skills-box" *ngFor="let skill of categorySkill">
+                    <div class="label-name" *ngIf="lang === 'en'">{{ skill.name_english }}</div>
+                    <div class="label-name" *ngIf="lang === 'id'">{{ skill.name_indonesia }}</div>
+                    <div class="progress">
+                        <div class="progress-bar" [ngStyle]="{'width.%': skill.value}">
+                            {{ skill.value }}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="technician-skill reviews-technician">
+                    <div class="header-title">{{'account.technician_reviews' | translate}}</div>
+                    <div *ngIf="reviews?.length > 0">
+                        <div class="reviews-box" *ngFor="let review of reviews">
+                            <div class="customer">{{ review.first_name }}</div>
+                            <div class="date-review">{{ review.created_at | date }}</div>
+                            <div class="rating-reviews">
+                                <rating [(ngModel)]="review.rating" [readonly]="true"></rating>
+                            </div>
+                            <div class="content-text" [innerHtml]="review.text"></div>
+                        </div>
+                    </div>
+                    <div class="no-product no-review" *ngIf="reviews?.length === 0">
+                        {{'account.no_reviews' | translate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

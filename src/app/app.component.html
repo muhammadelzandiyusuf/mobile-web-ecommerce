@@ -1,0 +1,347 @@
+<div class="layout-spinner" *ngIf="spinner">
+    <div class="spinner">
+        <img src="assets/images/spin.gif">
+    </div>
+</div>
+<div style="position:absolute;top:0;left:0;right:0;bottom:0;">
+    <mat-sidenav-container #sidenav style="height:100%;width:100%;">
+        <mat-sidenav mode="over" #sidenav style="min-width:220px;">
+            <mat-toolbar color="default">
+                <mat-toolbar-row>
+                    <span class="example-spacer"></span>
+                    <mat-icon class="example-icon" (click)="sidenav.toggle()">clear</mat-icon>
+                </mat-toolbar-row>
+            </mat-toolbar>
+
+            <!-- Foto Profile -->
+            <div class="box-account-login" *ngIf="token != null">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="image-user">
+                                <img src="../assets/images/default.jpg" *ngIf="avatarImage === null">
+                                <img src="{{ domainImage }}/{{ avatarPath }}/{{ avatarImage }}" *ngIf="avatarImage !== null">
+                            </div>
+                        </div>
+                        <div class="col-7">
+                              <div class="name-account-last" *ngIf="lastName === null" [ngClass]="{'name-profile': personAs === null}">
+                                {{ firstName }}
+                              </div>
+                              <div class="name-account" *ngIf="lastName !== null" [ngClass]="{'name-profile': personAs === null}">
+                                {{ firstName }} {{ lastName }}
+                              </div>
+                              <div class="my-account" *ngIf="personAs">
+                                ({{ personAs }})
+                              </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu  -->
+            <mat-list>
+                <mat-list-item (click)="goLink('/')">
+                    <mat-icon mat-list-icon>home</mat-icon>
+                    <h4 mat-line>{{ 'menu.home' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+
+                <mat-list-item (click)="goLink('/commercial')">
+                    <mat-icon mat-list-icon>store</mat-icon>
+                    <h4 mat-line>Commercial Kitchen</h4>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+
+                <mat-list-item (click)="goLink('account')" *ngIf="token != null">
+                    <mat-icon mat-list-icon>
+                        <mat-icon mat-list-icon>account_box</mat-icon>
+                    </mat-icon>
+                    <h4 mat-line>{{ 'menu.my_account' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider *ngIf="token != null"></mat-divider>
+
+                <mat-list-item (click)="goLink('register')" *ngIf="token == null">
+                    <mat-icon mat-list-icon>person_add</mat-icon>
+                    <h4 mat-line>{{ 'menu.registration' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider *ngIf="token == null"></mat-divider>
+
+                <mat-list-item (click)="goLink('login')" *ngIf="token == null">
+                    <mat-icon mat-list-icon>person</mat-icon>
+                    <h4 mat-line>{{ 'menu.login' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider *ngIf="token == null"></mat-divider>
+
+                <mat-list-item (click)="goLink('business_partner/register')" *ngIf="token == null">
+                    <mat-icon mat-list-icon>business</mat-icon>
+                    <h4 mat-line *ngIf="token == null">{{ 'menu.business' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider *ngIf="token == null"></mat-divider>
+
+                <mat-list-item (click)="goProduct('category')">
+                    <mat-icon mat-list-icon>dialpad</mat-icon>
+                    <h4 mat-line>{{ 'menu.category_product' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+
+                <mat-list-item (click)="goProduct('brand')">
+                    <mat-icon mat-list-icon>
+                        <fa name="tag"></fa>
+                    </mat-icon>
+                    <h4 mat-line>{{ 'menu.brand' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+
+                <mat-list-item (click)="goLink('promo/deal_zone')" *ngIf="dealzone > 0">
+                    <mat-icon mat-list-icon>
+                        <i class="fa fa-handshake"></i>
+                    </mat-icon>
+                    <h4 mat-line>{{ 'menu.deal_zone' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider *ngIf="dealzone > 0"></mat-divider>
+
+                <mat-list-item (click)="goLink('promo/sale_item')" *ngIf="clearance_sale > 0">
+                    <mat-icon mat-list-icon>
+                        <i class="fa fa-percent"></i>
+                    </mat-icon>
+                    <h4 mat-line>{{ 'menu.sale_item' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider *ngIf="clearance_sale > 0"></mat-divider>
+
+                <mat-list-item (click)="goLink('promo/hot_deals')" *ngIf="hotSpectacular > 0">
+                    <mat-icon mat-list-icon>
+                        <i class="fas fa-fire"></i>
+                    </mat-icon>
+                    <h4 mat-line>{{ 'menu.hot_deals' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider *ngIf="hotSpectacular > 0"></mat-divider>
+
+                <mat-list-item (click)="goLink('package/deal')" *ngIf="packageDeal > 0">
+                    <mat-icon mat-list-icon>
+                        <fa name="cubes"></fa>
+                    </mat-icon>
+                    <h4 mat-line>{{ 'menu.package_deal' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider *ngIf="packageDeal > 0"></mat-divider>
+
+                <mat-list-item (click)="goLink('package/free')" *ngIf="giveaway > 0">
+                    <mat-icon mat-list-icon>
+                        <i class="fas fa-money-bill-wave"></i>
+                    </mat-icon>
+                    <h4 mat-line>{{ 'menu.get_free' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider *ngIf="giveaway > 0"></mat-divider>
+
+                <mat-list-item (click)="goLink('event/' + sale_event_url)" *ngIf="sale_event > 0">
+                    <mat-icon mat-list-icon>
+                        <i class="fa fa-bullhorn"></i>
+                    </mat-icon>
+                    <!-- <h4 mat-line>{{ 'menu.sale_event' | translate }}</h4> -->
+                    <h4 mat-line>{{ sale_event_name }}</h4>
+                </mat-list-item>
+                <mat-divider *ngIf="sale_event > 0"></mat-divider>
+
+                <mat-list-item (click)="goLink('trade_in')" *ngIf="token != null">
+                    <mat-icon mat-list-icon>
+                        <fa name="retweet"></fa>
+                    </mat-icon>
+                    <h4 mat-line>{{ 'menu.trade' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider *ngIf="token != null"></mat-divider>
+
+                <mat-list-item (click)="goLink('shopping-tool')">
+                    <mat-icon mat-list-icon>
+                        <i class="fa fa-shopping-basket"></i>
+                    </mat-icon>
+                    <h4 mat-line>{{ 'menu.shopping_tool' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+
+                <mat-list-item (click)="goLink('professional-resource')">
+                    <mat-icon mat-list-icon>recent_actors</mat-icon>
+                    <h4 mat-line>{{ 'menu.professional_resource' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+
+                <mat-list-item (click)="goLink('culinary_classes')">
+                    <mat-icon mat-list-icon>
+                        <i class="fa fa-utensils"></i>
+                    </mat-icon>
+                    <h4 mat-line>{{ 'menu.cullinary_classes' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+
+                <mat-list-item (click)="goLink('contact_us')">
+                    <mat-icon mat-list-icon>
+                        <i class="fa fa-phone"></i>
+                    </mat-icon>
+                    <h4 mat-line>{{ 'menu.contact' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+
+                <mat-list-item (click)="logOut()" *ngIf="token != null">
+                    <mat-icon mat-list-icon>exit_to_app</mat-icon>
+                    <h4 mat-line>{{ 'menu.logout' | translate }}</h4>
+                </mat-list-item>
+                <mat-divider *ngIf="token != null"></mat-divider>
+            </mat-list>
+        </mat-sidenav>
+
+        <!-- Navbar -->
+        <mat-toolbar color="default">
+            <mat-toolbar-row>
+                <span (click)="sidenav.toggle()">
+                    <mat-icon class="example-icon">menu</mat-icon>
+                </span>
+                <div class="search" (click)="searchProduct()">
+                    <i class="fa fa-search"></i>
+                    <img src="/assets/images/logo.png">
+                </div>
+                <span class="example-spacer"></span>
+                <span>
+                    <button mat-icon-button class="icon-heart" (click)="notification()">
+                        <i class="fa fa-bell"></i>
+                        <span class="badge" *ngIf="token != null && countNotif > 0 && 9 >= countNotif">{{ countNotif }}</span>
+                        <span class="badge" *ngIf="token != null && countNotif > 9">9+</span>
+                    </button>
+                </span>
+                <span>
+                    <button mat-icon-button (click)="toChart()">
+                        <mat-icon matBadge="15" class="example-icon">shopping_cart</mat-icon>
+                        <span class="badge" *ngIf="token != null && countCart > 0 && 9 >= countCart">{{ countCart }}</span>
+                        <span class="badge" *ngIf="token != null && countCart > 0 && countCart > 9">9+</span>
+                        <span class="badge" *ngIf="token == null && countCartLocal > 0 && 9 >= countCartLocal">{{ countCartLocal }}</span>
+                        <span class="badge" *ngIf="token == null && countCartLocal > 0 && countCartLocal > 9">9+</span>
+                    </button>
+                </span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+
+        <div class="inner-sidenav-content">
+            <!-- Router Page -->
+            <router-outlet></router-outlet>
+
+
+            <!-- Footer Top Menu -->
+            <section class="footer-menu">
+                <div class="footer-top-menu">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <swiper class="swiper" [config]="config">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide" *ngFor="let menu of termsFooterMenu" (click)="toLink(menu.slug)"> 
+                                            <div class="box-footer">
+                                                <div class="icon-footer">
+                                                    <img src="{{ assetDomain }}/{{ pathIcon }}/{{ menu.icon }}" alt="{{ menu.name_english }}" />
+                                                </div>
+                                                <div *ngIf="lang === 'en'" class="name-menu">{{ menu.name_english }}</div>
+                                                <div *ngIf="lang === 'id'" class="name-menu">{{ menu.name_indonesia }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-pagination"></div>
+                                </swiper>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Payment Channel -->
+            <section class="footer-menu">
+                <div class="footer-top-menu">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="title-footer-top">{{ 'menu.instant_payment' | translate }}</div>
+                                <div class="payment-channel">
+                                    <ul>
+                                        <li *ngFor="let pay of paymentInstants">
+                                            <img src="{{ assetDomain }}/{{ pathPayment }}/{{ pay.image }}" alt="payment instant">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="title-footer-top">{{ 'menu.virtual_account' | translate }}</div>
+                                <div class="payment-channel">
+                                    <ul>
+                                        <li *ngFor="let pay of paymentVirtuals">
+                                            <img src="{{ assetDomain }}/{{ pathPayment }}/{{ pay.image }}" alt="virtual account">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="title-footer-top">{{ 'menu.installment' | translate }}</div>
+                                <div class="payment-channel">
+                                    <ul>
+                                        <li *ngFor="let pay of paymentInstallments">
+                                            <img src="{{ assetDomain }}/{{ pathPayment }}/{{ pay.image }}" alt="{{ pay.name }}">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="title-footer-top">{{ 'menu.credit_card' | translate }}</div>
+                                <div class="payment-channel">
+                                    <ul>
+                                        <li *ngFor="let pay of paymentCredits">
+                                            <img src="{{ assetDomain }}/{{ pathPayment }}/{{ pay.image }}" alt="credit card">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="title-footer-top">{{ 'menu.security' | translate }}</div>
+                                <div class="payment-channel">
+                                    <ul>
+                                        <li *ngFor="let pay of security">
+                                            <img src="{{ pay.image }}" alt="Comodo Trusted Site Seal" style="border: 0px; height: 45px">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer Menu -->
+            <section class="footer-menu">
+                <mat-nav-list>
+                    <mat-list-item *ngFor="let link of terms" (click)="getMenuPopUp(link.id)">
+                        <a matLine style="font-size: 14px;" *ngIf="selected == 'en'">{{ link.name_english }}</a>
+                        <a matLine style="font-size: 14px;" *ngIf="selected == 'id'">{{ link.name_indonesia }}</a>
+                        <button mat-icon-button>
+                          <i class="material-icons">keyboard_arrow_down</i>
+                        </button>
+                        <mat-divider></mat-divider>
+                    </mat-list-item>
+                </mat-nav-list>
+            </section>
+
+            <!-- Footer -->
+            <footer>
+                <div class="footer-copyright">
+                    <label class="label-select">{{ 'footer.select' | translate }} :</label>
+                    <mat-form-field class="language">
+                        <mat-select [(value)]="selected" (change)="useLanguage(selected)">
+                          <mat-option *ngFor="let language of languages" [value]="language.value">
+                            {{ language.viewValue }}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="copyright">
+                        &copy; 2019, PT. Mulia Sukses Jaya
+                    </div>
+                    <div class="copyright" (click)="goLink('terms_condition')">
+                        {{ 'footer.term_condition' | translate }}
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </mat-sidenav-container>
+</div>

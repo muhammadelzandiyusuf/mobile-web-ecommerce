@@ -1,0 +1,26 @@
+<div class="account">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="header-account style-header">
+                    <mat-icon class="back-icon" (click)="backHome()">keyboard_backspace</mat-icon>
+                    <span>{{'account.my_account' | translate}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="account-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" *ngFor="let term of terms">
+                    <div class="content-menu-account" *ngIf="lang === 'en'" (click)="goToUrl(term.url)">
+                        {{ term.name_english }}
+                    </div>
+                    <div class="content-menu-account" *ngIf="lang === 'id'" (click)="goToUrl(term.url)">
+                        {{ term.name_indonesia }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+.media-center{
+  margin: 0;
+  padding: 0;
+}
+.media-year{
+  width: 100%;
+  padding-bottom: 5px;
+  display: flex;
+  text-align: center;
+  overflow-x: auto;
+  border-bottom: 1px solid #ddd;
+}
+.media-year .year{
+  padding: 20px 35px;
+  display: inline-block;
+  font-size: 16px;
+  color: #999;
+}
+.active-year{
+  border-bottom: 2px solid #ad2825;
+  color: #ad2825 !important;
+  font-weight: bold
+}
+.media-content{
+  margin: 0;
+  padding: 0;
+}
+.media{
+  margin: 10px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 2px #ddd;
+}
+.media .image img{
+  width: 100%;
+}
+.media .title{
+  font-size: 14px;
+  text-transform: uppercase;
+  padding: 15px;
+  text-align: center;
+  color: #666;
+}
+.media-content a{
+  text-decoration: none;
+  color: #666;
+}

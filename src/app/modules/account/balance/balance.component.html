@@ -1,0 +1,67 @@
+<div class="balance">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="form-date" *ngIf="searching">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5">
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="picker" [formControl]="startDate" placeholder="{{ 'account.start_date' | translate }}">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker startView="year" [startAt]="startDateNow"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2">
+                          <div class="min-date">-</div>
+                        </div>
+                        <div class="col-5">
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="date" [formControl]="endDate" placeholder="{{ 'account.end_date' | translate }}">
+                                <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                                <mat-datepicker #date startView="year" [startAt]="endDateNow"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12">
+                            <div class="button-row">
+                                <button class="btn-serach" mat-raised-button (click)="getBalances()">{{ 'account.search' | translate }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="header-text">
+                    {{ 'account.your_balance' | translate }} <span>{{ totalBalance | currency:'Rp':'true':'4.0-0' }}</span> 
+                    <a class="filter-btn" (click)="getSerach(searching)">
+                        <i class="fa fa-filter"></i>
+                    </a>
+                </div>
+                <div class="not-found-data" *ngIf="countBalance === 0">
+                    {{ 'account.balance_is_no_data' | translate }}
+                </div>
+            </div>
+            <div class="col-12" *ngIf="countBalance > 0">
+                <div class="information-balance" *ngFor="let balance of balances">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="text-invoice-number">
+                                {{ balance.created_at.date | date : 'd MMM y HH:mm' }}
+                                </div>
+                                <div class="invoice-number line-height">{{ balance.note }}</div>
+                            </div>
+                            <div class="col-12">
+                                <div class="text-invoice-number">Nominal</div>
+                                <div class="invoice-number {{ balance.mutation }}">{{ balance.amount | currency:'Rp':'true':'4.0-0' }}</div>
+                            </div>
+                            <div class="col-12">
+                                <div class="text-invoice-number">{{ 'account.expired_at' | translate }}</div>
+                                <div class="invoice-number">{{ balance.created_at.date | date : 'd MMM y HH:mm:ss' }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+<div class="inquiry">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="title">{{'shopping.for_any_project' | translate}}</div>
+      </div>
+      <div class="col-12">
+        <form novalidate [formGroup]="registerForm">
+          <mat-form-field>
+            <mat-select placeholder="{{'helpinfo.salutation' | translate}}" formControlName="salutation" required>
+              <mat-option *ngFor="let item of salutaion" [value]="item.name">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="{{'form.first_name' | translate}}" formControlName="first_name" required>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="{{'form.last_name' | translate}}" formControlName="last_name">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="{{'form.company_name' | translate}}" formControlName="company_name">
+          </mat-form-field>
+
+          <div class="form-label-registration">
+            Inquiry For <span class="required">*</span>
+          </div>
+          <mat-radio-group class="example-radio-group" formControlName="person_as">
+            <mat-radio-button class="example-radio-button" value="Personal">Personal</mat-radio-button>
+            <mat-radio-button class="example-radio-button" value="Company">Company</mat-radio-button>
+          </mat-radio-group>
+
+          <mat-form-field>
+            <input matInput placeholder="{{'form.mobile' | translate}}" [textMask]="{mask: mask}" formControlName="handphone" required>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="{{'form.phone' | translate}}" [textMask]="{mask: mask}" formControlName="telephone">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email" required>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="{{'form.confirm_email' | translate}}" formControlName="same_email" required>
+          </mat-form-field>
+
+          <mat-form-field>
+            <textarea matInput placeholder="{{'form.address' | translate}}" formControlName="address" required></textarea>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="{{'form.province' | translate}}" formControlName="province_id" required>
+              <mat-option *ngFor="let province of provinces" [value]="province.province_id" (click)="getCityByProvince(province.province_id)">
+                {{province.province}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="{{'form.city' | translate}}" [disabled]="cityDisabled" formControlName="state_id" required>
+              <mat-option *ngFor="let city of cities" [value]="city.city_id">
+                {{ city.city_name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="{{'form.postal_code' | translate}}" [textMask]="{mask: postal}" formControlName="postal_zip" required>
+          </mat-form-field>
+
+          <mat-form-field>
+            <textarea matInput placeholder="{{'order.note' | translate}}" class="notes" formControlName="message" required></textarea>
+          </mat-form-field>
+
+          <div class="button-row">
+            <button *ngIf="spinner === false" type="button" class="save-btn" mat-raised-button [disabled]="registerForm.invalid"
+              (click)="registerInquiry()">
+              {{'form.save' | translate}}
+            </button>
+            <button *ngIf="spinner" type="button" mat-raised-button disabled="true">
+              <img src="assets/images/spin.gif" class="image-spinner">
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

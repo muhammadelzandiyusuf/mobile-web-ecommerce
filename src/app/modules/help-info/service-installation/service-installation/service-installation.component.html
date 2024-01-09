@@ -1,0 +1,43 @@
+<div class="service-installation">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="headel-service-title" *ngIf="lang === 'en'">{{ termNameEng }}</div>
+                <div class="headel-service-title" *ngIf="lang === 'id'">{{ termNameIndo }}</div>
+                <h4>
+                    PT BADGER SUKSES JAYA <br>
+                    <span>
+                        Komp. Ruko Agung Sedayu <br>
+                        Harco Mangga Dua Blok H No. 36 <br>
+                        Jl. Mangga Dua Raya, Jakarta Pusat 10730 <br> 
+                        Phone : +62 21 62202288
+                    </span>
+                </h4>
+            </div>
+            <div class="col-6" *ngFor="let category of categories">
+                <div class="service-category" (click)="getFormService(category.slug)">
+                    <div class="service-icon" *ngIf="category.id === 1">
+                        <fa name="wrench"></fa>
+                    </div>
+                    <div class="service-icon" *ngIf="category.id === 2">
+                        <fa name="plug"></fa>
+                    </div>
+                    <div class="service-icon" *ngIf="category.id === 3">
+                        <fa name="file"></fa>
+                    </div>
+                    <div class="service-icon" *ngIf="category.id === 4">
+                        <fa name="cogs"></fa>
+                    </div>
+                    <div class="service-icon" *ngIf="category.id === 5">
+                        <fa name="gavel"></fa>
+                    </div>
+                    <div class="service-icon" *ngIf="category.id === 6">
+                        <fa name="check-square"></fa>
+                    </div>
+                    <div class="service-name" *ngIf="lang === 'en'">{{ category.name_english }}</div>
+                    <div class="service-name" *ngIf="lang === 'id'">{{ category.name_indonesia }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

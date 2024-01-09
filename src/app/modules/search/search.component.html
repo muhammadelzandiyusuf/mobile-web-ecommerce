@@ -1,0 +1,63 @@
+<div class="search">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="header">
+                    <mat-icon class="back-icon" (click)="back()">keyboard_backspace</mat-icon>
+                    <input type="search" class="text-search" placeholder="{{'product.what_are_you_looking_for' | translate}}" #box (input)="onSearchChange($event.target.value)" (keyup.enter)="onEnter(box.value)">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="result-research" *ngIf="brands?.length > 0">
+                    <div class="title-serarch titles-search">
+                        Brand
+                    </div>
+                    <div class="search-result" *ngFor="let item of brands">
+                        <span (click)="onEnter(item.name)">{{ item.name }}</span>
+                    </div>
+                </div>
+                <div class="result-research related" *ngIf="products?.length > 0">
+                    <div class="title-serarch">
+                        {{ 'product.related_products' | translate }}
+                    </div>
+                    <div class="text-result">
+                        <b>{{ countProduct }}</b> {{'product.product_with_the_word_search' | translate}} <b>{{ textSearch }}.</b ><span (click)="onEnter(textSearch)">  {{ 'home.show_more' | translate }}</span>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 col-sm-4 col-md-4" *ngFor="let product of products">
+                            <div class="box-product" (click)="goProductDetail(product.url)">
+                                <div class="product-discount-all" *ngIf="product.discount > 32">
+                                    <span>{{ product.discount }}%</span>
+                                </div>
+                                <div class="image">
+                                    <img src="{{ product.image_domain }}/{{ product.product_image_path }}/{{ product.product_image_name }}">
+                                </div>
+                                <div class="content">
+                                    <div class="brand">{{ product.brand_name }}</div> 
+                                    <div class="name">{{ product.name }}
+                                        ({{product.code }})
+                                    </div>
+                                    <div *ngIf="product.price > 0">
+                                        <div class="normal-price">{{ product.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                        <div class="diskon-price">{{ product.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    </div>
+                                    <div *ngIf="product.price == null || product.price == 0">
+                                        <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="installment" *ngIf="product.stock_status_id == 1">
+                                    <span *ngIf="product.price > 0">
+                                        {{ product.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                    </span>
+                                </div>
+                                <div class="installment color-red" *ngIf="product.stock_status_id != 1">{{ product.stock_status }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

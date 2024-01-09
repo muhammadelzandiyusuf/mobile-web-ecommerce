@@ -1,0 +1,51 @@
+<div class="product">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="box-tab">
+                    <div class="wishlist-tab" (click)="gotToWishlist()">
+                        {{'account.wishlist' | translate}}
+                    </div>
+                    <div class="lastview-tab" (click)="gotToLastView()">
+                        {{'account.last_view' | translate}}
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="not-wihslish" *ngIf="countProduct === 0">
+                    <div class="not-found-data">{{'account.there_is_no_last_view' | translate}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-product">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-6 col-sm-4 col-md-4" *ngFor="let product of products">
+                    <div class="box-product" (click)="goProductDetail(product.url, product.type_status_id)">
+                        <div class="image">
+                            <img src="{{ product.image }}">
+                        </div>
+                        <div class="content">
+                            <div class="brand">{{ product.brand_name }}</div>
+                            <div class="name">{{ product.name }}</div>
+                            <div *ngIf="product.price > 0">
+                                <div class="normal-price">{{ product.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                <div class="diskon-price">{{ product.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                            </div>
+                            <div *ngIf="product.price == null || product.price == 0">
+                                <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                            </div>
+                        </div>
+                        <div class="installment" *ngIf="product.stock_status_id == 1">
+                            <span *ngIf="product.price > 0">
+                                {{ product.installment | currency:'Rp':'true':'4.0-0' }}
+                                x 12 Bln
+                            </span>
+                        </div>
+                        <div class="installment color-red" *ngIf="product.stock_status_id != 1">{{ product.stock_status }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

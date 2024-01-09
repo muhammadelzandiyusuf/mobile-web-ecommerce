@@ -1,0 +1,132 @@
+<div class="kitchen-design-form">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-design">
+                    <div class="title">{{'shopping.free_kitchen_design_form' | translate}}</div>
+                    <div class="form">
+                        <form novalidate [formGroup]="contactForm" enctype="multipart/form-data">
+                          <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                  {{'shopping.personal_company_data' | translate}}
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+                          
+                              <mat-form-field>
+                                <input matInput placeholder="{{'form.full_name' | translate}}" formControlName="full_name" required>
+                              </mat-form-field>
+
+                              <mat-form-field>
+                                <input matInput placeholder="Email" formControlName="email" required>
+                              </mat-form-field>
+
+                              <mat-form-field>
+                                <input matInput placeholder="{{'form.confirm_email' | translate}}" formControlName="same_email" required>
+                              </mat-form-field>
+
+                              <mat-form-field>
+                                <input matInput placeholder="{{'form.phone' | translate}}" [textMask]="{mask: mask}" formControlName="phone" required>
+                              </mat-form-field>
+
+                              <mat-form-field>
+                                <input matInput placeholder="{{'form.company_name' | translate}}" formControlName="company_name">
+                              </mat-form-field>
+
+                              <mat-form-field>
+                                <input matInput placeholder="{{'form.company_phone' | translate}}" [textMask]="{mask: mask}" formControlName="company_phone">
+                              </mat-form-field>
+
+                              <div class="person-us">
+                                <mat-radio-group formControlName="person_as" required>
+                                  <mat-radio-button value="Personal">Personal</mat-radio-button>
+                                  <mat-radio-button value="Company">Company</mat-radio-button>
+                                </mat-radio-group>  
+                              </div> 
+                              
+                              <mat-form-field>
+                                <textarea matInput placeholder="{{'form.address' | translate}}" formControlName="address" required></textarea>
+                              </mat-form-field>
+
+                              <mat-form-field>
+                                <mat-select placeholder="{{'form.province' | translate}}" formControlName="province_id" required>
+                                  <mat-option *ngFor="let province of provinces" [value]="province.province_id" (click)="getCityByProvince(province.province_id)">
+                                    {{province.province}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        
+                              <mat-form-field>
+                                <mat-select placeholder="{{'form.city' | translate}}" [disabled]="cityDisabled" formControlName="city_id" required>
+                                  <mat-option *ngFor="let city of cities" [value]="city.city_id">
+                                    {{ city.city_name }}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                          
+                              <mat-action-row>
+                                <button type="button" mat-button color="primary" (click)="nextStep()">{{'form.next' | translate}}</button>
+                              </mat-action-row>
+                            </mat-expansion-panel>
+                          
+                            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                  {{'shopping.upload_file' | translate}}
+                                </mat-panel-title>
+                              </mat-expansion-panel-header>
+
+                              <mat-form-field>
+                                <mat-select placeholder="{{'shopping.prefered_design' | translate}}" [formControl]="preferred_designs" multiple required>
+                                  <mat-option *ngFor="let design of freeKitchen" [value]="design">{{ design.title }}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+
+                              <div class="fileUpload">
+                                <span *ngIf="nameFile === ''"><fa name="upload"></fa> {{'shopping.upload_floor_plan_layout' | translate}}</span>
+                                <span *ngIf="nameFile !== ''"><fa name="upload"></fa> {{ nameFile }}</span>
+                                <input id="uploadBtn" accept="image/*" type="file" class="upload" id="layout_plan" (change)="onFileChange($event)" #layoutPlan>
+                              </div>
+                          
+                              <mat-form-field>
+                                <textarea matInput placeholder="{{'order.notes' | translate}}" formControlName="notes" required></textarea>
+                              </mat-form-field>
+
+                              <mat-form-field>
+                                <mat-select placeholder="Brand" [formControl]="brandIds" multiple>
+                                  <mat-option *ngFor="let brand of brands" [value]="brand">
+                                    {{brand.brand_name}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+
+                              <!-- <mat-form-field>
+                                <mat-select placeholder="Brand" formControlName="brand_id">
+                                  <mat-option *ngFor="let brand of brands" [value]="brand.id">
+                                    {{brand.brand_name}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field> -->
+
+                              <mat-form-field>
+                                <mat-select placeholder="{{'shopping.prefered_appliance' | translate}}" [formControl]="categories" multiple>
+                                  <mat-option *ngFor="let category of categoriesKitchen" [value]="category">{{ category.name_english }}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                              
+                          
+                              <mat-action-row>
+                                <button type="button" mat-button color="warn" (click)="prevStep()">{{'form.previous' | translate}}</button>
+                                <button mat-button color="primary" (click)="saveContact()">{{'form.save' | translate}}</button>
+                              </mat-action-row>
+                            </mat-expansion-panel>
+                          
+                          </mat-accordion>                          
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

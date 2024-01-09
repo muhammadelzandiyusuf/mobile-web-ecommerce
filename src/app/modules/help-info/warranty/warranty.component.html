@@ -1,0 +1,331 @@
+<div class="tarde-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+              <mat-accordion class="example-headers-align">
+                  <form novalidate [formGroup]="warrantyForm" enctype="multipart/form-data">
+                    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{'helpinfo.personal_data' | translate}}
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                  
+                      <mat-form-field>
+                        <mat-select placeholder="{{'helpinfo.salutation' | translate}}" formControlName="salutation" required>
+                          <mat-option *ngFor="let item of salutaion" [value]="item.name">
+                            {{item.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="{{'form.first_name' | translate}}" formControlName="first_name" required>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                          <input matInput placeholder="{{'form.last_name' | translate}}" formControlName="last_name">
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="{{'form.mobile' | translate}}" [textMask]="{mask: mask}" formControlName="handphone" required>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="{{'form.phone' | translate}}" [textMask]="{mask: mask}" formControlName="telephone">
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="Email" formControlName="email" required>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="{{'form.confirm_email' | translate}}" formControlName="same_email" required>
+                      </mat-form-field>
+                  
+                      <mat-action-row>
+                        <button type="button" mat-button color="primary" (click)="nextStep()">{{'form.next' | translate}}</button>
+                      </mat-action-row>
+                    </mat-expansion-panel>
+                  
+                    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{'form.address' | translate}}
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                  
+                      <mat-form-field>
+                          <textarea class="form-textrea" matInput placeholder="{{'form.address' | translate}}" formControlName="address" required></textarea>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <mat-select placeholder="{{'form.province' | translate}}" formControlName="province_id" required>
+                          <mat-option *ngFor="let province of provinces" [value]="province.province_id" (click)="getCityByProvince(province.province_id)">
+                            {{province.province}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <mat-select placeholder="{{'form.city' | translate}}" [disabled]="cityDisabled" formControlName="state_id" required>
+                          <mat-option *ngFor="let city of cities" [value]="city.city_id">
+                            {{ city.city_name }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="{{'form.postal_code' | translate}}" formControlName="postal_zip" [textMask]="{mask: postal}" required>
+                      </mat-form-field>
+                  
+                      <mat-action-row>
+                        <button type="button" mat-button color="warn" (click)="prevStep()">{{'form.previous' | translate}}</button>
+                        <button type="button" mat-button color="primary" (click)="nextStep()">{{'form.next' | translate}}</button>
+                      </mat-action-row>
+                    </mat-expansion-panel>
+                  
+                    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{'helpinfo.warranty_product' | translate}} <span *ngIf="countProduct > 1">&nbsp;1</span>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+
+                      <mat-form-field>
+                        <mat-select placeholder="Brand" formControlName="brand_id_1" required>
+                          <mat-option *ngFor="let brand of brands" [value]="brand.id" (click)="getProductWarranty()">
+                            {{brand.brand_name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="{{'helpinfo.product' | translate}}" [matAutocomplete]="auto" formControlName='productInput_1' disabled="productDisable" required>
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                          <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="20"></mat-spinner></mat-option>
+                          <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let product of products" [value]="product">
+                              <img class="example-option-img" aria-hidden [src]="product.image" height="25">
+                              <span>{{ product.full_name }}</span>
+                            </mat-option>
+                          </ng-container>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                      
+                      <!-- <div class="warranty-number-box">
+                          <mat-form-field>
+                              <input matInput placeholder="{{'helpinfo.warranty_number_code' | translate}}" formControlName="warranty_number_code_1" required>
+                          </mat-form-field>
+                          <span class="icon-code-success" *ngIf="isCorrect === true">
+                              <mat-icon mat-list-icon>check_circle</mat-icon>
+                          </span>
+                          <span class="icon-code-error" *ngIf="isError === true">
+                              <mat-icon mat-list-icon>clear</mat-icon>
+                          </span>
+                          <span class="spinner-loading" *ngIf="isLoadingCheck === true">
+                              <img src="assets/images/spin.gif">
+                          </span>
+                          <button type="button" mat-raised-button (click)="getCheckCode()">{{'helpinfo.check' | translate}}</button>
+                      </div> -->
+
+                      <mat-form-field>
+                          <input matInput maxlength="10" placeholder="{{'helpinfo.warranty_number' | translate}}" formControlName="warranty_number_text_1" required>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                          <input matInput placeholder="{{'helpinfo.serial_number' | translate}}" formControlName="serial_number_1" required>
+                      </mat-form-field>
+
+                      <div class="file-document">
+                        <p>{{'helpinfo.upload_warranty_card' | translate}} <span>*</span></p>
+                        <img *ngIf="url != null" [src]="url">
+                        <img *ngIf="url == null" src="assets/images/image.png">
+                        <div class="upload-btn-wrapper">
+                            <button mat-raised-button color="primary">{{'helpinfo.browse' | translate}}</button>
+                            <input type="file" accept="image/*" class="form-file" id="card_image" (change)="onFileChange($event)" formControlName="card_image_1" #fileInput1>
+                        </div>       
+                      </div>
+                  
+                      <mat-form-field>
+                        <input matInput [max]="maxToday" placeholder="{{'helpinfo.purchase_transaction_date' | translate}}" [matDatepicker]="picker" (focus)="picker.open()" formControlName="purchase_date_1" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                  
+                      <mat-action-row>
+                        <button type="button" mat-button color="warn" (click)="prevStep()">{{'form.previous' | translate}}</button>
+                        <button *ngIf="countProduct >= 2" type="button" mat-button color="primary" (click)="nextStep()">{{'form.next' | translate}}</button>
+                      </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle *ngIf="formProduct2">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{'helpinfo.warranty_product' | translate}} 2
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+
+                      <mat-form-field>
+                        <mat-select placeholder="Brand" formControlName="brand_id_2" required>
+                          <mat-option *ngFor="let brand of brands" [value]="brand.id" (click)="getProductWarranty2()">
+                            {{brand.brand_name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="{{'helpinfo.product' | translate}}" [matAutocomplete]="auto" formControlName='productInput_2' disabled="productDisable2" required>
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                          <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="20"></mat-spinner></mat-option>
+                          <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let product2 of productsWaranty" [value]="product2">
+                              <img class="example-option-img" aria-hidden [src]="product2.image" height="25">
+                              <span>{{ product2.full_name }}</span>
+                            </mat-option>
+                          </ng-container>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                      
+                      <!-- <div class="warranty-number-box">
+                          <mat-form-field>
+                              <input matInput placeholder="{{'helpinfo.warranty_number_code' | translate}}" formControlName="warranty_number_code_2" required>
+                          </mat-form-field>
+                          <span class="icon-code-success" *ngIf="isCorrect2 === true">
+                              <mat-icon mat-list-icon>check_circle</mat-icon>
+                          </span>
+                          <span class="icon-code-error" *ngIf="isError2 === true">
+                              <mat-icon mat-list-icon>clear</mat-icon>
+                          </span>
+                          <span class="spinner-loading" *ngIf="isLoadingCheck2 === true">
+                              <img src="assets/images/spin.gif">
+                          </span>
+                          <button type="button" mat-raised-button (click)="getCheckCode2()">{{'helpinfo.check' | translate}}</button>
+                      </div> -->
+
+                      <mat-form-field>
+                          <input matInput maxlength="10" placeholder="{{'helpinfo.warranty_number' | translate}}" formControlName="warranty_number_text_2" required>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                          <input matInput placeholder="{{'helpinfo.serial_number' | translate}}" formControlName="serial_number_2" required>
+                      </mat-form-field>
+
+                      <div class="file-document">
+                        <p>{{'helpinfo.upload_warranty_card' | translate}} <span>*</span></p>
+                        <img *ngIf="urlProd != null" [src]="urlProd">
+                        <img *ngIf="urlProd == null" src="assets/images/image.png">
+                        <div class="upload-btn-wrapper">
+                            <button mat-raised-button color="primary">{{'helpinfo.browse' | translate}}</button>
+                            <input type="file" accept="image/*" class="form-file" id="card_image" (change)="onFileChangeProd($event)" formControlName="card_image_2" #fileInput2>
+                        </div>       
+                      </div>
+                  
+                      <mat-form-field>
+                        <input matInput [max]="maxToday" placeholder="{{'helpinfo.purchase_transaction_date' | translate}}" [matDatepicker]="picker2" (focus)="picker2.open()" formControlName="purchase_date_2" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                      </mat-form-field>
+                  
+                      <mat-action-row>
+                        <button type="button" mat-button color="warn" (click)="prevStep()">{{'form.previous' | translate}}</button>
+                        <button *ngIf="countProduct === 3" type="button" mat-button color="primary" (click)="nextStep()">{{'form.next' | translate}}</button>
+                      </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle *ngIf="formProduct3">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{'helpinfo.warranty_product' | translate}} 3
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+
+                      <mat-form-field>
+                        <mat-select placeholder="Brand" formControlName="brand_id_3" required>
+                          <mat-option *ngFor="let brand of brands" [value]="brand.id" (click)="getProductWarranty3()">
+                            {{brand.brand_name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width">
+                        <input matInput placeholder="{{'helpinfo.product' | translate}}" [matAutocomplete]="auto" formControlName='productInput_3' disabled="productDisable3" required>
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                          <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="20"></mat-spinner></mat-option>
+                          <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let product3 of productWarranties" [value]="product3">
+                              <img class="example-option-img" aria-hidden [src]="product3.image" height="25">
+                              <span>{{ product3.full_name }}</span>
+                            </mat-option>
+                          </ng-container>
+                        </mat-autocomplete>
+                      </mat-form-field>
+                      
+                      <!-- <div class="warranty-number-box">
+                          <mat-form-field>
+                              <input matInput placeholder="{{'helpinfo.warranty_number_code' | translate}}" formControlName="warranty_number_code_3" required>
+                          </mat-form-field>
+                          <span class="icon-code-success" *ngIf="isCorrect3 === true">
+                              <mat-icon mat-list-icon>check_circle</mat-icon>
+                          </span>
+                          <span class="icon-code-error" *ngIf="isError3 === true">
+                              <mat-icon mat-list-icon>clear</mat-icon>
+                          </span>
+                          <span class="spinner-loading" *ngIf="isLoadingCheck3 === true">
+                              <img src="assets/images/spin.gif">
+                          </span>
+                          <button type="button" mat-raised-button (click)="getCheckCode3()">{{'helpinfo.check' | translate}}</button>
+                      </div> -->
+
+                      <mat-form-field>
+                          <input matInput maxlength="10" placeholder="{{'helpinfo.warranty_number' | translate}}" formControlName="warranty_number_text_3" required>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                          <input matInput [max]="maxToday" placeholder="{{'helpinfo.serial_number' | translate}}" formControlName="serial_number_3" required>
+                      </mat-form-field>
+
+                      <div class="file-document">
+                        <p>{{'helpinfo.upload_warranty_card' | translate}} <span>*</span></p>
+                        <img *ngIf="urlWarranty != null" [src]="urlWarranty">
+                        <img *ngIf="urlWarranty == null" src="assets/images/image.png">
+                        <div class="upload-btn-wrapper">
+                            <button mat-raised-button color="primary">{{'helpinfo.browse' | translate}}</button>
+                            <input type="file" accept="image/*" class="form-file" id="card_image" (change)="onFileChangeProdWarranty($event)" formControlName="card_image_3" #fileInput3>
+                        </div>       
+                      </div>
+                  
+                      <mat-form-field>
+                        <input matInput [max]="maxToday" placeholder="{{'helpinfo.purchase_transaction_date' | translate}}" [matDatepicker]="picker3" (focus)="picker3.open()" formControlName="purchase_date_3" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker #picker3></mat-datepicker>
+                      </mat-form-field>
+                  
+                      <mat-action-row>
+                        <button type="button" mat-button color="warn" (click)="prevStep()">{{'form.previous' | translate}}</button>
+                      </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <div class="button-add-product">
+                        <button *ngIf="countProduct > 1" type="button" mat-stroked-button (click)="removeProduct()">{{'helpinfo.remove_product' | translate}}</button>
+                        <button *ngIf="2 >= countProduct" type="button" mat-stroked-button color="warn" (click)="addProduct()">{{'helpinfo.add_product' | translate}}</button>
+                    </div>
+                    <div class="button-submit">
+                        <mat-action-row>
+                          <button *ngIf="spinner === false" type="submit" mat-raised-button color="action" [disabled]="warrantyForm.invalid" (click)="saveRegisterWarranty()">Submit</button>
+                          <button *ngIf="spinner" type="button" mat-raised-button disabled="true">
+                            <img src="assets/images/spin.gif" class="image-spinner">
+                          </button>
+                        </mat-action-row>
+                    </div>
+                  </form>
+                  <div class="download-file center">
+                    <a href="https://api.kitchenart.id/warranty/download_pdf" target="_blank">
+                        {{ 'footer.term_condition' | translate }}
+                    </a>
+                </div>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+</div>

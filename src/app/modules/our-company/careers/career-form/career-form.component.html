@@ -1,0 +1,63 @@
+<div class="careers">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="full-time-job">
+                    <div class="title-position">{{ position}}</div>
+                    <div class="job-description">
+                        <div class="job-title">{{'product.description' | translate}} :</div>
+                        <div class="job-content" [innerHtml]="description_english"></div>
+                    </div>
+                    <div class="job-description">
+                            <div class="job-title">{{'about.requirement' | translate}} :</div>
+                            <div class="job-content" [innerHtml]="requirement_english"></div>
+                        </div>
+                </div>
+                <div class="content-internship">
+                    <form novalidate [formGroup]="contactForm" enctype="multipart/form-data">
+                        <mat-form-field>
+                            <input matInput placeholder="{{'form.name' | translate}}" formControlName="name" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Email" formControlName="email" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <textarea matInput placeholder="{{'form.address' | translate}}" formControlName="address" required></textarea>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="{{'form.phone' | translate}}" formControlName="phone" [textMask]="{mask: phone}" required>
+                        </mat-form-field>
+
+                        <div class="document-files">
+                            <div class="title-files">{{'about.photo' | translate}}
+                            <span class="riquired-files">( * Max 300kb, file JPG/PNG )</span>
+                            </div>
+                            <input type="file" accept="image/*" class="form-file" id="photoFile" (change)="onFileChangePhoto($event)" #filePhoto>
+                        </div>
+
+                        <div class="document-files">
+                            <div class="title-files">{{'about.application_letter' | translate}}
+                                <span class="riquired-files">( * Max 300kb, file DOC/DOCX/PDF )</span>
+                            </div>
+                            <input type="file" accept=".doc,.docx,.pdf" class="form-file" id="aplicationFile" (change)="onFileChangeApplication($event)" #fileApplication>
+                        </div>
+
+                        <div class="document-files">
+                            <div class="title-files">{{'about.upload_cv' | translate}}
+                                <span class="riquired-files">( * Max 300kb, file DOC/DOCX/PDF )</span>
+                            </div>
+                            <input type="file" accept=".doc,.docx,.pdf" class="form-file" id="cvFile" (change)="onFileChangeCv($event)" #fileCv>
+                        </div>
+
+                        <div class="action">
+                            <button mat-raised-button *ngIf="spinner === false" [disabled]="contactForm.invalid" class="btn-default" (click)="saveContact()">Submit</button>
+                            <button mat-raised-button *ngIf="spinner" disabled>
+                                <img src="assets/images/spin.gif" class="image-spinner">
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

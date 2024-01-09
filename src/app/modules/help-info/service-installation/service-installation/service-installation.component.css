@@ -1,0 +1,42 @@
+.service-installation{
+    margin: 0;
+    padding: 0 0 10px;
+    background-color: #ffffff;
+}
+.headel-service-title{
+    padding: 15px 15px 0;
+    text-align: center;
+    font-size: 20px;
+    color: #666666;
+    font-weight: bold;
+}
+.service-installation h4{
+    font-weight: 500;
+    color: #666666;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5rem;
+}
+.service-installation h4 span{
+    font-size: 12px;
+    color: #999999;
+    font-weight: 0;
+}
+.service-category{
+    margin: 5px;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #dddddd;
+    text-align: center;
+    box-shadow: 0 0 8px 0 #dddddd;
+    height: 100px;
+}
+.service-category .service-icon{
+    font-size: 22px;
+    color: #666666;
+}
+.service-category .service-name{
+    font-size: 14px;
+    color: #666666;
+    margin-top: 10px;
+}

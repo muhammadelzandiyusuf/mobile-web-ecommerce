@@ -1,0 +1,195 @@
+<div class="about-us">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="video">
+                  <iframe width="100%" height="{{heightVideo}}" [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="aboutus" *ngIf="lang === 'en'" [innerHtml]="content_english"></div>
+                <div class="aboutus" *ngIf="lang === 'id'" [innerHtml]="content_indonesia"></div>
+            </div>
+            <div class="col-12" *ngIf="awardYear?.length > 0">
+                <div class="title-about">{{'about.awards' | translate}}</div>
+                <div class="timeline-centered">
+                    <div class="timeline-entry begin" *ngFor="let year of awardYear">
+                        <div class="timeline-entry-inner">
+                            <div class="timeline-icon">
+                                <i class="entypo-feather"></i> {{ year.award_year }}
+                            </div>
+                            
+                            <div *ngFor="let certificate of awardCertificate">
+                                <div class="timeline-label" *ngIf="certificate.year === year.award_year">
+                                    <h2>{{ certificate.title }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="title-about">{{'about.our_products' | translate}}</div>
+                <div class="our-product">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <mat-accordion>
+                                    <mat-expansion-panel *ngFor="let parent of terms; let idx = index">
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title class="header-title" *ngIf="lang === 'en'"> 
+                                                {{ parent.category_name_english }}
+                                            </mat-panel-title>
+                                            <mat-panel-title class="header-title" *ngIf="lang === 'id'"> 
+                                                {{ parent.category_name_indonesia }}
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-6" *ngFor="let child of category" [ngClass]="{'not-same' : child.parent_id !== parent.id}">
+                                                    <div class="list-item" *ngIf="child.parent_id === parent.id" (click)="goLinkCategory(child.parent_id, child.link_url)">
+                                                        <span *ngIf="lang === 'en'">{{ child.category_name_english }}</span>
+                                                        <span *ngIf="lang === 'id'">{{ child.category_name_indonesia }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="title-about">{{'about.milestones' | translate}}</div>
+                <swiper class="swiper" [config]="config">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" *ngFor="let item of milestones; let idx = index">
+                            <div class="milestones">
+                                <div class="milestone-1" *ngIf="idx % 2 === 0">
+                                    <div class="rounded-1">
+                                        <span class="year">{{ item.year }}</span>
+                                    </div>
+                                    <div class="vertical-line-1"></div>
+                                    <div class="horizontal-line-1">
+                                        <div class="child-rounded"></div>
+                                    </div>
+                                    <div class="content-milestone">
+                                        <div class="showroom">
+                                            <div class="title-showroom" *ngFor="let showroom of milestoneShowroom">
+                                                <span *ngIf="showroom.showroom_milestone_id === item.id" (click)="goLinkShowroom(showroom.url)">
+                                                    {{ showroom.showroom_name }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="brand">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-4" *ngFor="let brand of milestoneBrand">
+                                                        <div class="image-logo" *ngIf="brand.brand_milestone_id === item.id" (click)="goProductBrand(brand.brand_url)">
+                                                            <img src="{{ brand.image_domain }}/{{ brand.logo_path }}/{{ brand.logo_image }}" alt="Logo Brand">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="milestone-2" *ngIf="idx % 2 !== 0">
+                                    <div class="content-milestone">
+                                        <div class="brand">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-4" *ngFor="let brand of milestoneBrand">
+                                                        <div class="image-logo" *ngIf="brand.brand_milestone_id === item.id" (click)="goProductBrand(brand.brand_url)">
+                                                            <img src="{{ brand.image_domain }}/{{ brand.logo_path }}/{{ brand.logo_image }}" alt="Logo Brand">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="caption-title">Showroom</div>
+                                        <div class="showroom">
+                                            <div class="title-showroom" *ngFor="let showroom of milestoneShowroom">
+                                                <span *ngIf="showroom.showroom_milestone_id === item.id" (click)="goLinkShowroom(showroom.url)">
+                                                    {{ showroom.showroom_name }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="horizontal-line-2">
+                                        <div class="child-rounded"></div>
+                                    </div>
+                                    <div class="vertical-line-2"></div>
+                                    <div class="rounded-2">
+                                        <span class="year">{{ item.year }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </swiper>
+            </div>
+            <div class="col-12">
+                <!-- <div class="payment-methods" *ngFor="let method of paymentMethod">
+                    <div class="title-method" *ngIf="lang === 'en'">{{ method.name_english }}</div>
+                    <div class="title-method" *ngIf="lang === 'id'">{{ method.name_indonesia }}</div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4" *ngFor="let icon of method.payment_channels">
+                                <div class="icon">
+                                    <img src="{{ icon.domain_image }}/{{ icon.icon_path }}/{{ icon.icon_image }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="payment-methods">
+                    <div class="title-method" *ngIf="lang === 'en'">Virtual Account</div>
+                    <div class="title-method" *ngIf="lang === 'id'">Virtual Account</div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="icon">
+                                    <img src="{{ assets }}/{{ pathPaymentIcon }}/{{ iconPermata }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment-methods">
+                    <div class="title-method" *ngIf="lang === 'en'">Credit Card</div>
+                    <div class="title-method" *ngIf="lang === 'id'">Kartu Kredit</div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="icon">
+                                    <img src="{{ assets }}/{{ pathPaymentIcon }}/{{ iconCredit }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="payment-methods">
+                    <div class="title-method" *ngIf="lang === 'en'">Instant Payment</div>
+                    <div class="title-method" *ngIf="lang === 'id'">Pembayaran Instan</div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="icon">
+                                    <img src="{{ assets }}/{{ pathPaymentIcon }}/{{ iconBca }}">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="icon">
+                                    <img src="{{ assets }}/{{ pathPaymentIcon }}/{{ iconMandiri }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

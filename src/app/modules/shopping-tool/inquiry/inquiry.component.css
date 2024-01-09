@@ -1,0 +1,30 @@
+.mat-form-field {
+    width: 100%;
+}
+.inquiry{
+    padding: 20px;
+    background-color: #ffffff;
+}
+.inquiry .title{
+    margin-bottom: 20px;
+    font-size: 16px;
+    text-align: center
+}
+.form-label-registration{
+    margin-bottom: 10px;
+    color: rgba(0,0,0,.54)
+}
+.example-radio-button {
+    color: rgba(0,0,0,.54);
+    margin-bottom: 20px;
+}
+.button-row{
+    text-align: right
+}
+.save-btn{
+    background-color: #ad2825;
+    color: #fff;
+}
+.notes{
+    height: 100px;
+}

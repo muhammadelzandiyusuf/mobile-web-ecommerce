@@ -1,0 +1,22 @@
+<div class="not-found">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="background-image">
+                    <img src="/assets/images/fire.png">
+                </div>
+                <div class="logo-kitchenart">
+                    <img src="/assets/images/logo-kitchenart.png" (click)="backHome()">
+                </div>
+                <div class="content-image">
+                    <div class="text-not-found">
+                        {{'registered.message' | translate}}
+                    </div>
+                    <div class="center">
+                        <button class="back-to-home" (click)="backHome()">{{'registered.back_home' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+.detail-kitchen{
+    margin: 0;
+    padding: 0;
+}
+.banner-kitchen .banner img{
+    width: 100%;
+}
+.content-kitchen{
+    padding: 20px 20px 0;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.5rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.content-default{
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+    line-height: 1.5rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.read-more{
+    padding: 10px 0 0;
+}
+.btn-read-more{
+    font-size: 14px;
+    color: #666;
+    font-weight: bold;
+    border: none;
+    background-color: transparent;
+}
+.content-detail{
+    background-color: #fff;
+    margin: 10px 0 0;
+}
+.free-kitchen-design{
+    margin-top: 10px;
+    background-color: #fff;
+}
+.free-kitchen-design .title-kitchen{
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px;
+    color: #999;
+}
+.kitchen-design{
+    margin: 10px;
+    box-shadow: 0 0 2px 1px #ddd;
+}
+.kitchen-design .image img{
+    width: 100%;
+}
+.kitchen-design .title{
+    padding: 15px;
+    font-size: 14px;
+    text-align: center;
+    color: #666;
+}
+.show-mores{
+    text-align: right;
+    padding: 0 10px 10px;
+}
+.show-mores a{
+    font-size: 12px;
+    color: red;
+    text-decoration: none;
+    font-style: italic;
+}
+.submit-contact{
+    margin-top: 10px;
+    background-color: #fff;
+    padding: 15px;
+    width: 100%;
+}
+.btn-contact{
+    background-color: #c3071c;
+    color: #fff;
+    width: 100%;
+}

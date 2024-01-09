@@ -1,0 +1,40 @@
+.gallery-detail .banner img{
+    width: 100%;
+}
+.gallery-detail .title-gallery{
+    font-size: 16px;
+    color: #666;
+    padding: 10px;
+    text-transform: uppercase;
+    font-weight: bold
+}
+.gallery-detail .description-gallery{
+    font-size: 14px;
+    color: #666;
+    padding: 0 10px;
+    line-height: 1.5rem
+}
+.share-this{
+    margin-top: 15px;
+}
+.title-brand-product{
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 14px;
+    color: #999;
+    font-weight: bold;
+}
+.box-product{
+    margin: 10px;
+}
+.box-product .image img{
+    width: 100%;
+}
+.box-product .name-product{
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+}
+.box-product-apliance{
+    background-color: #ffffff;
+}

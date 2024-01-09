@@ -1,0 +1,84 @@
+.balance{
+    background-color: #ffffff;
+    padding: 15px 10px;
+    min-height: 100%;
+}
+.information-balance{
+    padding: 15px;
+    background: #f5f5f5;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.header-text{
+    font-size: 18px;
+    color: #666666;
+    margin-bottom: 15px;
+}
+.header-text span{
+    color: #c3071c !important
+}
+.text-header{
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+.text-body{
+    color: #666666;
+    font-size: 14px;
+}
+.text-invoice-number{
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: bold
+}
+.invoice-number{
+    font-size: 14px;
+    color: #666;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+.line-height{
+    line-height: 1.5rem
+}
+.filter-btn{
+    float: right
+}
+.credit{
+    color: green
+}
+.debit{
+    color: red
+}
+.mat-form-field {
+    width: 100%;
+}
+.min-date{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%)
+}
+.btn-serach{
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #c3071c;
+    color: #ffffff
+}
+.form-date{
+    transition: all;
+    transition: 1s
+}
+.button-withdrawl{
+    padding: 10px 0;
+}
+.btn-withdrwal{
+    width: 100%;
+    font-size: 14px;
+    padding: 10px 15px;
+    background-color: #c3071c;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+}

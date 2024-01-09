@@ -1,0 +1,94 @@
+<div class="account profile-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="profile-header">
+                    <mat-icon class="back-icon" (click)="backHome()">keyboard_backspace</mat-icon>
+                    <span>{{'account.notification' | translate}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="menu-notif">
+                    <ul>
+                        <li *ngFor="let menu of menus" [ngClass]="{'menu-active': activeMenu == menu.id}" (click)="activeMenuNotif(menu.id)">
+                            <span *ngIf="lang === 'en'">{{ menu.name_english }}</span>
+                            <span *ngIf="lang === 'id'">{{ menu.name_indonesia }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="activeMenu == 1">
+            <div class="col-12" *ngIf="notification?.length === 0">
+                <div class="not-wihslish">
+                    <div class="not-found-data">
+                        {{'account.notification_not_found' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="notification?.length > 0">
+                <div class="container-notification">
+                    <div class="box-notification" *ngFor="let notif of notification">
+                        <div class="notification" *ngFor="let product of notif.product_order" (click)="detailNotif(notif.order_status_id, notif.transaction_code, product.order_product_id)">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <div class="status-product-notif" *ngIf="lang === 'en'">{{ product.product_name }} {{ product.product_code }} {{ notif.history_order.message_english }}</div>
+                                        <div class="status-product-notif" *ngIf="lang !== 'en'">{{ product.product_name }} {{ product.product_code }} {{ notif.history_order.message_indonesia }}</div>
+                                        <div class="date-notif">
+                                            <i class="fas fa-clock"></i> {{ notif.history_order.history_order_date | date: 'd MMMM yyyy h:m:s' }}
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="image">
+                                            <img src="{{ product.domain_asset }}/{{ product.image_path }}/{{ product.product_image }}">        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="activeMenu == 2">
+            <div class="col-12" *ngIf="tradeins?.length === 0">
+                <div class="not-wihslish">
+                    <div class="not-found-data">
+                        {{'account.notification_not_found' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="tradeins?.length > 0">
+                <div class="container-notification">
+                    <div class="box-notification" *ngFor="let trade of tradeins" (click)="detailNotifTrade()">
+                        <div class="notification">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <div class="status-product-notif">{{ trade.registration_no }} {{ trade.product_name }} {{ trade.product_code }} 
+                                            <span *ngIf="trade.confirmation == 'P'">(Pending)</span>
+                                            <span *ngIf="trade.confirmation == 'A'">(Approved)</span>
+                                        </div>
+                                        <div class="date-notif">
+                                            <i class="fas fa-clock"></i> {{ trade.created_at.date | date: 'd MMMM yyyy h:m:s' }}
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="image">
+                                            <img src="{{ trade.image_domain }}/{{ trade.product_image_path }}/{{ trade.product_image }}">        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

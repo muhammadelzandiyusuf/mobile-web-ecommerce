@@ -1,0 +1,127 @@
+<div class="product">
+    <div class="container">
+        <div class="row" *ngIf="group == 'category'">
+            <div class="col-12" *ngIf="categories?.length === 0">
+                <div class="not-found-data">
+                    {{'product.product_category_not_found' | translate}}
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="title">
+                    {{'product.product_by_category' | translate}}
+                </div>
+            </div>
+            <div class="col-4 col-sm-2 col-md-2" *ngFor="let category of categories">
+                <div class="box-brand" (click)="goLink(category.link_url)">
+                    <div class="image-category">
+                        <img src="{{ category.image_domain }}/{{ category.thumb_image_path }}/{{ category.thumb_image_name }}">
+                    </div>
+                    <div class="title-category">
+                      <span *ngIf="lang === 'en'">{{ category.category_name_english }}</span>
+                      <span *ngIf="lang === 'id'">{{ category.category_name_indonesia }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- By Brand -->
+        <div class="row" *ngIf="group == 'brand'">
+            <div class="col-12" *ngIf="brands?.length === 0">
+                <div class="not-found-data">
+                    {{'product.product_brand_not_found' | translate}}
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="title">
+                    {{'product.product_by_brand' | translate}}
+                </div>
+            </div>
+            <div class="col-4 col-sm-3 col-md-3" *ngFor="let brand of brands">
+                <div class="box-brand" (click)="goProductBrand(brand.link_url)">
+                    <div class="image">
+                        <img src="{{ brand.image_domain }}/{{ brand.thumb_gallery_path }}/{{ brand.thumb_gallery_image }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="title bottom-margin">
+                    {{'product.new_product' | translate}}
+                </div>
+            </div>
+            <div class="col-6 col-sm-4 col-md-4" *ngFor="let product of products" [ngClass]="{'not-actived':product.stock_status_id == 2 && (today | date: 'MM dd, yyyy HH:mm:ss') > (product.date_end_periode | date: 'MM dd, yyyy HH:mm:ss')}">
+                <div class="box-product" (click)="goProductDetail(product.url)" *ngIf="product.stock_status_id != 2">
+                    <div class="product-discount-all" *ngIf="product.discount > 32">
+                        <span>{{ product.discount }}%</span>
+                    </div>
+                    <div class="overlay-new" *ngIf="product.new_collection === 'T'">
+                        <div  class="new-collection">
+                            {{'product.new' | translate}}
+                        </div>
+                    </div>
+                    <div class="image">
+                        <img src="{{ product.image_domain }}/{{ product.product_image_path }}/{{ product.product_image_name }}">
+                    </div>
+                    <div class="content">
+                        <div class="brand">{{ product.brand_name }}</div>
+                        <div class="name">{{ product.name }}
+                            ({{product.code }})
+                        </div>
+                        <div *ngIf="product.price > 0">
+                            <div class="normal-price" *ngIf="product.discount !== 0">{{ product.price | currency:'Rp':'true':'4.0-0' }}</div>
+                            <div class="diskon-price">{{ product.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                        </div>
+                        <div *ngIf="product.price == null || product.price == 0">
+                            <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                        </div>
+                    </div>
+                    <div class="installment" *ngIf="product.stock_status_id == 1">
+                        <span *ngIf="product.price > 0">
+                            {{ product.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                        </span>
+                    </div>
+                    <div class="installment color-red" *ngIf="product.stock_status_id != 1">{{ product.stock_status }}</div>
+                </div>
+
+                <div *ngIf="(today | date: 'MM dd, yyyy HH:mm:ss') >= (product.date_start_periode | date: 'MM dd, yyyy HH:mm:ss')">
+                    <div *ngIf="(today | date: 'MM dd, yyyy HH:mm:ss') <= (product.date_end_periode | date: 'MM dd, yyyy HH:mm:ss')">
+                        <div class="box-product" (click)="goProductDetail(product.url)" *ngIf="product.stock_status_id == 2">
+                            <div class="overlay-new" *ngIf="product.new_collection === 'T'">
+                                <div  class="new-collection">
+                                    New
+                                </div>
+                            </div>
+                            <div class="product-discount-all" *ngIf="product.discount > 32">
+                                <span>{{ product.discount }}%</span>
+                            </div>
+                            <div class="image">
+                                <img src="{{ product.image_domain }}/{{ product.product_image_path }}/{{ product.product_image_name }}">
+                            </div>
+                            <div class="content">
+                                <div class="brand">{{ product.brand_name }}</div>
+                                <div class="name">{{ product.name }}
+                                    ({{product.code }})
+                                </div>
+                                <div *ngIf="product.price > 0">
+                                    <div class="normal-price" *ngIf="product.discount !== 0">{{ product.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="diskon-price">{{ product.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                </div>
+                                <div *ngIf="product.price == null || product.price == 0">
+                                    <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                </div>
+                            </div>
+                            <div class="installment" *ngIf="product.stock_status_id == 1">
+                                <span *ngIf="product.price > 0">
+                                    {{ product.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                </span>
+                            </div>
+                            <div class="installment color-red" *ngIf="product.stock_status_id != 1">{{ product.stock_status }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

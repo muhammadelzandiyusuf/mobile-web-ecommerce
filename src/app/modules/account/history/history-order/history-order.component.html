@@ -1,0 +1,108 @@
+<div class="account profile-page">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-12">
+              <div class="profile-header">
+                  <mat-icon class="back-icon" (click)="backAccount()">keyboard_backspace</mat-icon>
+                  <span>{{'account.history_order' | translate}}</span>
+              </div>
+          </div>
+          <div class="col-12">
+              <div class="menu-list">
+                  <ul>
+                      <li *ngFor="let status of orderStatus" [ngClass]="{'active-menu': status.name === segment}" (click)="activedMenu(status.name, status.id)">{{ status.name }}</li>
+                      <li [ngClass]="{'active-menu': 'review' === segment}" (click)="activedMenureview('review')">{{'account.reviews' | translate}}</li>
+                  </ul>
+              </div>
+          </div>
+          <div class="col-12">
+                <div class="content-history" *ngIf="countHistory === 0 && countReview === 0">
+                    <div class="not-found-data">{{'account.there_is_no_data' | translate}}</div>
+                </div>
+                <div class="content-history" *ngIf="countReview === 0 && countHistory === 0">
+                    <div class="not-found-data">{{'account.there_is_no_data' | translate}}</div>
+                </div>
+                <div class="content-history" *ngIf="countReview > 0">
+                    <div *ngFor="let review of reviewProducts">
+                        <div class="product-history history-border" *ngFor="let product of review.product_order[review.id]" (click)="reviewDetail(review.transaction_code, product.order_product_id)">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <div class="image">
+                                            <img src="{{ product.domain_asset }}/{{ product.image_path }}/{{ product.product_image }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-10">
+                                        <div class="product-name-history">
+                                            {{ product.product_brand }} {{ product.product_name }} {{ product.product_code }} 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-history" *ngIf="countHistory > 0">
+                    <div class="box-history-order" *ngFor="let history of historyOrder" (click)="historyDetail(history.transaction_code)">
+                        <div class="header-history">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="text-invoice-number">{{'account.invoice_number' | translate}}</div>
+                                        <div class="invoice-number">{{ history.transaction_no }}</div>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="text-invoice-number right">{{'account.transaction_status' | translate}}</div>
+                                        <div class="invoice-number right" *ngIf="lang === 'en'">{{ history.history_order.message_english }}</div>
+                                        <div class="invoice-number right" *ngIf="lang === 'id'">{{ history.history_order.message_indonesia }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-history" *ngFor="let product of history.product_order">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="image">
+                                            <img src="{{ product.domain_asset }}/{{ product.image_path }}/{{ product.product_image }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="product-name-history">
+                                            {{ product.product_brand }} {{ product.product_name }} {{ product.product_code }} 
+                                        </div>
+                                        <div class="history-quantity">
+                                            {{'account.quantity' | translate}} : {{ product.product_quantity }}
+                                        </div>
+                                        <div class="sub-total-product">
+                                            {{ product.product_total | currency:'Rp':'true':'4.0-0' }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-history">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="text-invoice-number">{{'account.total_transaction' | translate}}</div>
+                                        <div class="invoice-number">{{ history.total_order.grand_total | currency:'Rp':'true':'4.0-0' }}</div>
+                                    </div>
+                                    <div class="col-6" *ngIf="history.expired_at !== null">
+                                        <div class="text-invoice-number right">{{'account.expired_date' | translate}}</div>
+                                        <div class="invoice-number right">{{ history.expired_at | date: 'd MMM yyyy h:m:s' }}</div>
+                                    </div>
+                                    <div class="col-12" *ngIf="history.order_status_id === 1">
+                                        <div class="btn-continue">
+                                            <button class="btn-continue-payment" (click)="checkout()">{{'account.continue_checkout' | translate}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          </div>
+      </div>
+  </div>
+</div>

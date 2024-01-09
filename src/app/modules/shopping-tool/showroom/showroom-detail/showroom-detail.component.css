@@ -1,0 +1,147 @@
+swiper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+swiper img {
+    width: 100%;
+    height: auto;
+}
+.showroom-detail-content .detail-contact{
+    padding: 0 0 5px 0;
+    background-color: #ffffff
+}
+.contact-title{
+    font-size: 16px;
+    text-transform: capitalize;
+    font-weight: bold;
+    color: #999;
+    margin: 10px 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+.table-contact{
+    margin: 10px 0;
+}
+.box-contact-detail{
+    padding: 10px;
+}
+.box-contact-detail .contact-name{
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: bold
+}
+.box-contact-detail .contact-content{
+    font-size: 16px;
+    color: #666;
+}  
+.showroom-video{
+    padding: 0;
+    width: 100%;
+    margin-top: 10px;
+    background-color: #ffffff
+}
+.showroom-video .video{
+    margin: 10px 0;
+}
+.preference-contact{
+    padding: 0 10px;
+    text-align: center;
+}
+agm-map {
+    height: 300px;
+}
+.overlay-popup {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 9999999;
+}
+
+.overlay-popup .popup {
+    position: absolute;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    left: 50%;
+    top: 42%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.overlay-popup .popup .header {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.overlay-popup .popup .header .title {
+    font-size: 16px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.overlay-popup .popup .header .close {
+    font-size: 16px;
+    text-align: right;
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+textarea.mat-input-element {
+    height: 100px;
+}
+
+.overlay-popup .popup .content {
+    padding: 15px;
+}
+
+.not-actived {
+    display: none;
+}
+.date-time{
+    padding: 10px 0;
+}
+.date-time label{
+    padding-bottom: 5px;
+    width: 100%;
+    color: rgba(0,0,0,.54)
+}
+.date-time span{
+    font-size: 18px;
+    color: rgba(0,0,0,.54)
+}
+input[type="datetime-local" i]{
+    padding: 5px 0;
+    width: 100%;
+    font-size: 14px;
+    color: rgba(0,0,0,.54);
+    outline: none;
+}
+.submit-contact{
+    padding: 5px;
+    width: 100%;
+}
+.btn-contact{
+    background-color: #c3071c;
+    color: #fff;
+    width: 100%;
+}
+.box-exhibition-host{
+    margin: 10px;
+    box-shadow: 0 0 1px 2px #dddddd;
+}
+.box-exhibition-host .image img{
+    width: 100%;
+}
+.box-exhibition-host .name{
+    color: #666666;
+    font-size: 14px;
+    text-align: center;
+    padding: 5px;
+}

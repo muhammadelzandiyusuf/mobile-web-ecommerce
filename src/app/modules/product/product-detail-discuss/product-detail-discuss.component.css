@@ -1,0 +1,137 @@
+.product-discuss{
+    background-color: #ffffff
+}
+.discuss-content{
+    margin-top: 54px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+}
+.discuss-content .product-detail-discuss{
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+.discuss-content .product-detail-discuss .image{
+    padding: 0 10px;
+}
+.discuss-content .product-detail-discuss .image img{
+    width: 100%;
+}
+.discuss-content .product-name{
+    font-size: 13px;
+    color: #666;
+    line-height: 1.3rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 100%;
+    padding: 10px 15px;
+    font-weight: bold
+}
+.content-discussion{
+    padding: 0 0 0 15px;
+}
+.customer-discuss{
+    font-size: 13px;
+    padding: 10px 0;
+    background-color: #ffffff;
+    height: 500px;
+    overflow: scroll;
+}
+.child-content-discuss{
+    padding-left: 15px;
+}
+.text-name{
+    color: #666;
+    margin-bottom: 5px;
+}
+.text-date{
+    color: #999;
+    margin-bottom: 10px;
+}
+.text-description{
+    color: #666;
+    line-height: 1.2rem;
+}
+.image-icon{
+    border-radius: 50%;
+    background-color: #ddd;
+    color: #ffffff;
+    font-size: 16px;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    padding: 8px;
+}
+.child-discuss{
+    margin-top: 10px;
+    padding: 10px 10px 0;
+    border-top: 1px solid #ddd;
+}
+.see-comment{
+    padding: 15px;
+    color: #c3071c;
+    font-size: 13px;
+    text-align: right
+}
+.customer-discuss .image{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.customer-discuss .image img{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.box-message-discuss{
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    background-color: #ffffff;
+    border-top: 2px solid #ddd;
+    padding: 10px
+}
+.form-text{
+    width: 95%;
+    outline: none;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    font-size: 14px;
+    color: #666;
+    padding: 8px 15px;
+}
+.btn-send{
+    font-size: 30px;
+    color: #c3071c;
+    outline: none;
+}
+.btn-deleted{
+    position: absolute;
+    right: 0;
+}
+.customer-discuss-content{
+    padding: 5px;
+}
+.float-right{
+    float: right;
+}
+mat-chip {
+    max-width: 150px;
+}
+.parent-discuss{
+    margin-bottom: 5px;
+}
+.customer{
+    background-color: #c3071c !important;
+    color: #ffffff !important
+}

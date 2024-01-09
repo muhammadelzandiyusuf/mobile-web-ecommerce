@@ -1,0 +1,275 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12" *ngIf="showMessage">
+          <div class="box-ref">
+            <div class="message-ref">{{'referral.message' | translate}}</div>
+          </div>
+        </div>
+        <div class="col-12" *ngIf="showMessage === false">
+            <div class="detail-product">
+                <div class="product-discount-all" *ngIf="discount > 32">
+                    <span>{{ discount }}%</span>
+                </div>
+                <div class="slider-image-detail">
+                    <ul>
+                        <li *ngFor="let slider of product_image; let i = index;">
+                            <div class="slide-image" [ngClass]="{'active-slide':slide_active == i}">
+                                <img src="{{ slider.image_domain }}/{{ slider.product_image_path }}/{{ slider.product_image }}">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="slider-image-detail-thumbnail">
+                    <ul>
+                        <li *ngFor="let slider of product_image; let i = index;" (click)="slideImage(i)">
+                            <div class="thumbnail-image" [ngClass]="{'active-thumb':thumb_active == i}">
+                                <img src="{{ slider.image_domain }}/{{ slider.product_image_path }}/{{ slider.product_image }}">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="detail-content-product">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="box-product-name">
+                                    <div class="brand-name">{{ brand_name }}</div>
+                                    <div class="product-name">{{ name }}</div>
+                                </div>
+                                <div class="discount-price">{{ discount_price | currency:'Rp':'true':'4.0-0' }}
+                                    <span class="normal-price">{{ price | currency:'Rp':'true':'4.0-0' }}</span>
+                                </div>
+                                <div *ngIf="extended_warranties !== null">
+                                  <div class="extended-warranty">
+                                      <div class="form-warranty">
+                                          <mat-form-field>
+                                              <mat-select placeholder="{{'order.extended_warranty' | translate}}" name="warranty" [formControl]="warranty">
+                                                <mat-option (click)="removeWarranty()">
+                                                    &nbsp;
+                                                </mat-option>
+                                                <mat-option *ngFor="let warranty of extended_warranties" [value]="warranty.id" (click)="addWarranty(warranty.id, warranty.price, warranty.periode_english, warranty.periode_indonesia)">
+                                                  <span *ngIf="lang === 'en'">{{warranty.periode_english}} ({{ warranty.price | currency:'Rp':'true':'4.0-0' }})</span>
+                                                  <span *ngIf="lang === 'id'">{{warranty.periode_indonesia}} ({{ warranty.price | currency:'Rp':'true':'4.0-0' }})</span>
+                                                </mat-option>
+                                              </mat-select>
+                                          </mat-form-field>
+                                      </div>
+                                  </div>
+                                </div>
+                                <div *ngIf="contract_services !== null">
+                                  <div class="extended-warranty">
+                                      <div class="form-warranty">
+                                          <mat-form-field>
+                                              <mat-select placeholder="{{'order.contract_service' | translate}}" name="contractService" [formControl]="contractService">
+                                                <mat-option (click)="removeService()">
+                                                    &nbsp;
+                                                </mat-option>
+                                                <mat-option *ngFor="let contract of contract_services" [value]="contract.id" (click)="addContractService(contract.id, contract.price, contract.periode_english, contract.periode_indonesia)">
+                                                    <span *ngIf="lang === 'en'">{{contract.periode_english}} ({{ contract.price | currency:'Rp':'true':'4.0-0' }})</span>
+                                                    <span *ngIf="lang === 'id'">{{contract.periode_indonesia}} ({{ contract.price | currency:'Rp':'true':'4.0-0' }})</span>
+                                                </mat-option>
+                                              </mat-select>
+                                          </mat-form-field>
+                                      </div>
+                                  </div>
+                                </div>
+                                <div class="product-highlight">
+                                    <div class="content-highlight">
+                                      <div class="container-content" [innerHTML]="highlight_english"></div>
+                                    </div>
+                                </div>
+                                <div class="content-tabs">
+                                  <mat-tab-group>
+                                      <mat-tab>
+                                        <ng-template mat-tab-label>
+                                            {{'product.description' | translate}}
+                                        </ng-template>
+                                        <div class="video-url" *ngIf="videoUrl != null">
+                                            <iframe class="e2e-iframe-trusted-src" width="100%" height="250" [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="cutsiize-image" *ngIf="cutsize_image_name !== null">
+                                            <img src="{{ image_domain }}/{{ cutsize_image_path }}/{{ cutsize_image_name }}">
+                                        </div>
+                                        <div class="list-description" [innerHTML]="description_english"></div>
+                                      </mat-tab>
+                                      <mat-tab>
+                                        <ng-template mat-tab-label>
+                                            {{'product.excellence' | translate}}
+                                        </ng-template>
+                                        <div class="excellence-container">
+                                          <div class="container">
+                                            <div class="row">
+                                              <div class="col-6" *ngFor="let excellence of product_excellence">
+                                                <div class="box-excellence">
+                                                    <div class="image">
+                                                        <img src="{{ image_domain }}/{{ excellence.image_path }}/{{ excellence.image_name }}">
+                                                      </div>
+                                                      <div class="title-excellence">
+                                                          {{ excellence.title_english }}
+                                                      </div>
+                                                      <div class="content-excellence">
+                                                          {{ excellence.content_english }}
+                                                      </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </mat-tab>
+                                      <mat-tab>
+                                        <ng-template mat-tab-label>
+                                            {{'product.specification' | translate}}
+                                        </ng-template>
+                                        <div class="spesification-container">
+                                            <mat-tab-group>
+                                              <mat-tab>
+                                                <ng-template mat-tab-label>
+                                                  Overview
+                                                </ng-template>
+                                                <div class="table-content-specivication">
+                                                  <table>
+                                                    <tr *ngFor="let row of specification">
+                                                      <td *ngIf="row.specification_category == 'O'">{{ row.specification_value }}</td>
+                                                      <td *ngIf="row.specification_category == 'O'">
+                                                        <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                        <span *ngIf="row.specification_content == null">Null</span>
+                                                      </td>
+                                                    </tr>
+                                                  </table>
+                                                </div>
+                                              </mat-tab>
+                                              <mat-tab>
+                                                <ng-template mat-tab-label>
+                                                  Dimension & Weight
+                                                </ng-template>
+                                                <div class="table-content-specivication">
+                                                    <table>
+                                                      <tr *ngFor="let row of specification">
+                                                        <td *ngIf="row.specification_category == 'DW'">{{ row.specification_value }}</td>
+                                                        <td *ngIf="row.specification_category == 'DW'">
+                                                          <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                          <span *ngIf="row.specification_content == null">Null</span>
+                                                        </td>
+                                                      </tr>
+                                                    </table>
+                                                  </div>
+                                              </mat-tab>
+                                              <mat-tab>
+                                                <ng-template mat-tab-label>
+                                                  Perfomance & Efficiency
+                                                </ng-template>
+                                                <div class="table-content-specivication">
+                                                    <table>
+                                                      <tr *ngFor="let row of specification">
+                                                        <td *ngIf="row.specification_category == 'PE'">{{ row.specification_value }}</td>
+                                                        <td *ngIf="row.specification_category == 'PE'">
+                                                          <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                          <span *ngIf="row.specification_content == null">Null</span>
+                                                        </td>
+                                                      </tr>
+                                                    </table>
+                                                  </div>
+                                              </mat-tab>
+                                              <mat-tab>
+                                                <ng-template mat-tab-label>
+                                                  Comfort & Convenience
+                                                </ng-template>
+                                                <div class="table-content-specivication">
+                                                    <table>
+                                                      <tr *ngFor="let row of specification">
+                                                        <td *ngIf="row.specification_category == 'CC'">{{ row.specification_value }}</td>
+                                                        <td *ngIf="row.specification_category == 'CC'">
+                                                          <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                          <span *ngIf="row.specification_content == null">Null</span>
+                                                        </td>
+                                                      </tr>
+                                                    </table>
+                                                  </div>
+                                              </mat-tab>
+                                              <mat-tab>
+                                                <ng-template mat-tab-label>
+                                                  Aesthetics & Features
+                                                </ng-template>
+                                                <div class="table-content-specivication">
+                                                    <table>
+                                                      <tr *ngFor="let row of specification">
+                                                        <td *ngIf="row.specification_category == 'AF'">{{ row.specification_value }}</td>
+                                                        <td *ngIf="row.specification_category == 'AF'">
+                                                          <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                          <span *ngIf="row.specification_content == null">Null</span>
+                                                        </td>
+                                                      </tr>
+                                                    </table>
+                                                  </div>
+                                              </mat-tab>
+                                              <mat-tab>
+                                                  <ng-template mat-tab-label>
+                                                    Safety & Security
+                                                  </ng-template>
+                                                  <div class="table-content-specivication">
+                                                      <table>
+                                                        <tr *ngFor="let row of specification">
+                                                          <td *ngIf="row.specification_category == 'SS'">{{ row.specification_value }}</td>
+                                                          <td *ngIf="row.specification_category == 'SS'">
+                                                            <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                            <span *ngIf="row.specification_content == null">Null</span>
+                                                          </td>
+                                                        </tr>
+                                                      </table>
+                                                    </div>
+                                              </mat-tab>
+                                              <mat-tab>
+                                                  <ng-template mat-tab-label>
+                                                    Warranty
+                                                  </ng-template>
+                                                  <div class="table-content-specivication">
+                                                      <table>
+                                                        <tr *ngFor="let row of specification">
+                                                          <td *ngIf="row.specification_category == 'W'">{{ row.specification_value }}</td>
+                                                          <td *ngIf="row.specification_category == 'W'">
+                                                            <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                            <span *ngIf="row.specification_content == null">Null</span>
+                                                          </td>
+                                                        </tr>
+                                                      </table>
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                            <div class="notes-spesification">*Spesification subject to change without prior notice</div>
+                                        </div>
+                                      </mat-tab>
+                                    </mat-tab-group>
+                                </div>
+                                <div class="term-condition">
+                                    <mat-accordion>
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    {{'footer.term_condition' | translate}}
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div *ngIf="lang === 'en'" class="term-condition-referral" [innerHtml]="termEnglish"></div>
+                                            <div *ngIf="lang === 'id'" class="term-condition-referral" [innerHtml]="termIndonesia"></div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box-method" *ngIf="showMessage === false">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+            <div class="button-row">
+                <button mat-raised-button color="action" class="buy-now" (click)="buyNow()">{{ 'account.buy_now' | translate }}</button>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>

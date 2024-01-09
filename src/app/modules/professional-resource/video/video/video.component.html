@@ -1,0 +1,21 @@
+<div class="videos">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="text-video">
+                    {{'professional.video_category' | translate}}
+                </div>
+            </div>
+            <div class="col-6" *ngFor="let video of videos">
+                <div class="video" (click)="getListVideo(video.url)">
+                    <div class="category-name" *ngIf="lang === 'en'">
+                        {{ video.title_english }}
+                    </div>
+                    <div class="category-name" *ngIf="lang === 'id'">
+                        {{ video.title_indonesia }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

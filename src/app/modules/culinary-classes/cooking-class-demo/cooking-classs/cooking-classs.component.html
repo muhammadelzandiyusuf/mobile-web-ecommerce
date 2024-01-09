@@ -1,0 +1,48 @@
+<div class="exhibition" (scroll)="onScroll($event)">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-12">
+              <div class="banner">
+                  <img src="{{ assetDomain }}/{{ bannerPath }}/{{ bannerImage }}">
+                  <div class="title-page-exhibition">
+                      <span>{{'culinary.cooking_class_demo' | translate}}</span>
+                  </div>
+              </div>
+          </div>
+          <div class="col-12">
+              <div class="content">
+                  <div class="header-event">
+                      <div class="header-title-event" *ngFor="let item of events" [ngClass]="{'actived-events':selectedIndex === item.name}" (click)="getExhibition(item.name)">
+                          {{ item.name }}
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-12">
+              <div class="content-event-list">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-12" *ngIf="exhibitionEvents?.length === 0">
+                              <div class="no-content">{{'culinary.content_no' | translate}}</div>
+                          </div>
+                          <div class="col-6 col-sm-4 col-md-4" *ngFor="let event of exhibitionEvents">
+                              <a href="cooking_class_demo/{{ event.url }}">
+                                  <div class="box-events">
+                                      <div class="image">
+                                          <img src="{{ event.image_domain }}/{{ event.thumb_path }}/{{ event.thumb_image }}">
+                                          <div class="box-date-event">
+                                              <div class="date-events">{{ event.date_start | date: 'dd' }}</div>
+                                              <div class="month-events">{{ event.date_start | date: 'MMM' }}</div>
+                                          </div>
+                                      </div>
+                                      <div class="event-name">{{ event.title }}</div>
+                                  </div>
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

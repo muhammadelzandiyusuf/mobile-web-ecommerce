@@ -1,0 +1,26 @@
+.contractor-content{
+    background-color: #ffffff
+}
+.box-contractor{
+    margin: 15px 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 2px 1px #ddd;
+}
+.box-contractor .tumbnail img{
+    width: 100%;
+}
+.contractor-name{
+    font-size: 14px;
+    text-align: center;
+    padding: 15px;
+    color: #999999;
+}
+.contractor-content{
+    margin:0;
+    padding:0;
+    min-height: auto;
+    max-height: 1000px;
+    overflow: scroll;
+}

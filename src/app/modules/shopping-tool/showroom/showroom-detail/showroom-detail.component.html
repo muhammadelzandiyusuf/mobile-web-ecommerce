@@ -1,0 +1,113 @@
+<div class="overlay-popup" *ngIf="contactProduct == true">
+  <div class="popup">
+    <div class="header">
+      <div class="container">
+        <div class="row">
+          <div class="col-6">
+            <div class="title">{{'shopping.scheldule_a_visit' | translate}}</div>
+          </div>
+          <div class="col-6">
+            <div class="close" (click)="closePopupContact()"><fa name="close"></fa></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <form novalidate [formGroup]="scheduleForm">
+        <mat-form-field>
+          <input matInput placeholder="{{'form.full_name' | translate}}" formControlName="full_name" required>
+        </mat-form-field>
+         <mat-form-field>
+          <input matInput placeholder="{{'form.phone' | translate}}" [textMask]="{mask: mask}" formControlName="phone" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" required>
+        </mat-form-field>
+        <div class="date-time">
+            <label>{{'shopping.date_visit' | translate}}</label> <span> *</span>
+            <ngx-datetime-picker [(selectedDateTime)]="dateTimeExample" formControlName="visit_date" required></ngx-datetime-picker>
+        </div>
+        <mat-action-row>
+          <button mat-raised-button type="submit" [disabled]="scheduleForm.invalid" color="kitchent" (click)="saveShowroomSchedule()">{{'form.save' | translate}}</button>
+        </mat-action-row>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="showroom-detail">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <swiper class="swiper" [config]="config">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" *ngFor="let banner of images">
+              <img src="{{ showrooms.image_domain }}/{{ showrooms.banner_image_path }}/{{ banner.image }}">
+            </div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </swiper>
+      </div>
+
+      <div class="col-12">
+        <div class="showroom-detail-content">
+          <div class="detail-contact">
+            <div class="contact-title">{{'shopping.detail_contact' | translate}}</div>
+            <div class="table-contact">
+              <div class="box-contact-detail">
+                <div class="contact-name">{{'form.name' | translate}}</div>
+                <div class="contact-content">{{ name }}</div>
+              </div>
+              <div class="box-contact-detail">
+                <div class="contact-name">{{'form.address' | translate}}</div>
+                <div class="contact-content" [innerHtml]="address"></div>
+              </div>
+              <div class="box-contact-detail">
+                <div class="contact-name">{{'form.phone' | translate}}</div>
+                <div class="contact-content">{{ phone }}</div>
+              </div>
+            </div>
+            <div class="submit-contact">
+                <button mat-raised-button class="btn-contact" (click)="popupContact()">{{'shopping.scheldule_a_visit' | translate}}</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="showroom-video">
+          <div class="video">
+            <div class="video-url" *ngIf="videoUrl != null">
+              <iframe class="e2e-iframe-trusted-src" width="100%" height="{{heightVideo}}" [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div class="showroom-map">
+          <div class="maps">
+              <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15">
+                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+              </agm-map>
+          </div>
+        </div>
+      </div>
+
+      <div class="showroom-video" *ngIf="cookingClass?.length > 0">
+          <div class="contact-title">{{'shopping.event_showroom' | translate}}</div>
+          <swiper class="swiper" [config]="configExhibition">
+              <div class="swiper-wrapper">
+                  <div class="swiper-slide" *ngFor="let cooking of cookingClass">
+                      <div class="box-exhibition-host" (click)="getCookingClass(cooking.event_url)">
+                          <div class="image">
+                              <img src="{{ imageDomain }}/{{ cooking.thumb_path }}/{{ cooking.thumb_image }}">
+                          </div>
+                          <div class="name">
+                              {{ cooking.title }}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </swiper>
+      </div>
+
+    </div>
+  </div>
+</div>

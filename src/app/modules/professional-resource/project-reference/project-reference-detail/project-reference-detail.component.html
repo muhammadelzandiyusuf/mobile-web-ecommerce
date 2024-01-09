@@ -1,0 +1,134 @@
+<div class="project-detail">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <swiper class="swiper" [config]="config">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" *ngFor="let banner of images">
+                            <img src="{{ imageDomain }}/{{ galleryImagePath }}/{{ banner.image }}" #logo (load)="onLoad()">
+                            <div class="pin-tag" *ngFor="let pin of pinTag; let i = index" [ngStyle]="{'top.px':pin.long, 'left.px':pin.lat}" [ngClass]="{'not-product': banner.id !== pin.project_reference_image_id}" (click)="getProductModal(i)">
+                                <i class="fas fa-tag fa-w-12 fa-lg"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </swiper>
+            </div>
+            <div class="col-12">
+                <div class="content-detail">
+                    <div class="title-project">
+                        {{ title }}
+                    </div>
+                    <div class="subtitle-project">
+                        {{ subtitle }}
+                    </div>
+                    <div class="description" *ngIf="lang === 'en'" [innerHtml]="contentEnglish"></div>
+                    <div class="description" *ngIf="lang === 'id'" [innerHtml]="contentIndonesia"></div>
+                </div>
+                <div class="box-share" *ngIf="architects?.length > 0">
+                    <div class="title-link">{{'professional.architects' | translate}}</div>
+                    <div class="link-item">
+                        <ul>
+                            <li *ngFor="let item of architects" (click)="goArchitect(item.url)">
+                                {{ item.name }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box-share" *ngIf="contractors?.length > 0">
+                    <div class="title-link">{{'professional.contractors' | translate}}</div>
+                    <div class="link-item">
+                        <ul>
+                            <li *ngFor="let item of contractors" (click)="goContractor(item.url)">
+                                {{ item.name }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box-share" *ngIf="developers?.length > 0">
+                    <div class="title-link">{{'professional.developers' | translate}}</div>
+                    <div class="link-item">
+                        <ul>
+                            <li *ngFor="let item of developers" (click)="goContractor(item.url)">
+                                {{ item.name }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box-share" *ngIf="kitchen_partners?.length > 0">
+                    <div class="title-link">{{'professional.kitchen_partners' | translate}}</div>
+                    <div class="link-item">
+                        <ul>
+                            <li *ngFor="let item of kitchen_partners" (click)="goKitchen(item.url)">
+                                {{ item.name }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box-share">
+                    <div class="share-button-box">
+                        <div class="share-button fb" (click)="shareButtonFB()">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <div class="share-button wa" (click)="shareButtonWA()">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="share-button tw" (click)="shareButtonTW()">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="share-button pt" (click)="shareButtonPinterest()">
+                            <i class="fab fa-pinterest-p"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div [@dialog] class="overlay-tag-product dialog" *ngIf="visible" (click)="closeTag()">
+    <div class="banner-tag">
+        <div class="close" (click)="closeTag()">
+            <i class="fa fa-close"></i>
+        </div>
+    </div>
+    <div class="content-product-tag">
+        <div class="box-product">
+            <div class="image" (click)="getProduct(product.url)">
+                <img src="{{ product.image_domain }}/{{ product.product_image_path }}/{{ product.product_image_name }}">
+            </div>
+            <div class="content" (click)="getProduct(product.url)">
+                <div class="brand">{{ product.brand_name }}</div> 
+                <div class="name">{{ product.name }}
+                    ({{product.code }})
+                </div>
+                <div *ngIf="product.price > 0">
+                    <div class="normal-price">{{ product.price | currency:'Rp':'true':'4.0-0' }}</div>
+                    <div class="diskon-price">{{ product.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                </div>
+                <div *ngIf="product.price == null || product.price == 0">
+                    <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                </div>
+            </div>
+            <div class="installment" *ngIf="product.stock_status_id == 1" (click)="getProduct(product.url)">
+                <span *ngIf="product.price > 0">
+                    {{ product.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                </span>
+            </div>
+            <div class="installment color-red" *ngIf="product.stock_status_id != 1" (click)="getProduct(product.url)">{{ product.stock_status }}</div>
+            <div class="btn-action">
+                <button class="btn-add-chart" *ngIf="token !== null" (click)="addCart(product.product_id)">
+                    <i class="fas fa-cart-plus"></i>
+                </button>
+                <button class="btn-add-chart" *ngIf="token === null" (click)="addChartLocal(product.product_id, product.brand_name, product.discount_price, product.name, product.product_image_path, product.product_image_name)">
+                    <i class="fas fa-cart-plus"></i>
+                </button>
+                <button class="btn-add-wish" *ngIf="token !== null" (click)="addWishlist(product.product_id)">
+                    <i class="fas fa-heart"></i>
+                </button>
+                <button class="btn-add-wish" *ngIf="token === null" (click)="addWishListLocal(product.product_id)">
+                    <i class="fas fa-heart"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

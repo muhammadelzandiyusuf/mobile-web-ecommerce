@@ -1,0 +1,41 @@
+<div class="account profile-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="profile-header">
+                    <mat-icon class="back-icon" (click)="back()">keyboard_backspace</mat-icon>
+                    <span>{{'account.voucher' | translate}}</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="detail-voucher-account">
+                    <div class="banner">
+                        <img src="{{ domainAsset }}/{{ pathImage }}/{{ bannerImage }}">
+                    </div>
+                    <div class="box-term">
+                        <div class="text-header detail-voucher">{{ name }}</div>
+                        <div class="text-detail-voucher">
+                            <i class="fa fa-money-bill-wave"></i> {{'account.min_transaction' | translate}} : {{  minimumAmount | currency:'Rp':'true':'4.0-0' }}
+                        </div>
+                        <div class="text-detail-voucher">
+                            <i class="fa fa-clock"></i> {{'account.expired_at' | translate}} : {{ dateEnd | date : 'd MMMM y' }}
+                        </div>
+                    </div>
+                    <div class="box-term">
+                        <div class="text-header">{{'footer.term_condition' | translate}}</div>
+                        <div class="term-description" *ngIf="lang === 'en'" [innerHtml]="termUseEnglish"></div>
+                        <div class="term-description" *ngIf="lang === 'id'" [innerHtml]="termUseIndonesia"></div>
+                    </div>
+                    <div class="box-term mr-b">
+                        <div class="text-header">{{'account.how_to_use' | translate}}</div>
+                        <div class="term-description" *ngIf="lang === 'en'" [innerHtml]="howToUseEnglish"></div>
+                        <div class="term-description" *ngIf="lang === 'id'" [innerHtml]="howToUseIndonesia"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="btn-use-voucher" (click)="useVoucher()">
+        {{'account.use_voucher' | translate}}
+    </div>
+</div>

@@ -1,0 +1,56 @@
+.track-shipping{
+    background-color: #f5f5f5;
+    margin-top: 52px;
+    height: 590px;
+    overflow: scroll
+}
+.text-invoice-number{
+    font-size: 12px;
+    color: #999999;
+    margin-bottom: 5px;
+    text-transform: uppercase
+}
+.invoice-number{
+    font-size: 14px;
+    color: #666;
+    font-weight: 600;
+}
+.text-summary{
+    border-bottom: 1px solid #ddd;
+    padding: 15px;
+    background-color: #ffffff
+}
+.manifest{
+    padding-top: 15px;
+    background-color: #f5f5f5
+}
+.manifest .mat-expansion-panel-header{
+    padding: 0 25px 0 15px;
+}
+.list-manifest{
+    padding: 15px 0;
+    border-bottom: 1px solid #dddd
+}
+.list-manifest:last-child{
+    border-bottom: none;
+}
+.list-description{
+    font-size: 14px;
+    color: #666666
+}
+.list-date{
+    font-size: 12px;
+    color: #999999
+}
+.list-time{
+    font-size: 12px;
+    color: #999999
+}
+.message-track{
+    font-size: 14px;
+    color: #c3071c;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 15px;
+}

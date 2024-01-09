@@ -1,0 +1,108 @@
+<div class="overlay-popup" *ngIf="contactProduct == true">
+    <div class="popup">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="title">{{'professional.contact_me' | translate}}</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="close" (click)="closePopupContact()">
+                            <fa name="close"></fa>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <form novalidate [formGroup]="contactForm">
+                <mat-form-field>
+                    <input matInput placeholder="{{'form.full_name' | translate}}" formControlName="full_name" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="{{'form.phone' | translate}}" [textMask]="{mask: mask}" formControlName="phone" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Email" formControlName="email" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <textarea matInput placeholder="{{'form.message' | translate}}" formControlName="message" required></textarea>
+                </mat-form-field>
+                <mat-action-row>
+                    <button mat-raised-button type="submit" [disabled]="contactForm.invalid" color="kitchent" (click)="saveContact()">{{'form.save' | translate}}</button>
+                </mat-action-row>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="architect-detail">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="category-name" *ngIf="lang === 'en'">{{ nameEnglish }}</div>
+                <div class="category-name" *ngIf="lang === 'id'">{{ nameIndonesia }}</div>
+                <div class="photo-architect">
+                    <img src="{{ imageDomain }}/{{ photoPath }}/{{ photoImage }}">
+                </div>
+                <div class="architect-name">{{ name }}</div>
+                <div class="architect-subtitle" *ngIf="lang === 'en'">{{ subtitleEnglish }}</div>
+                <div class="architect-subtitle" *ngIf="lang === 'id'">{{ subtitleIndonesia }}</div>
+                <div class="submit-contact">
+                    <button mat-raised-button class="btn-contact" (click)="popupContact()">{{'professional.contact_me' | translate}}</button>
+                </div>
+                <div class="content">
+                    <div class="description-content" *ngIf="lang === 'en'" [innerHtml]="contentEnglish"></div>
+                    <div class="description-content" *ngIf="lang === 'id'" [innerHtml]="contentIndonesia"></div>
+                </div>
+                <div class="box-share" *ngIf="projectPreference?.length > 0">
+                    <div class="title-link">{{'professional.project_preference' | translate}}</div>
+                    <div class="link-item">
+                        <ul>
+                            <li *ngFor="let item of projectPreference" (click)="goProject(item.url)">
+                                {{ item.title }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-architect" *ngIf="architectAward?.length > 0">
+                    <div class="arhitect-title">
+                        {{'professional.awards' | translate}}
+                    </div>
+                    <div class="architect-award-box">
+                        <swiper class="swiper" [config]="config">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" *ngFor="let award of album; let i = index">
+                                    <div class="box-award">
+                                        <div class="image" (click)="open(i)">
+                                            <img [src]="award.thumb">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </swiper>
+                    </div>
+                </div>
+                <div class="content-architect" *ngIf="architectPortfolio?.length > 0">
+                    <div class="arhitect-title">
+                        {{'professional.portfolio' | translate}}
+                    </div>
+                    <div class="architect-award-box">
+                        <swiper class="swiper" [config]="configPortfolio">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" *ngFor="let portfolio of architectPortfolio">
+                                    <div class="box-portfolio" (click)="getPortfolioDetail(portfolio.url)">
+                                        <div class="image">
+                                            <img src="{{ imageDomain }}/{{ portfolio.thumb_path }}/{{ portfolio.thumb_image }}">
+                                        </div>
+                                        <div class="title">{{ portfolio.title }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </swiper>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

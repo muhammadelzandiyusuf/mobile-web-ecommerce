@@ -1,0 +1,29 @@
+.detail-media {
+    margin: 0;
+    padding: 0;
+}
+.detail-media .content {
+    background-color: #ffffff;
+}
+.detail-media .content .banner img {
+    width: 100%;
+}
+.detail-media .content .title {
+    font-size: 18px;
+    color: #666;
+    font-weight: bold;
+    padding: 10px;
+}
+.detail-media .content .subtitle {
+    font-size: 16px;
+    color: #666;
+    padding: 0 10px;
+}
+.detail-media .content .description {
+    font-size: 14px;
+    color: #666;
+    padding: 15px 10px;
+}
+.share-this{
+    margin: 15px 0 0 15px;
+}

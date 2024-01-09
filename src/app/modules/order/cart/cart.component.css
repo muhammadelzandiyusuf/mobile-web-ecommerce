@@ -1,0 +1,221 @@
+.cart {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background-color: #ffffff;
+}
+.cart .header-cart {
+    padding: 20px;
+    border-bottom: 2px solid #dddddd;
+
+}
+.cart .header-cart .text-cart {
+    float: left;
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+}
+.cart .header-cart .action-cart {
+    float: right;
+    text-align: right;
+    font-size: 14px;
+    color: #c3071c;
+}
+.clear {
+    clear: both;
+}
+.get-promo {
+    margin: 15px 10px 5px;
+    padding: 15px;
+    color: #c3071c;
+    font-weight: 500;
+    font-size: 14px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 1px #dddddd;
+}
+.cart-product {
+    margin: 10px 10px 0;
+    padding: 15px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 1px #dddddd;
+    font-size: 14px;
+}
+.cart-product:last-child {
+    margin: 10px;
+}
+.image-prod {
+    padding: 5px;
+    margin-right: 5px;
+}
+.image-prod img {
+    width: 100%;
+}
+.cart-brand {
+    line-height: 1.5rem;
+    font-size: 14px;
+    color: #666666;
+    font-weight: bold;
+}
+.cart-name-prod {
+    line-height: 1.5rem;
+    font-size: 14px;
+    font-weight: bold;
+}
+.cart-prod-price {
+    font-size: 14px;
+    line-height: 1.5rem;
+    color: #c3071c;
+}
+.name-brand {
+    float: left;
+}
+.action-delete {
+    float: right;
+    padding-right: 20px;
+}
+.action-chart {
+    padding: 0;
+}
+.action-chart ul {
+    margin: 0;
+    padding: 0;
+}
+.action-chart ul li {
+    list-style: none;
+    display: inline-block;
+}
+.btn-chart-action {
+    width: 35px;
+    height: 35px;
+    background-color: transparent;
+}
+.wishlist {
+    margin-right: 10px;
+}
+.checkout-chart {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 15px;
+    border-top: 1px solid #dddddd;
+    z-index: 99;
+}
+.checkout-chart .text-count-price {
+    font-size: 16px;
+    color: #666666;
+    line-height: 1.5rem;
+}
+.checkout-chart .count-price {
+    color: #c3071c;
+    font-size: 14px;
+}
+.checkout-chart-button {
+    text-align: right;
+}
+.overlay-chart-delete {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+}
+.overlay-chart-delete .box-chart-delete {
+    position: fixed;
+    width: 90%;
+    background-color: #ffffff;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: 5px;
+    box-shadow: 0 0 5px 1px #666666;
+    z-index: 999999;
+}
+.overlay-chart-delete .box-chart-delete .header-title-delete {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 15px;
+}
+.overlay-chart-delete .box-chart-delete .sub-title-delete {
+    font-size: 14px;
+    color: #666666;
+    padding: 0 15px 15px;
+}
+.overlay-chart-delete .box-chart-delete .delete-whislist {
+    text-align: right;
+}
+.btn-remove-whislist {
+    font-size: 14px;
+    color: #c3071c;
+}
+.btn-remove {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+.empty-cart {
+    margin-bottom: 15px;
+}
+.empty-product-cart {
+    width: 100%;
+    padding: 20px 15px;
+}
+.empty-product-cart .image {
+    text-align: center;
+}
+.empty-product-cart .image img {
+    width: auto;
+    height: 150px;
+}
+.empty-product-cart .text-empty-cart {
+    font-size: 24px;
+    line-height: 1.5rem;
+    color: #c3071c;
+    text-align: center;
+}
+.empty-product-cart .button-empty-cart {
+    padding: 15px;
+    text-align: center;
+}
+.message-product {
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #FFA000;
+    padding: 10px;
+    margin: 10px 10px 0;
+    text-align: center;
+    border-radius: 5px;
+}
+.not-action {
+    opacity: 0.5;
+}
+.extended-warranty {
+    margin-top: 2px;
+    background-color: #f5f5f5;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 10px 10px 0;
+    margin: 5px 10px;
+}
+.warranty-btn {
+    background-color: #c3071c;
+    color: #ffffff !important;
+    float: right;
+}
+.select-warranty {
+    color: #666666;
+    font-size: 12px;
+    padding: 10px;
+}
+.select-warranty span {
+    color: #c3071c;
+}
+.icon-remove {
+    position: absolute;
+    top: 17px;
+    right: 20px;
+}

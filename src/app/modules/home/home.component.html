@@ -1,0 +1,555 @@
+<div class="pop-up-promo" *ngIf="popUpPromo">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="promo-up">
+                    <div class="close" (click)="closeBannerPromotion()">
+                        <i class="fa fa-times-circle"></i>
+                    </div>
+                    <img src="{{bannerImage}}" alt="Kitchenart Promo" (click)="goToLogin()">
+                    <!-- <div class="btn-login">
+                        <button (click)="goToLogin()">Mau</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Banner Slide -->
+<div class="banner-slide">
+    <div class="text-special">{{ 'home.special_for_you' | translate }}</div>
+    <swiper class="swiper" [config]="config">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" *ngFor="let banner of banners" (click)="getBannerUrl(banner.link_url)">
+                <img src="{{ banner.image_domain }}/{{ banner.image_path }}/{{ banner.image }}">
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </swiper>
+</div>
+
+<!-- Menu Favorit -->
+<div class="menu-pavorite">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <div class="menu-item" (click)="goLink('promo/deal_zone')">
+                    <div class="image-fav">
+                        <img src="assets/images/deal_zone.png">
+                    </div>
+                    <div class="text-name">{{ 'menu.deal_zone' | translate }}</div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="menu-item" (click)="goLink('promo/sale_item')">
+                    <div class="image-fav">
+                        <img src="assets/images/sale_clearence.png">
+                    </div>
+                    <div class="text-name">{{ 'menu.sale_clearence' | translate }}</div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="menu-item" (click)="goLink('promo/hot_deals')">
+                    <div class="image-fav">
+                        <img src="assets/images/sale_event.png">
+                    </div>
+                    <div class="text-name">{{ 'menu.hot_deals' | translate }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Brand -->
+<div class="brand-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="text-brand">
+                    Brand <a (click)="goLink('product/brand')">{{ 'home.show_more' | translate }}</a>  
+                </div>
+            </div>
+            <div class="col-3 col-sm-2 col-md-2" *ngFor="let brand of brands">
+                <div class="image-brand" (click)="getProductBrand(brand.link_url)">
+                    <img src="{{ brand.image_domain }}/{{ brand.logo_path }}/{{ brand.logo_image }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Category -->
+<div class="brand-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="text-brand">
+                    {{'menu.category_product' | translate}} <a (click)="goLink('product/category')">{{ 'home.show_more' | translate }}</a>  
+                </div>
+            </div>
+            <div class="col-3 col-sm-2 col-md-2" *ngFor="let category of categories">
+                <div class="image-brand" (click)="getProductCategory(category.link_url)">
+                    <img src="{{ category.image_domain }}/{{ category.thumb_image_path }}/{{ category.thumb_image_name }}">
+                </div>
+                <div class="text-category-name" *ngIf="lang === 'en'">
+                    {{ category.category_name_english }}
+                </div>
+                <div class="text-category-name" *ngIf="lang === 'id'">
+                    {{ category.category_name_indonesia }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sale Event -->
+<section class="package-deals sale-clearence-color" *ngIf="countSaleEvent > 0">
+    <div class="text-title-prod">
+        {{saleEventName}} <a (click)="goLink('event/' + saleEventUrl)">{{ 'home.show_more' | translate }}</a>  
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+            <swiper class="swiper" [config]="configDeal">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" *ngFor="let item of saleEventProducts">
+                            <div class="box-dealzone" (click)="goProductDetailBase(item.url)">
+                                <div class="product-discount-all" *ngIf="item.discount > 32">
+                                    <span>{{ item.discount }}%</span>
+                                </div>
+                                <div class="header">
+                                    <div class="image">
+                                        <img src="{{ item.image_domain }}/{{ item.product_image_path }}/{{ item.product_image_name }}">
+                                    </div>
+                                </div>
+                                <div class="contents">
+                                    <div class="brand">{{ item.brand_name }}</div>
+                                    <div class="name-product">
+                                        {{ item.name }}
+                                        <br>
+                                        {{ item.code }}
+                                        </div>
+                                    <div class="sale-price" *ngIf="item.discount !== 0">{{ item.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-list">{{ item.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-per-month">{{ item.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </swiper>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Deal Zones -->
+<section class="package-deals deal-zone-color" *ngIf="countDealzone > 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <div class="text-title-prod">
+                    {{'menu.deal_zone' | translate}}  
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="count-time">
+                    <count-down [text]="text" units="Hours | Minutes | Seconds" end="{{dateDelalZone | date: 'MM dd, yyyy HH:mm:ss'}}"></count-down>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="text-title-prod">
+                    <a (click)="goLink('promo/deal_zone')">{{ 'home.show_more' | translate }}</a>
+                </div>
+            </div>
+            <div class="col-12">
+                <swiper class="swiper" [config]="configDeal">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" *ngFor="let item of dealzones">
+                            <div class="box-dealzone" (click)="goProductDetailBase(item.url)">
+                                <div class="product-discount-all" *ngIf="item.discount > 32">
+                                    <span>{{ item.discount }}%</span>
+                                </div>
+                                <div class="header">
+                                    <div class="image">
+                                        <img src="{{ item.image_domain }}/{{ item.product_image_path }}/{{ item.product_image_name }}">
+                                    </div>
+                                </div>
+                                <div class="contents">
+                                    <div class="brand">{{ item.brand_name }}</div>
+                                    <div class="name-product">
+                                        {{ item.name }}
+                                        <br>
+                                        {{ item.code }}
+                                    </div>
+                                    <div class="sale-price" *ngIf="item.discount !== 0">{{ item.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-list">{{ item.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-per-month">{{ item.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </swiper>
+            </div>
+        </div>
+    </div>                            
+</section>
+
+<!-- Sale Item -->
+<section class="package-deals sale-clearence-color" *ngIf="countSale > 0">
+    <div class="text-title-prod">
+        {{'menu.sale_item' | translate}} <a (click)="goLink('promo/sale_item')">{{ 'home.show_more' | translate }}</a>  
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+            <swiper class="swiper" [config]="configDeal">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" *ngFor="let item of saleItems">
+                            <div class="box-dealzone" (click)="goProductDetailBase(item.url)">
+                                <div class="product-discount-all" *ngIf="item.discount > 32">
+                                    <span>{{ item.discount }}%</span>
+                                </div>
+                                <div class="header">
+                                    <div class="image">
+                                        <img src="{{ item.image_domain }}/{{ item.product_image_path }}/{{ item.product_image_name }}">
+                                    </div>
+                                </div>
+                                <div class="contents">
+                                    <div class="brand">{{ item.brand_name }}</div>
+                                    <div class="name-product">
+                                        {{ item.name }}
+                                        <br>
+                                        {{ item.code }}
+                                        </div>
+                                    <div class="sale-price" *ngIf="item.discount !== 0">{{ item.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-list">{{ item.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-per-month">{{ item.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </swiper>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Hot Spectacular -->
+<section class="package-deals sale-clearence-color" *ngIf="countHot > 0">
+    <div class="text-title-prod">
+        {{'menu.hot_deals' | translate}} <a (click)="goLink('promo/hot_deals')">{{ 'home.show_more' | translate }}</a>  
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+            <swiper class="swiper" [config]="configDeal">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" *ngFor="let item of hotSpectacular">
+                            <div class="box-dealzone" (click)="goProductDetailBase(item.url)">
+                                <div class="product-discount-all" *ngIf="item.discount > 32">
+                                    <span>{{ item.discount }}%</span>
+                                </div>
+                                <div class="header">
+                                    <div class="image">
+                                        <img src="{{ item.image_domain }}/{{ item.product_image_path }}/{{ item.product_image_name }}">
+                                    </div>
+                                </div>
+                                <div class="contents">
+                                    <div class="brand">{{ item.brand_name }}</div>
+                                    <div class="name-product">
+                                        {{ item.name }}
+                                        <br>
+                                        {{ item.code }}
+                                        </div>
+                                    <div class="sale-price" *ngIf="item.discount !== 0">{{ item.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-list">{{ item.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-per-month">{{ item.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </swiper>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Package Deals -->
+<div class="package-deals package-deal-color" *ngIf="products?.length > 0">
+    <div class="text-title-prod">
+        {{'menu.package_deal' | translate}} <a (click)="goLink('package/deal')">{{ 'home.show_more' | translate }}</a>  
+    </div>
+    <div class="container">
+        <div class="row">
+            <swiper class="swiper" [config]="configDeal">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" *ngFor="let product of products">
+                        <div class="box-product" (click)="goProductDetail(product.url)">
+                            <!-- <div class="product-discount-all" *ngIf="product.discount > 32">
+                                <span>{{ product.discount }}%</span>
+                            </div> -->
+                            <div class="image">
+                                <img src="{{ product.image_domain }}/{{ product.product_image_path }}/{{ product.product_image_name }}">
+                            </div>
+                            <div class="content">
+                                <div class="name">{{ product.name }}</div>
+                                <div class="normal-price" *ngIf="product.discount !== 0">{{ product.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                <div class="diskon-price">{{ product.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                            </div>
+                            <div class="installment">
+                                {{ product.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </swiper>
+        </div>
+    </div>
+</div>
+
+<!-- Get Free Item -->
+<div class="package-deals package-deal-color" *ngIf="freeItems?.length > 0">
+    <div class="text-title-prod">
+        {{'menu.get_free' | translate}} <a (click)="goLink('package/free')">{{ 'home.show_more' | translate }}</a>  
+    </div>
+    <div class="container">
+        <div class="row">
+            <swiper class="swiper" [config]="configDeal">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" *ngFor="let free of freeItems">
+                        <div class="box-product" (click)="goProductDetail(free.url)">
+                            <!-- <div class="product-discount-all" *ngIf="free.discount > 32">
+                                <span>{{ free.discount }}%</span>
+                            </div> -->
+                            <div class="image">
+                                <img src="{{ free.image_domain }}/{{ free.product_image_path }}/{{ free.product_image_name }}">
+                            </div>
+                            <div class="content">
+                                <div class="name">{{ free.name }}</div>
+                                <div class="normal-price" *ngIf="free.discount !== 0">{{ free.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                <div class="diskon-price">{{ free.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                            </div>
+                            <div class="installment">
+                                {{ free.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </swiper>
+        </div>
+    </div>
+</div>
+
+<!-- Best Seller -->
+<section class="package-deals sale-clearence-color" *ngIf="countBestSeller > 0">
+    <div class="text-title-prod">
+        {{'home.best_seller' | translate}} <a (click)="goLink('promo/best_seller')">{{ 'home.show_more' | translate }}</a>  
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+            <swiper class="swiper" [config]="configDeal">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" *ngFor="let item of bestSellers">
+                            <div class="box-dealzone" (click)="goProductDetailBase(item.url)">
+                                <div class="product-discount-all" *ngIf="item.discount > 32">
+                                    <span>{{ item.discount }}%</span>
+                                </div>
+                                <div class="header">
+                                    <div class="image">
+                                        <img src="{{ item.image_domain }}/{{ item.product_image_path }}/{{ item.product_image_name }}">
+                                    </div>
+                                </div>
+                                <div class="contents">
+                                    <div class="brand">{{ item.brand_name }}</div>
+                                    <div class="name-product">
+                                        {{ item.name }}
+                                        <br>
+                                        {{ item.code }}
+                                        </div>
+                                    <div class="sale-price" *ngIf="item.discount !== 0">{{ item.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-list">{{ item.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-per-month">{{ item.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </swiper>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Top Picks -->
+<section class="package-deals package-deal-color" *ngIf="countTopPicks > 0">
+    <div class="text-title-prod">
+        {{'home.top_picks' | translate}} <a (click)="goLink('promo/top_picks')">{{ 'home.show_more' | translate }}</a>  
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+            <swiper class="swiper" [config]="configDeal">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" *ngFor="let item of topPicks">
+                            <div class="box-dealzone" (click)="goProductDetailBase(item.url)">
+                                <div class="product-discount-all" *ngIf="item.discount > 32">
+                                    <span>{{ item.discount }}%</span>
+                                </div>
+                                <div class="header">
+                                    <div class="image">
+                                        <img src="{{ item.image_domain }}/{{ item.product_image_path }}/{{ item.product_image_name }}">
+                                    </div>
+                                </div>
+                                <div class="contents">
+                                    <div class="brand">{{ item.brand_name }}</div>
+                                    <div class="name-product">
+                                        {{ item.name }}
+                                        <br>
+                                        {{ item.code }}
+                                        </div>
+                                    <div class="sale-price" *ngIf="item.discount !== 0">{{ item.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-list">{{ item.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-per-month">{{ item.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </swiper>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- New Collection -->
+<section class="package-deals deal-zone-color" *ngIf="countNewCollection > 0">
+    <div class="text-title-prod">
+        {{'home.new_collection' | translate}} <a (click)="goLink('promo/new_collection')">{{ 'home.show_more' | translate }}</a>  
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <swiper class="swiper" [config]="configDeal">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" *ngFor="let item of newCollections">
+                            <div class="box-dealzone" (click)="goProductDetailBase(item.url)">
+                                <div class="product-discount-all" *ngIf="item.discount > 32">
+                                    <span>{{ item.discount }}%</span>
+                                </div>
+                                <div class="header">
+                                    <div class="image">
+                                        <img src="{{ item.image_domain }}/{{ item.product_image_path }}/{{ item.product_image_name }}">
+                                    </div>
+                                </div>
+                                <div class="contents">
+                                    <div class="brand">{{ item.brand_name }}</div>
+                                    <div class="name-product">
+                                        {{ item.name }}
+                                        <br>
+                                        {{ item.code }}
+                                    </div>
+                                    <div class="sale-price" *ngIf="item.discount !== 0">{{ item.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-list">{{ item.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-per-month">{{ item.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </swiper>
+            </div>
+        </div>
+    </div>                            
+</section>
+
+<!-- Pre Order -->
+<section class="package-deals package-deal-color" *ngIf="countPreOrder > 0">
+    <div class="text-title-prod">
+        {{'home.pre_order' | translate}} <a (click)="goLink('promo/pre_order')">{{ 'home.show_more' | translate }}</a>  
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+            <swiper class="swiper" [config]="configDeal">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" *ngFor="let item of preOrder">
+                            <div class="box-dealzone" (click)="goProductDetailBase(item.url)">
+                                <div class="product-discount-all" *ngIf="item.discount > 32">
+                                    <span>{{ item.discount }}%</span>
+                                </div>
+                                <div class="header">
+                                    <div class="image">
+                                        <img src="{{ item.image_domain }}/{{ item.product_image_path }}/{{ item.product_image_name }}">
+                                    </div>
+                                </div>
+                                <div class="contents">
+                                    <div class="brand">{{ item.brand_name }}</div>
+                                    <div class="name-product">
+                                        {{ item.name }}
+                                        <br>
+                                        {{ item.code }}
+                                        </div>
+                                    <div class="sale-price" *ngIf="item.discount !== 0">{{ item.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-list">{{ item.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="price-per-month">{{ item.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </swiper>
+            </div>
+        </div>
+    </div>
+</section>
+ 
+<!-- Bussiness Partners -->
+<section class="bussines-partner">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <img src="https://asset.kitchenart.id/images/banner/banner-bussines-partner.jpg">
+                <div class="overlay-image">
+                    <div class="bussiness-sign" (click)="goLink('business_partner/register')">
+                        {{ 'home.business_partners_sign_up_here' | translate }}
+                    </div>
+                    <div class="text-bussines">
+                        <i>{{ 'home.join_us_today_and_receive_special_member_discounts' | translate }}</i>
+                    </div>
+                    <div class="bussiness-join" (click)="goLink('business_partner/register')">
+                        {{ 'home.join_today' | translate }}
+                    </div>
+                    <div class="text-bussines" (click)="goLink('login')">{{ 'home.already_have_an_account' | translate }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- <div class="livechat-button">
+    <a href="https://direct.lc.chat/12077586/" target="_blanks">
+        <div class="icon-chat">
+            <i class="fas fa-comment-dots"></i>
+        </div>
+    </a>
+</div> -->
+
+<div class="livechat-button">
+    <a href="https://api.whatsapp.com/send?phone=6282211995022" target="_blanks">
+        <div class="icon-chat">
+            <i class="fab fa-whatsapp"></i>
+        </div>
+    </a>
+</div>
+
+<!-- <div class="popup-under" *ngIf="underDevelop" (click)="underClose()">
+    <div class="box-under">Website under development !</div>
+</div> -->

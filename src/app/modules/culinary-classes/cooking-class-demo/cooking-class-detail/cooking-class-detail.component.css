@@ -1,0 +1,94 @@
+.detail-exhibition .image{
+    width: 100%;
+    background-color: #ffffff
+}
+.detail-exhibition .image img{
+    position: relative;
+    width: 100%;
+}
+.date-time-detail{
+    margin-top: 15px;
+    background-color: #ffffff;
+    padding: 10px;
+}
+.date-time-detail .title-exhibition{
+    font-size: 16px;
+    color: #666;
+    font-weight: bold
+}
+.date-time-detail .text-date{
+    margin-top: 10px;
+    padding-left: 5px;
+    font-size: 14px;
+    font-weight: bold
+}
+.date-time-detail .content-date{
+    font-size: 14px;
+    padding-left: 5px;
+    padding-top: 5px;
+    line-height: 1.5rem;
+}
+.detail-exhibition .name-event{
+    font-size: 18px;
+    padding: 15px 10px 0;
+    font-weight: bold;
+    color: #666;
+    text-align: center;
+}
+.share-this{
+    margin: 15px 15px 0;
+}
+.list-host{
+    padding: 10px 5px 5px;
+}
+.list-host .host a{
+    font-size: 14px;
+    color: #ad2825;
+    font-style: italic;
+    text-decoration: none;
+    line-height: 1.3rem;
+}
+.date-time-detail .description-exhibition{
+    font-size: 14px;
+    padding: 15px 10px;
+    line-height: 1.5rem
+}
+.box-maps{
+    margin-top: 5px;
+}
+.video-url-exhibition{
+    margin-top: 15px;
+}
+.photo-image{
+    margin: 5px;
+    box-shadow: 0 0 5px 0 #dddddd;
+}
+.photo-image img{
+    width: 100%;
+}
+.box-method {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 999999;
+    background-color: #ffffff;
+    border-top: 1px solid #eee;
+    box-shadow: 0 0 10px -5px #666;
+    width: 100%;
+    padding: 10px;
+}
+.btn-action-icon {
+    width: 100%;
+    background-color: #dddddd;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    color: #666;
+    font-size: 12px;
+    box-shadow: 0 0 5px 0 #eee;
+    outline: none;
+}
+.add-chart {
+    background-color: #c3071c;
+    color: #fff;
+}

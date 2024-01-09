@@ -1,0 +1,56 @@
+.commercial{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+.commercial__banner{
+    width: 100%;
+}
+.commercial__banner__image{
+    width: 100%;
+    height: auto;
+}
+.commercial_h3{
+    text-align: center;
+    color: #787878;
+}
+.commercial__more{
+    margin-top: 15px;
+    padding: 10px 15px;
+    text-align: center;
+    background-color: #c3071c;
+    color: #ffffff;
+    font-size: 15px;
+    border-radius: 5px;
+    width: 40%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.commercial__title{
+    padding: 15px;
+    font-size: 18px;
+    color: #787878;
+    font-weight: bold;
+}
+.commercial_container{
+    padding: 0 15px;
+}
+.commercial__box{
+    padding: 10px;
+    margin-right: 7px;
+    margin-bottom: 7px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.commercial__box__image{
+    width: 100%;
+}
+.commercial_box_title{
+    text-align: center;
+    padding: 15px 10px;
+    color: #787878;
+    font-size: 14px;
+}

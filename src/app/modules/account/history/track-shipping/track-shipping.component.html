@@ -1,0 +1,67 @@
+<div class="account profile-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="profile-header">
+                    <mat-icon class="back-icon" (click)="backHistory()">keyboard_backspace</mat-icon>
+                    <span>{{'account.track_shipping' | translate}}</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="track-shipping" *ngIf="status">
+                    <div class="text-summary">
+                        <div class="text-invoice-number">{{'account.track_number' | translate}}</div>
+                        <div class="invoice-number text-upercase">{{ waybillNumber }}</div>
+                    </div>
+                    <div class="text-summary">
+                        <div class="text-invoice-number">{{'account.shipment_t' | translate}}</div>
+                        <div class="invoice-number text-upercase">{{ waybillDate | date : 'd MMMM yyyy' }}</div>
+                    </div>
+                    <div class="text-summary">
+                        <div class="text-invoice-number">{{'order.courier' | translate}}</div>
+                        <div class="invoice-number text-upercase">{{ courierName }}</div>
+                    </div>
+                    <div class="text-summary">
+                        <div class="text-invoice-number">{{'account.service_code' | translate}}</div>
+                        <div class="invoice-number text-upercase">{{ serviceCode }}</div>
+                    </div>
+                    <div class="text-summary">
+                        <div class="text-invoice-number">{{'account.shipper_name' | translate}}</div>
+                        <div class="invoice-number text-upercase">{{ shipperName }}</div>
+                    </div>
+                    <div class="text-summary">
+                        <div class="text-invoice-number">{{'account.receiver_name' | translate}}</div>
+                        <div class="invoice-number text-upercase">{{ receiverName }}</div>
+                    </div>
+                    <div class="text-summary">
+                        <div class="text-invoice-number">{{'account.status_shipping' | translate}}</div>
+                        <div class="invoice-number text-upercase">{{ statusShipping }}</div>
+                    </div>
+
+                    <div class="manifest" *ngIf="countManifests > 0">
+                        <mat-accordion>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        {{'account.history_shipping' | translate}}
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                  
+                               <div class="list-manifest" *ngFor="let manisfest of manifests">
+                                   <div class="list-description">{{ manisfest.manifest_description }}</div>
+                                   <div class="list-date">{{ manisfest.manifest_date | date : 'd MMMM yyyy' }}</div>
+                                   <div class="list-time">{{ manisfest.manifest_time }}</div>
+                                </div>
+                            </mat-expansion-panel>            
+                        </mat-accordion>
+                    </div>
+                </div>
+                <div class="track-shipping" *ngIf="status === false">
+                    <div class="message-track">
+                        {{ description }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

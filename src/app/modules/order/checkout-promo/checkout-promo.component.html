@@ -1,0 +1,685 @@
+<div class="checkout-cart">
+    <div class="container">
+        <div class="row" *ngIf="notLoad === false">
+            <div class="col-12">
+                <div class="header-checkout">
+                    <mat-icon class="back-icon" (click)="backToCart()">keyboard_backspace</mat-icon>
+                    <span>Checkout</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="load-gif">
+                    <img src="/assets/images/load.gif" alt="load" />
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="notLoad === true">
+            <div class="col-12">
+                <div class="header-checkout">
+                    <mat-icon class="back-icon" (click)="backToDetail()">keyboard_backspace</mat-icon>
+                    <span>Checkout</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="shipping-address">
+                    <div class="header-text">
+                        <mat-icon class="icon-checkout">location_on</mat-icon>
+                        <span>{{ 'order.shipping_address' | translate }}</span> 
+                    </div>
+                    <div class="content-address" *ngIf="receiverName === null">
+                        <div class="not-address">
+                            {{ 'order.shipping_address_not_available' | translate }}
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="addres-button">
+                                    <button class="btn-shipping-address" (click)="addShippingAddress()">{{ 'order.add_new_address' | translate }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-address" *ngIf="receiverName !== null">
+                        <div class="text-customer">{{ receiverName }} <span>({{ label }})</span></div>
+                        <div class="text-address">{{ receiverPhone }}</div>
+                        <div class="text-address">{{ address }}</div>
+                        <div class="text-address">{{ province }}, {{ city }}, {{ subdistrict }}, {{ postalZip }}</div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="addres-button">
+                                    <button class="btn-shipping-address" (click)="addShippingAddress()">{{ 'order.add_new_address' | translate }}</button>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="addres-button">
+                                    <button class="btn-shipping-address" (click)="choseShippingAddress()">{{ 'order.choose_another_address' | translate }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" *ngFor="let item of contents">
+                <div class="cart-product">
+                    <div class="row">
+                        <div class="col-4">
+                          <div class="image-prod">
+                              <img src="{{ item.image }}">
+                          </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="cart-brand">
+                                <div class="name-brand">{{ item.brand }}</div>
+                            </div>
+                            <div class="cart-name-prod">{{ item.name }}</div>
+                            <div class="cart-qauntity">
+                                {{ item.quantity }} product ({{ item.weight }} gr)
+                            </div>
+                            <div class="cart-prod-price">{{ item.price | currency:'Rp':'true':'4.0-0' }}</div>
+                        </div>
+                        <div class="col-12">
+                            <div class="subtotal-text">
+                                Sub total
+                            </div>
+                            <div class="subtotal-cart">
+                                {{ item.subtotal | currency:'Rp':'true':'4.0-0' }}
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="col-12" *ngIf="warranty">
+                            <div class="extended-warranty" *ngIf="lang === 'en'">
+                                {{ 'order.extended_warranty' | translate }} {{ warrantyPeriodeEnglish }} 
+                                <span>( + {{ warrantyPrice | currency:'Rp':'true':'4.0-0' }} )</span>
+                            </div>
+                            <div class="extended-warranty" *ngIf="lang === 'id'">
+                                {{ 'order.extended_warranty' | translate }} {{ warrantyPeriodeIndonesia }} 
+                                <span>( + {{ warrantyPrice | currency:'Rp':'true':'4.0-0' }} )</span>
+                            </div>
+                        </div>
+                        <div class="col-12" *ngIf="service">
+                            <div class="extended-warranty" *ngIf="lang === 'en'">
+                                {{ 'order.contract_service' | translate }} {{ servicePeriodeEnglish }} 
+                                <span>( + {{ servicePrice | currency:'Rp':'true':'4.0-0' }} )</span>
+                            </div>
+                            <div class="extended-warranty" *ngIf="lang === 'id'">
+                                {{ 'order.contract_service' | translate }} {{ servicePeriodeIndonesia }} 
+                                <span>( + {{ servicePrice | currency:'Rp':'true':'4.0-0' }} )</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="shipping-address">
+                    <div class="header-text courir-box">
+                        <i class="fas fa-info"></i> <span> {{ 'order.shipping_info' | translate }} </span> 
+                    </div>
+                    <div class="content-address">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="shipping-info">
+                                    <div class="text-address">1. {{ 'order.note_checkout_1' | translate }}</div>
+                                    <div class="text-address">2. {{ 'order.note_checkout_2' | translate }}</div>
+                                    <div class="text-address">3. {{ 'order.note_checkout_3' | translate }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="shipping-address">
+                    <div class="header-text courir-box">
+                        <fa name="truck" class="icon-truct"></fa>
+                        <span>{{ 'order.shipping_courier' | translate }}</span> 
+                    </div>
+                    <div class="content-address">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="not-address padding-not-available" *ngIf="receiverName === null">
+                                    {{ 'order.shipping_courier_not_available' | translate }}
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="text-free-shipping" *ngIf="freeShipping === 'T'">
+                                    {{ 'order.free_shipping' | translate }}
+                                </div>
+                                <div *ngIf="serviceCourier === null && freeShipping === 'F'">
+                                    <button class="btn-courier" (click)="showCourier()">{{ 'order.choose_courier' | translate }}</button>
+                                </div>
+                            </div>
+                            <div class="col-6" *ngIf="serviceCourier !== null">
+                                <div class="text-courier">{{ courierName }} - {{ serviceCourierName }}</div>
+                                <div class="text-etd">{{ serviceCourierEtd }} - {{ serviceCourierEtdEnd }} {{ 'order.day' | translate }}</div>
+                                <div class="text-cost">{{ serviceCourierCost | currency:'Rp':'true':'4.0-0' }}</div>
+                            </div>
+                            <div class="col-6" *ngIf="serviceCourier !== null">
+                                <div class="button-courier">
+                                    <button class="btn-courier" (click)="showCourier()">{{ 'order.change_courier' | translate }}</button>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="note-checkout">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput #message maxlength="256" [formControl]="notes" placeholder="{{ 'order.note' | translate }}">
+                                        <mat-hint align="end">{{message.value.length}} / 256</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-12" *ngIf="insurancePrice !== 0">
+                                <div class="text-summary">
+                                    <mat-checkbox class="example-margin" [(ngModel)]="checkedInsurance" (click)="usingInsurance()">{{ 'order.insurance' | translate }} ({{ insurancePrice | currency:'Rp':'true':'4.0-0' }})</mat-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12">
+                <div class="get-promo" *ngIf="promoCode === null">
+                    <mat-icon class="icon-giftcard" class="icon-ticket-voucher">card_giftcard</mat-icon>
+                    {{ 'order.use_voucher_or_coupon' | translate }}
+                </div>
+                <div class="get-promo" *ngIf="promoCode !== null">
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="text-my-coupon promo-code">{{ promotionText }} : <span>{{ promoCode }}</span></div>
+                        </div>
+                        
+                    </div>
+                    <div class="text-my-coupon">{{ messagePromo }}</div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="get-promo" (click)="paymentMethod()" *ngIf="payMethod === false">
+                    {{ 'order.payment_method' | translate }}
+                </div>
+                <div class="get-promo" (click)="paymentMethod()" *ngIf="payMethod === true">
+                    {{ 'order.payment_method' | translate }} / {{ paymentName }}
+                </div>
+            </div> -->
+            <div class="col-12">
+                <div class="shipping-address shopping-summary">
+                    <div class="header-text courir-box">
+                        {{ 'order.shopping_summary' | translate }}
+                    </div>
+                    <div class="content-address">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="text-summary">
+                                    {{ 'order.total_price' | translate }} ({{ totalItems }} Product)
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-summary right">
+                                    {{ subtotal | currency:'Rp':'true':'4.0-0' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-address shipping-summary" *ngIf="totalDiscount !== 0">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="text-summary">
+                                    {{ 'order.total_discount' | translate }}
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-summary right kitchenart-color">
+                                    - {{ totalDiscount | currency:'Rp':'true':'4.0-0' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-address shipping-summary" *ngIf="freeShipping === 'F' && serviceCourier !== null">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="text-summary">
+                                    {{ 'order.shipping_cost' | translate }}
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-summary right">
+                                    {{ serviceCourierCost | currency:'Rp':'true':'4.0-0' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-address shipping-summary" *ngIf="freeShipping === 'T'">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="text-summary">
+                                    {{ 'order.shipping_cost' | translate }}
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-summary right">
+                                    Rp 0
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-address shipping-summary" *ngIf="balance !== 0">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="text-summary">
+                                    <mat-checkbox class="example-margin" [(ngModel)]="checked" (click)="usingBalance()">{{ 'order.use_balance' | translate }}</mat-checkbox>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-summary right kitchenart-color">
+                                    - {{ balance | currency:'Rp':'true':'4.0-0' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-address shipping-summary" *ngIf="useInsurance !== 'F'">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="text-summary">
+                                    {{ 'order.insurance' | translate }}
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-summary right kitchenart-color">
+                                    {{ insurancePrice | currency:'Rp':'true':'4.0-0' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="box-total-payment">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="get-promo voucher-button-check" *ngIf="promoCode === null">
+                                <mat-icon class="icon-giftcard" class="icon-ticket-voucher">card_giftcard</mat-icon>
+                                {{ 'order.use_voucher_or_coupon' | translate }}
+                            </div>
+                            <div class="get-promo voucher-button-check" *ngIf="promoCode !== null">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <div class="text-my-coupon promo-code">{{ promotionText }} : <span>{{ promoCode }}</span></div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="text-my-coupon">{{ messagePromo }}</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="get-promo voucher-button-check" (click)="paymentMethod()" *ngIf="payMethod === false">
+                                {{ 'order.payment_method' | translate }}
+                            </div>
+                            <div class="get-promo voucher-button-check" (click)="paymentMethod()" *ngIf="payMethod === true">
+                                {{ 'order.payment_method' | translate }} / {{ paymentName }}
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-total-payment">
+                                {{ 'order.total_payment' | translate }}
+                            </div>
+                            <div class="text-payment" *ngIf="totalPayment !== 0">
+                                {{ totalPayment | currency:'Rp':'true':'4.0-0' }}
+                            </div>
+                            <div class="text-payment" *ngIf="totalPayment === 0">
+                                -
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="button-payment">
+                                <button mat-raised-button color="action" (click)="payment()">{{ 'order.payment' | translate }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="overlay-courier" *ngIf="courierStatus">
+    <div class="box-courier">
+        <div class="header-courier">
+            <mat-icon class="back-icon" (click)="closeCourier()">clear</mat-icon>
+            <span>{{ 'order.courier' | translate }}</span>
+        </div>
+        <div class="content-courier" *ngIf="services.length === 0">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-courier">{{  'account.not_found_postal_code' | translate }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="content-courier" *ngFor="let item of services; let i = index" (click)="chooseCourier(i)">
+            <div class="row">
+                <!-- <div class="col-6">
+                    <div class="text-courier">{{ courierName }} - {{  item.service }}</div>
+                    <div class="text-etd">{{  item.etd }} Day</div>
+                    <div class="text-cost">{{  item.cost | currency:'Rp':'true':'4.0-0' }}</div>
+                </div> -->
+                <div class="col-6">
+                    <div class="text-courier">{{ courierName }} - {{  item.service_display }}</div>
+                    <div class="text-etd">{{  item.etd_from }} - {{  item.etd_thru }} Day</div>
+                    <div class="text-cost">
+                        {{  item.total_price | currency:'Rp':'true':'4.0-0' }}
+                        <span> {{  item.price | currency:'Rp':'true':'4.0-0' }}</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="courier-active" *ngIf="i === courierId">
+                        <mat-icon class="icon-courier">done</mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="checkout-loading" *ngIf="cekCourier">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>
+<div class="checkout-cart-shipping" *ngIf="addShipping">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="header-checkout">
+                    <mat-icon class="back-icon" (click)="closeShipping()">keyboard_backspace</mat-icon>
+                    <span>{{ 'order.shipping_address' | translate }}</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-add">
+                    <form novalidate [formGroup]="shippingForm">
+                        <mat-form-field>
+                            <input matInput placeholder="{{ 'form.address_label' | translate }}" formControlName="label" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="{{ 'form.receiver_name' | translate }}" formControlName="receiver_name" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="{{ 'form.receiver_phone' | translate }}" [textMask]="{mask: mask}" formControlName="receiver_phone" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <textarea matInput placeholder="{{ 'form.address' | translate }}" formControlName="address" required></textarea>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select placeholder="{{ 'form.province' | translate }}" formControlName="province_id" required>
+                                <mat-option *ngFor="let province of provinces" [value]="province.province_id" (click)="getCityByProvince(province.province_id)">
+                                {{province.province}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select placeholder="{{ 'form.city' | translate }}" [disabled]="cityDisabled" formControlName="city_id" required>
+                                <mat-option *ngFor="let city of cities" [value]="city.city_id" (click)="getSubdistrict(city.city_id)">
+                                {{ city.city_name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select placeholder="{{ 'form.subdistrict' | translate }}" [disabled]="subdistrictDisabled" formControlName="subdistrict_id" required>
+                                <mat-option *ngFor="let subdistrict of subdistricts" [value]="subdistrict.id" (click)="getPostalCode(subdistrict.name)">
+                                {{ subdistrict.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select placeholder="{{'form.postal_code' | translate}}" [disabled]="postalCodeShow" formControlName="postal_zip" required>
+                                <mat-option *ngFor="let destiny of destinations" [value]="destiny.zip_code">
+                                {{ destiny.full_address }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- <mat-form-field>
+                            <input matInput placeholder="{{ 'form.postal_code' | translate }}" [textMask]="{mask: postal}" formControlName="postal_zip" required>
+                        </mat-form-field> -->
+                        <!-- <mat-form-field class="example-full-width">
+                            <input matInput placeholder="{{'form.postal_code' | translate}}" [matAutocomplete]="auto" formControlName='postal_zip' required>
+                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="20"></mat-spinner></mat-option>
+                                <ng-container *ngIf="!isLoading">
+                                    <mat-option *ngFor="let destiny of destinations" [value]="destiny">
+                                        <span>{{ destiny.full_address }}</span>
+                                    </mat-option>
+                                </ng-container>
+                            </mat-autocomplete>
+                        </mat-form-field> -->
+                        <div class="button-row">
+                            <button *ngIf="spinner === false" type="button" class="save-btn" mat-raised-button [disabled]="shippingForm.invalid"
+                                (click)="registerShipping()">
+                                {{ 'form.save' | translate }}
+                            </button>
+                            <button *ngIf="spinner" type="button" mat-raised-button disabled="true">
+                                <img src="assets/images/spin.gif" class="image-spinner">
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="checkout-cart-shipping" *ngIf="listShipping">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="header-checkout">
+                    <mat-icon class="back-icon" (click)="closeShipping()">keyboard_backspace</mat-icon>
+                    <span>{{ 'order.shipping_address' | translate }}</span>
+                    <mat-icon class="plus-icon" (click)="addShippingAddress()">add</mat-icon>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="cekShipping">
+                <div class="load-gif">
+                    <img src="/assets/images/load.gif" alt="load" />
+                </div>
+            </div>
+            <div class="col-12" *ngIf="cekShipping === false && shippingLists?.length === 0">
+                <div class="not-address">
+                    {{ 'order.shipping_address_not_available' | translate }}
+                </div>
+            </div>
+            <div class="col-12" *ngFor="let shipping of shippingLists">
+                <div class="shipping-address" [ngClass]="{'chose-actived': shipping.as_default === 'T'}">
+                    <div class="header-text">
+                        <mat-icon class="icon-checkout">location_on</mat-icon>
+                        <span>{{ shipping.label }}</span>
+                        <button class="btn-delete-shipping">
+                            <mat-icon class="delete-icon" (click)="deleteAddressShow(shipping.label, shipping.id)">delete</mat-icon>
+                        </button>
+                    </div>
+                    <div class="content-address">
+                        <div class="text-customer">{{ shipping.receiver_name }} <span>({{ shipping.receiver_phone }})</span></div>
+                        <div class="text-address">{{ shipping.address }}</div>
+                        <div class="text-address">{{ shipping.province }}, {{ shipping.city }}, {{ shipping.subdistrict }}, {{ shipping.postal_zip }}</div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="addres-button">
+                                    <button class="btn-shipping-address-list" (click)="updateAddres(shipping.id)">
+                                        <fa name="edit"></fa> Change
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="addres-button" *ngIf="shipping.as_default === 'T'">
+                                    <div class="text-actived">
+                                        <button class="btn-shipping-address-list text-actived btn-choose">
+                                            Active
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="addres-button" *ngIf="shipping.as_default === 'F'">
+                                    <div class="text-actived">
+                                        <button class="btn-shipping-address-list btn-choose" (click)="updateShipping(shipping.id)">
+                                            <mat-icon class="choose-icon">touch_app</mat-icon> Choose
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="checkout-cart-shipping" *ngIf="updateShippingCheck">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="header-checkout">
+                    <mat-icon class="back-icon" (click)="closeShipping()">keyboard_backspace</mat-icon>
+                    <span>{{ 'order.shipping_address' | translate }}</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-add">
+                    <form novalidate [formGroup]="shippingUpdateForm">
+                        <mat-form-field>
+                            <input matInput placeholder="{{ 'form.address_label' | translate }}" formControlName="label" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="{{ 'form.receiver_name' | translate }}" formControlName="receiver_name" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="{{ 'form.receiver_phone' | translate }}" [textMask]="{mask: mask}" formControlName="receiver_phone" required>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <textarea matInput placeholder="{{ 'form.address' | translate }}" formControlName="address" required></textarea>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select placeholder="{{ 'form.province' | translate }}" formControlName="province_id" [compareWith]="compareProvince" required>
+                                <mat-option *ngFor="let province of provinces" [value]="province.province_id" (click)="getCityByProvince(province.province_id)">
+                                {{province.province}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select placeholder="{{ 'form.city' | translate }}" [disabled]="cityDisabled" formControlName="city_id" [compareWith]="compareCity" required>
+                                <mat-option *ngFor="let city of cities" [value]="city.city_id" (click)="getSubdistrict(city.city_id)">
+                                {{ city.city_name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select placeholder="{{ 'form.subdistrict' | translate }}" [disabled]="subdistrictDisabled" formControlName="subdistrict_id" [compareWith]="compareSubdistrict" required>
+                                <mat-option *ngFor="let subdistrict of subdistricts" [value]="subdistrict.id" (click)="getPostalCode(subdistrict.name)">
+                                {{ subdistrict.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-select placeholder="{{'form.postal_code' | translate}}" [disabled]="postalCodeShow" formControlName="postal_zip" [compareWith]="comparePostalZip" required>
+                                <mat-option *ngFor="let destiny of destinations" [value]="destiny.zip_code">
+                                {{ destiny.full_address }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- <mat-form-field>
+                            <input matInput placeholder="{{ 'form.postal_code' | translate }}" [textMask]="{mask: postal}" formControlName="postal_zip" required>
+                        </mat-form-field> -->
+                        <!-- <mat-form-field class="example-full-width">
+                            <input matInput placeholder="{{'form.postal_code' | translate}}" [matAutocomplete]="auto" formControlName='postal_zip' required>
+                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="20"></mat-spinner></mat-option>
+                                <ng-container *ngIf="!isLoading">
+                                    <mat-option *ngFor="let destiny of destinations" [value]="destiny">
+                                        <span>{{ destiny.full_address }}</span>
+                                    </mat-option>
+                                </ng-container>
+                            </mat-autocomplete>
+                        </mat-form-field> -->
+                        <div class="button-row">
+                            <button *ngIf="spinner === false" type="button" class="save-btn" mat-raised-button [disabled]="shippingUpdateForm.invalid"
+                                (click)="registerUpdateShipping()">
+                                {{ 'form.save' | translate }}
+                            </button>
+                            <button *ngIf="spinner" type="button" mat-raised-button disabled="true">
+                                <img src="assets/images/spin.gif" class="image-spinner">
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="overlay-chart-delete" *ngIf="actionDelete" (click)="closeDelete()">
+    <div class="box-chart-delete">
+        <div class="header-title-delete">{{ 'order.are_you_sure_to_remove' | translate }} <b>{{ addressLabel }}</b> ?</div>
+        <div class="delete-whislist">
+            <button class="btn-remove" mat-button color="action" (click)="deleteAddress(addressId)">{{ 'order.remove' | translate }}</button>
+        </div>
+    </div>
+</div>
+<div class="checkout-loading" *ngIf="choseShipping">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>
+<div class="overlay-checkout-voucher" *ngIf="showPayment">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="header-checkout-voucher">
+                    <mat-icon class="back-icon" (click)="closePaymentMethod()">keyboard_backspace</mat-icon>
+                    <span>{{ 'order.payment_method' | translate }}</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="payment-method-channel">
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Credit Card
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12" *ngFor="let credit of creditCards" (click)="chossePayment(credit.id, credit.name, credit.cc)">
+                                        <div class="list-payment">
+                                            {{ credit.name }}
+                                            <span *ngIf="paymentId === credit.id">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </mat-expansion-panel>
+                        <mat-expansion-panel (opened)="panelOpenState = true"
+                                             (closed)="panelOpenState = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Bank Transfer
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12" *ngFor="let transfer of bankTransfers" (click)="chossePayment(transfer.id, transfer.name, transfer.cc)">
+                                        <div class="list-payment">
+                                            {{ transfer.name }}
+                                            <span *ngIf="paymentId === transfer.id">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+
+                    <div class="button-payment-method">
+                        <button mat-raised-button color="action" (click)="submitPaymentChannel()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

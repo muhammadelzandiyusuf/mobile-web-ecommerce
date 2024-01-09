@@ -1,0 +1,59 @@
+.form-design {
+    background-color: #ffffff;
+}
+.form-design .title {
+    font-size: 16px;
+    text-align: center;
+    padding: 15px;
+    color: #666;
+    font-weight: bold;
+}
+.example-headers-align .mat-expansion-panel-header-description,
+.example-headers-align .mat-expansion-panel-header-title {
+    flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+.form {
+    padding: 10px;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+    padding-right: 16px;
+}
+
+.example-additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+}
+.mat-form-field {
+    width: 100%;
+}
+.example-radio-button {
+    margin: 5px;
+}
+.person-us{
+    padding-top: 5px;
+    padding-bottom: 20px;
+}
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    background-color: #eee;
+    color: #666;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    left: 0;
+    font-size: 18px;
+    cursor: pointer;
+    opacity: 0;
+    width: 100%;
+}

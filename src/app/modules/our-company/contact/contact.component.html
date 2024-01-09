@@ -1,0 +1,145 @@
+<div class="overlay-popup" *ngIf="newsletter == true">
+    <div class="popup">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="title">{{'about.register_yourself' | translate}}</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="close" (click)="closePopupNewsletter()"><fa name="close"></fa></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <form novalidate [formGroup]="newsletterForm">
+                <mat-form-field>
+                    <input matInput placeholder="{{'form.name' | translate}}" formControlName="name" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Email" formControlName="email" required>
+                </mat-form-field>
+               
+                <button mat-raised-button type="submit" [disabled]="newsletterForm.invalid" color="kitchent" (click)="postNewsletter()">Submit</button>
+            
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="contact-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="title-terms">
+                    {{'about.contact_us' | translate}}
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="header-contact-us">{{'about.business_partners_sign_up' | translate}}</div>
+                <div class="sub-header-contacts">{{'about.mailing_list_membership' | translate}}</div>
+                <div class="sub-header-contacts">{{'about.join_today_and_get_business_partner_discounts' | translate}}</div>
+                <div class="btn-newsletter">
+                    <button mat-raised-button color="action" (click)="popupNewsletter()">{{'about.keep_me_update' | translate}}</button>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="header-contact-us">{{'about.PRODUCT_SHIPPING_RETURN' | translate}}</div>
+                <div class="content-contact">
+                    <a target="_blank" href="https://wa.me/6282211995022">
+                        <span class="icon-contact whatsapp-text">
+                            <fa name="whatsapp"></fa>
+                        </span>
+                        <span class="title-contact whatsapp-text">
+                            {{ whatsappHelp }}
+                        </span>
+                    </a>
+                </div>
+                <div class="content-contact">
+                    <span class="icon-contact">
+                        <fa name="phone"></fa>
+                    </span>
+                    <span class="title-contact">
+                        {{ phoneHelp }}
+                    </span>
+                </div>
+                <div class="content-contact">
+                    <span class="icon-contact">
+                        <fa name="fax"></fa>
+                    </span>
+                    <span class="title-contact">
+                        {{ faxHelp }}
+                    </span>
+                </div>
+                <div class="content-contact">
+                    <span class="icon-contact">
+                        <fa name="envelope"></fa>
+                    </span>
+                    <span class="title-contact">
+                        {{ emailHelp }}
+                    </span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="header-contact-us service-contact">{{'about.SERVICE_INSTALLATION_DEMO' | translate}}</div>
+                <div class="content-contact">
+                    <a target="_blank" href="https://wa.me/62816862937">
+                        <span class="icon-contact whatsapp-text">
+                            <fa name="whatsapp"></fa>
+                        </span>
+                        <span class="title-contact whatsapp-text">
+                            {{ whatsappService }}
+                        </span>
+                    </a>
+                </div>
+                <div class="content-contact">
+                    <span class="icon-contact">
+                        <fa name="phone"></fa>
+                    </span>
+                    <span class="title-contact">
+                        {{ phoneService }}
+                    </span>
+                </div>
+                <div class="content-contact">
+                    <span class="icon-contact">
+                        <fa name="envelope"></fa>
+                    </span>
+                    <span class="title-contact">
+                        {{ emailService }}
+                    </span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="follow-us">
+                    <span class="text-follow">{{'about.follow_us' | translate}} : </span>
+                    <div class="follow-sosmed youtube">
+                        <a target="_blank" href="{{ youtube }}">
+                            <fa name="youtube"></fa>
+                        </a>
+                    </div>
+                    <div class="follow-sosmed instagram">
+                        <a target="_blank" href="{{ instagram }}">
+                            <fa name="instagram"></fa>
+                        </a>
+                    </div>
+                    <div class="follow-sosmed facebook">
+                        <a target="_blank" href="{{ facebook }}">
+                            <fa name="facebook"></fa>
+                        </a>
+                    </div>
+                    <div class="follow-sosmed twitter">
+                        <a target="_blank" href="{{ twitter }}">
+                            <fa name="twitter"></fa>
+                        </a>
+                    </div>
+                    <div class="follow-sosmed pinterest">
+                        <a target="_blank" href="{{ pinterest }}">
+                            <fa name="pinterest"></fa>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

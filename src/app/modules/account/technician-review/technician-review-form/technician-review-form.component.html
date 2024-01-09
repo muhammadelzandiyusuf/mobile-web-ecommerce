@@ -1,0 +1,42 @@
+<div class="account profile-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="profile-header">
+                    <mat-icon class="back-icon" (click)="back()">keyboard_backspace</mat-icon>
+                    <span>{{'form.technician_review' | translate}}</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="box-reviews">
+                    <div class="image">
+                        <img src="{{ assetDomain }}/{{ photoPath }}/{{ photoImage }}">
+                    </div>
+                    <div class="form-review">
+                        <form [formGroup]="reviewForm">
+                            <div class="text-name-product">
+                                <span>{{ registrationNo }}</span>
+                            </div>
+                            <div class="text-name-product">
+                                <span>{{ staffId }}</span> {{ fullName }}
+                            </div>
+                            <ngx-input-star-rating class="rating-form" formControlName="rating" required></ngx-input-star-rating>
+                            <mat-form-field>
+                                <textarea matInput placeholder="{{'form.message' | translate}}" formControlName="message" required></textarea>
+                            </mat-form-field>
+                            <mat-action-row>
+                                <button type="submit" class="btn-profile-save" mat-raised-button [disabled]="reviewForm.invalid" (click)="sendReview()">Submit</button>
+                            </mat-action-row>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="checkout-loading" *ngIf="cekProfile">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>

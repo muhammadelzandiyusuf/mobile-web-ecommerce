@@ -1,0 +1,145 @@
+swiper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+swiper img {
+    width: 100%;
+}
+.content-detail{
+    background-color: #ffffff
+}
+.title-project{
+    font-size: 18px;
+    text-align: center;
+    padding: 15px 15px 5px;
+    font-weight: bold
+}
+.subtitle-project{
+    font-size: 14px;
+    text-align: center;
+    padding: 0 15px 15px;
+    color: #999999
+}
+.content-detail .description{
+    line-height: 1.5rem;
+    padding: 0 15px 15px;
+    font-size: 14px;
+    color: #666666
+}
+.box-share{
+    margin-top: 10px;
+    background-color: #ffffff;
+    padding: 15px;
+}
+.box-share .title-link{
+    font-size: 16px;
+    color: #666;
+    font-weight: bold;
+}  
+.link-item{
+    padding: 10px;
+}
+.link-item ul{
+    margin: 0;
+    padding: 0;
+}
+.link-item ul li{
+    list-style: none;
+    display: block;
+    font-size: 14px;
+    color: #c3071c;
+    padding: 5px 0;
+}
+.not-product{
+    display: none;
+}
+.box-product {
+    background-color: #ffffff;
+    margin: 5px;
+    padding: 0;
+    box-shadow: 0 0 10px 0 #dddddd;
+}
+
+.box-product .image {
+    overflow: hidden;
+    padding: 10px 10px 0;
+}
+
+.box-product .image img {
+    width: 100%;
+    position: relative;
+}
+
+.box-product .content {
+    height: 120px;
+    padding: 10px;
+}
+
+.box-product .content .brand {
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+}
+
+.box-product .content .name {
+    padding: 5px 0;
+    font-size: 12px;
+    color: #787878;
+}
+
+.box-product .content .normal-price {
+    font-size: 10px;
+    color: #ad2825;
+    text-decoration: line-through;
+}
+
+.box-product .content .diskon-price {
+    padding: 5px 0;
+    font-size: 12px;
+    color: #787878;
+}
+
+.box-product .installment {
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #787878;
+    font-weight: bold;
+}
+
+.btn-action{
+    padding: 10px;
+    z-index: 999999;
+}
+.btn-action .btn-add-chart{
+    width: 48%;
+    padding: 10px;
+    background-color: #c3071c;
+    color: #fff;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+}
+.btn-action .btn-add-wish{
+    width: 48%;
+    padding: 10px;
+    background-color: #c3071c;
+    color: #fff;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    float: right;
+}
+      
+@media (min-width: 768px) and (max-width: 1024px) {
+    .box-product {
+        margin: 0px 145px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .box-product {
+        margin: 50px 270px;
+    }
+}

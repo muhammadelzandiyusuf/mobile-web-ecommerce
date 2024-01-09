@@ -1,0 +1,18 @@
+<div class="faq-list" (scroll)="onScroll($event)">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="title-terms" *ngIf="lang === 'en'">{{ termNameEng }}</div>
+                <div class="title-terms" *ngIf="lang === 'id'">{{ termNameIndo }}</div>
+                <div class="sub-title-trems" *ngIf="lang === 'en'">{{ titleEnglish }}</div>
+                <div class="sub-title-trems" *ngIf="lang === 'id'">{{ titleIndonesia }}</div>
+            </div>
+            <div class="col-12" *ngFor="let faq of faqs">
+                <div class="title-question" (click)="getDetailFaq(faq.url)">
+                    <span *ngIf="lang === 'en'">{{ faq.title_english }}</span>
+                    <span *ngIf="lang === 'id'">{{ faq.title_indonesia }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

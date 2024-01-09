@@ -1,0 +1,32 @@
+.box-reviews{
+    margin-top: 65px;
+}
+.box-reviews .image{
+    padding: 0 50px;
+}
+.box-reviews .image img{
+    width: 100%;
+}
+.form-review{
+    padding: 0 20px;
+}
+.mat-form-field {
+    width: 100%;
+}
+.rating-form{
+    width: 100%;
+    text-align: center;
+    outline: none
+}
+.text-name-product{
+    color: #666666;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.btn-profile-save{
+    font-size: 14px;
+    color: #fff;
+    background-color: #c3071c;
+    width: 100%
+}

@@ -1,0 +1,62 @@
+<div class="product">
+    <div class="container">
+        <div class="row">
+            <div class="col-12" *ngIf="count === 0">
+                <div class="load-gif">
+                    <img src="/assets/images/load.gif" alt="load" />
+                </div>
+            </div>
+            <div class="col-12" *ngIf="count > 0">
+                <h3 class="text-promo" *ngIf="url == 'deal_zone'">{{'menu.deal_zone' | translate}}</h3>
+                <h3 class="text-promo" *ngIf="url == 'sale_item'">{{'menu.sale_item' | translate}}</h3>
+                <h3 class="text-promo" *ngIf="url == 'hot_deals'">{{'menu.hot_deals' | translate}}</h3>
+                <h3 class="text-promo" *ngIf="url == 'best_seller'">{{'home.best_seller' | translate}}</h3>
+                <h3 class="text-promo" *ngIf="url == 'top_picks'">{{'home.top_picks' | translate}}</h3>
+                <h3 class="text-promo" *ngIf="url == 'new_collection'">{{'home.new_collection' | translate}}</h3>
+                <h3 class="text-promo" *ngIf="url == 'pre_order'">{{'home.pre_order' | translate}}</h3>
+                <div class="count-time" *ngIf="url == 'deal_zone'">
+                    <count-down [text]="text" units="Hours | Minutes | Seconds" end="{{dateEnd | date: 'MM dd, yyyy HH:mm:ss'}}"></count-down>
+                </div>
+                <div class="text-promo-description" *ngIf="url == 'hot_deals'">{{'menu.hot_deals_des' | translate}}</div>
+                <div class="text-promo-description" *ngIf="url == 'deal_zone'">{{'menu.deal_zone_des' | translate}}</div>
+                <div class="text-promo-description" *ngIf="url == 'sale_item'">{{'menu.clearance_sale_des' | translate}}</div>
+                <div class="text-promo-description" *ngIf="url == 'best_seller'">{{'menu.best_seller_des' | translate}}</div>
+                <div class="text-promo-description" *ngIf="url == 'top_picks'">{{'menu.top_picks_des' | translate}}</div>
+                <div class="text-promo-description" *ngIf="url == 'new_collection'">{{'menu.new_collection_des' | translate}}</div>
+                <div class="text-promo-description" *ngIf="url == 'pre_order'">{{'menu.pre_order_des' | translate}}</div>
+            </div>
+            <div class="col-6 col-sm-4 col-md-4" *ngFor="let product of products">
+                <div class="box-product" (click)="goProductDetail(product.url)">
+                    <div class="product-discount-all" *ngIf="product.discount > 32">
+                        <span>{{ product.discount }}%</span>
+                    </div>
+                    <div class="image">
+                        <img src="{{ product.image_domain }}/{{ product.product_image_path }}/{{ product.product_image_name }}">
+                    </div>
+                    <!-- <div class="discount-product">
+                        {{'product.discount' | translate}} {{ product.discount }}%
+                    </div> -->
+                    <div class="content">
+                        <div class="brand">{{ product.brand_name }}</div>
+                        <div class="name">{{ product.name }}
+                            <span>{{product.code }}</span>
+                        </div>
+                        <div *ngIf="product.price > 0">
+                            <div class="normal-price" *ngIf="product.discount !== 0">{{ product.price | currency:'Rp':'true':'4.0-0' }}</div>
+                            <div class="diskon-price">{{ product.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                        </div>
+                        <div *ngIf="product.price == null || product.price == 0">
+                            <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                        </div>
+                    </div>
+                    <div class="installment">
+                        <span *ngIf="product.price > 0">
+                            {{ product.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                        </span>
+                    </div>
+                    <div class="installment color-red" *ngIf="product.stock_status_id != 1">{{ product.stock_status }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

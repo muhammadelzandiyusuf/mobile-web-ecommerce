@@ -1,0 +1,49 @@
+.balance{
+    background-color: #ffffff;
+    padding: 15px 10px;
+}
+.title-withdraw{
+    font-size: 18px;
+    color: #666666;
+    text-align: center;
+    padding: 15px 15px 0;
+}
+.commision{
+    font-size: 16px;
+    color: #666666;
+    padding: 0 0 10px;
+}
+.commision span{
+    color: #c3071c;
+}
+.claim-container{
+    padding: 15px 0 0;
+}
+.claim-container > *{
+    width: 100%;
+}
+.claim-right-align {
+    text-align: right;
+}
+.button-withdrawl{
+    padding: 10px 0;
+}
+.btn-withdrwal{
+    width: 100%;
+    font-size: 14px;
+    padding: 0;
+    background-color: #c3071c;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+} 
+.sub-title-draw{
+    font-size: 14px;
+    color: #666666;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.mat-checkbox{
+    font-size: 12px;
+}

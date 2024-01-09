@@ -1,0 +1,46 @@
+<div class="account profile-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="profile-header">
+                    <mat-icon class="back-icon" (click)="backAccount()">keyboard_backspace</mat-icon>
+                    <span>{{'account.voucher' | translate}}</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="content-voucher-account">
+                    <div class="box-content-voucher" *ngFor="let voucher of vouchers">
+                        <div (click)="detailVoucher(voucher.code)">
+                            <div class="header-image">
+                                <img src="{{ voucher.domain_asset }}/{{ voucher.path_image }}/{{ voucher.thumb_image }}">
+                            </div>
+                            <div class="voucher-description" [innerHtml]="voucher.highlight_english"></div>
+                        </div>
+                        <div class="action-expired">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="text-expired">{{'account.expired_at' | translate}}</div>
+                                        <div class="date-expired">
+                                          <i class="fa fa-clock"></i> {{ voucher.date_end | date : 'd/M/y' }}
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                      <div class="right">
+                                          <button class="btn-use-voucher" (click)="detailVoucher(voucher.code)">{{'account.use_voucher' | translate}}</button>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notfound">
+                        <div class="not-found-data" *ngIf="vouchers?.length === 0">
+                            {{'account.no_voucher' | translate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

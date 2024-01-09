@@ -1,0 +1,27 @@
+.videos{
+    background-color: #ffffff
+}
+.video{
+    margin: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 0 8px 1px #dddddd;
+    height: 55px;
+}
+.category-name{
+    font-size: 14px;
+    text-align: center;
+    color: #999999;
+    padding: 10px;
+    font-weight: bold;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.text-video{
+    font-size: 18px;
+    color: #666666;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px;
+}

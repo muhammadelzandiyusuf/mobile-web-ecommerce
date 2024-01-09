@@ -1,0 +1,51 @@
+.kitchen-partner{
+    margin: 0;
+    padding: 0 0 10px;
+    min-height: auto;
+    max-height: 1000px;
+    overflow: scroll;
+    background-color: #ffffff
+}
+
+.kitchen-content{
+    margin-top: 10px;
+}
+.kitchen-content .image{
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+.kitchen-content .image img{
+    width: 100%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.title-kitchen{
+    font-size: 18px;
+    color: #666;
+    font-weight: bold;
+    padding: 15px 15px 0;
+    text-align: center;
+    text-transform: capitalize;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+.banners .image img{
+    width: 100%;
+}
+.container-partner{
+    padding: 0;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .kitchen-content{
+        margin-top: 0;
+        padding: 5px
+    }
+    .container-partner{
+        padding: 0 5px;
+    }
+}
+  

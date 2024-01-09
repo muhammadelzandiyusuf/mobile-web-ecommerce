@@ -1,0 +1,16 @@
+<div class="free-kitchen">
+    <div class="container">
+        <div class="row">
+            <div class="col-12" *ngFor="let design of freeKitchen">
+                <div class="banner-shopping" (click)="goKitchenDesignDetail(design.url)">
+                    <div class="image">
+                        <img src="{{ design.image_domain }}/{{ design.thumb_path }}/{{ design.thumb_image }}">
+                    </div>
+                    <div class="term-name">
+                        {{ design.title }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

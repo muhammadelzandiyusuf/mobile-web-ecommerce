@@ -1,0 +1,114 @@
+<div class="tradein">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="banner">
+                    <img src="{{ domainImage }}/{{ bannerPath }}/{{ bannerImage }}">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="banner">
+                    <img src="{{ domainImage }}/{{ bannerPathStep }}/{{ bannerStep }}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- <div class="title">{{'product.products_eligible_trade_up_bonus' | translate}}</div> -->
+                <div class="title-request-prod">
+                    {{'product.trade_request' | translate}} <span (click)="showRequestProduct()">{{'product.request_product' | translate}}</span>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="results?.length === 0">
+                <div class="not-wihslish">
+                    <div class="not-found-data">
+                        {{'product.product_not_found' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-sm-4 col-md-4" *ngFor="let product of results">
+              <div class="box-product" (click)="goProductDetail(product.url)">
+                <div class="product-discount-all" *ngIf="product.discount > 32">
+                    <span>{{ product.discount }}%</span>
+                </div>
+                  <div class="image">
+                      <img src="{{ product.image_domain }}/{{ product.product_image_path }}/{{ product.product_image_name }}">
+                  </div>
+                  <div class="content">
+                      <div class="brand">{{ product.brand_name }}</div> 
+                      <div class="name">{{ product.name }}
+                        ({{product.code }})
+                      </div>
+                      <div class="normal-price" *ngIf="product.discount !== 0">{{ product.price | currency:'Rp':'true':'4.0-0' }}</div>
+                      <div class="diskon-price">{{ product.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                  </div>
+                  <div class="action">
+                      <div class="button-row">
+                        <button mat-raised-button color="kitchent" (click)="goProductDetail(product.url)">{{'product.shop_now' | translate}}</button>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="col-12">
+                <div class="term-condition">
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    {{'footer.term_condition' | translate}}
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div *ngIf="lang === 'en'" class="term-condition-referral" [innerHtml]="termEnglish"></div>
+                            <div *ngIf="lang === 'id'" class="term-condition-referral" [innerHtml]="termIndonesia"></div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layout-form" *ngIf="showRequest">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="title-tradein-request">
+                    Request Product Tradein 
+                    <span (click)="closeRequestProduct()"><i class="fas fa-times"></i></span>
+                </div>
+            </div>
+            <div class="layout-form-input">
+                <form novalidate [formGroup]="tradeinForm" enctype="multipart/form-data">
+                    <mat-form-field>
+                        <mat-select placeholder="Brand" formControlName="brand_id" required>
+                          <mat-option *ngFor="let brand of brands" [value]="brand.id" (click)="getProductTradeinRequest()">
+                            {{brand.brand_name}}
+                          </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="{{'helpinfo.product' | translate}}" [matAutocomplete]="auto" formControlName='productInput' disabled="productDisable" required>
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                            <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="20"></mat-spinner></mat-option>
+                            <ng-container *ngIf="!isLoading">
+                                <mat-option *ngFor="let product of products" [value]="product">
+                                    <img class="example-option-img" aria-hidden [src]="product.image" height="25">
+                                    <span>{{ product.full_name }}</span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+                    </mat-form-field>
+
+                    <div class="button-submit">
+                        <button *ngIf="spinner === false" type="submit" mat-raised-button color="action" [disabled]="tradeinForm.invalid" (click)="saveRequest()">Submit</button>
+                        <button *ngIf="spinner" type="button" mat-raised-button disabled="true">
+                            <img src="assets/images/spin.gif" class="image-spinner">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

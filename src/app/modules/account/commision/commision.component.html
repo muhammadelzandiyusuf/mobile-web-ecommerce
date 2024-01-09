@@ -1,0 +1,66 @@
+<div class="balance">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="form-date" *ngIf="searching">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5">
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="picker" [formControl]="startDate" placeholder="{{ 'account.start_date' | translate }}">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker startView="year" [startAt]="startDateNow"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2">
+                          <div class="min-date">-</div>
+                        </div>
+                        <div class="col-5">
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="date" [formControl]="endDate" placeholder="{{ 'account.end_date' | translate }}">
+                                <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                                <mat-datepicker #date startView="year" [startAt]="endDateNow"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12">
+                            <div class="button-row">
+                                <button class="btn-serach" mat-raised-button (click)="getCommisions()">{{ 'account.search' | translate }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                  <div class="header-text">
+                      {{ 'account.your_commision' | translate }} <span>{{ totalCommision | currency:'Rp':'true':'0.0-0' }}</span> 
+                      <a class="filter-btn" (click)="getSerach(searching)">
+                          <i class="fa fa-filter"></i>
+                      </a>
+                  </div>
+                  <div class="button-withdrawl" *ngIf="commisionClaimable === 'T'">
+                      <button class="btn-withdrwal" (click)="detailWithdraw()">{{ 'account.withdraw_commision' | translate }}</button>
+                  </div>
+                  <div class="not-found-data" *ngIf="countCommision === 0">
+                      {{ 'account.commision_is_no_data' | translate }}
+                  </div>
+            </div>
+            <div class="col-12" *ngIf="countCommision > 0">
+                <div class="information-balance" *ngFor="let commision of commisions">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                              <div class="text-invoice-number">
+                                {{ commision.created_at.date | date : 'd MMM y HH:mm' }}
+                              </div>
+                              <div class="invoice-number line-height">{{ commision.note }}</div>
+                            </div>
+                            <div class="col-12">
+                                <div class="text-invoice-number">Nominal</div>
+                                <div class="invoice-number {{ commision.mutation }}">{{ commision.amount | currency:'Rp':'true':'0.0-0' }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

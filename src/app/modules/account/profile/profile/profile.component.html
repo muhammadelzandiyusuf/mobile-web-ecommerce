@@ -1,0 +1,143 @@
+<div class="account profile-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="profile-header">
+                    <mat-icon class="back-icon" (click)="backAccount()">keyboard_backspace</mat-icon>
+                    <span>{{'account.profile' | translate}}</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="account-photo-profile">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="image-profile">
+                                <img src="/assets/images/default.jpg" *ngIf="avatarImage === null">
+                                <img src="{{ imageDomain }}/{{ avatarPath }}/{{ avatarImage }}" *ngIf="avatarImage !== null">
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="name-text">
+                              {{ fullName }}
+                            </div>
+                            <div class="person-us">
+                              ({{ personUs }})
+                            </div>
+                            <div class="button-edit">
+                                <button class="edit-btn" (click)="goToUrl()">
+                                    <mat-icon class="icon-setting">settings</mat-icon>
+                                    <span>{{'account.set_account' | translate}}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="account-personal">
+                    <div class="header-text">{{ 'account.personal_data' | translate }}</div>
+                    <div class="header-sub-text">{{'account.this_info_can_only_be_seen_by_you' | translate}}</div>
+                    <div class="personal-data">
+                        <div class="title-text">Email</div>
+                        <div class="title-text-value">{{ email }}</div>
+                    </div>
+                    <div class="personal-data">
+                        <div class="title-text">{{ 'form.mobile' | translate }}</div>
+                        <div class="title-text-value">{{ handphone }}</div>
+                    </div>
+                    <div class="personal-data">
+                        <div class="title-text">{{ 'form.phone' | translate }}</div>
+                        <div class="title-text-value">
+                            {{ telephone }}
+                            <span *ngIf="telephone === null">-</span>
+                        </div>
+                    </div>
+                    <div class="personal-data">
+                        <div class="title-text">{{ 'form.birthday' | translate }}</div>
+                        <div class="title-text-value">{{ birthday | date: 'd MMMM y' }}</div>
+                    </div>
+                    <div class="personal-data">
+                        <div class="title-text">{{ 'form.address' | translate }}</div>
+                        <div class="title-text-value">
+                            {{ address }}
+                            <span *ngIf="address === null">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="account-personal">
+                    <div class="header-text">{{ 'form.company_information' | translate }}</div>
+                    <div class="header-sub-text">{{'account.this_info_can_only_be_seen_by_you' | translate}}</div>
+                    <div class="personal-data">
+                        <div class="title-text">{{ 'form.company_name' | translate }}</div>
+                        <div class="title-text-value">
+                            {{ companyName }}
+                            <span *ngIf="companyName === null">-</span>
+                        </div>
+                    </div>
+                    <div class="personal-data">
+                        <div class="title-text">{{ 'form.company_website' | translate }}</div>
+                        <div class="title-text-value">
+                            {{ companyWebsite }}
+                            <span *ngIf="companyWebsite === null">-</span>
+                        </div>
+                    </div>
+                    <div class="personal-data">
+                        <div class="title-text">{{ 'form.company_title' | translate }}</div>
+                        <div class="title-text-value">
+                            {{ companyTitle }}
+                            <span *ngIf="companyTitle === null">-</span>
+                        </div>
+                    </div>
+                    <div class="personal-data">
+                        <div class="title-text">{{ 'form.industry' | translate }}</div>
+                        <div class="title-text-value">
+                            {{ companyIndusty }}
+                            <span *ngIf="companyIndusty === null">-</span>
+                        </div>
+                    </div>
+                    <div class="personal-data">
+                        <div class="title-text">{{ 'form.phone' | translate }}</div>
+                        <div class="title-text-value">
+                            {{ companyTelephone }}
+                            <span *ngIf="companyTelephone === null">-</span>
+                        </div>
+                    </div>
+                    <div class="personal-data">
+                        <div class="title-text">{{ 'form.fax' | translate }}</div>
+                        <div class="title-text-value">
+                            {{ companyFax }}
+                            <span *ngIf="companyFax === null">-</span>
+                        </div>
+                    </div>
+                    <div class="personal-data">
+                        <div class="title-text">{{ 'form.address' | translate }}</div>
+                        <div class="title-text-value">
+                            {{ companyAddress }}
+                            <span *ngIf="companyAddress === null">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="documentFile1 !== null && documentFile2 !== null">
+                <div class="account-personal">
+                    <div class="header-text">{{ 'form.required_document' | translate }}</div>
+                    <div class="header-sub-text">{{'account.this_info_can_only_be_seen_by_you' | translate}}</div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="image-requirement-1">
+                                 <img src="{{ imageDomain }}/{{ documentPath }}/{{ documentFile1 }}" *ngIf="documentFile1 !== null">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="image-requirement-2">
+                                <img src="{{ imageDomain }}/{{ documentPath }}/{{ documentFile2 }}" *ngIf="documentFile2 !== null">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

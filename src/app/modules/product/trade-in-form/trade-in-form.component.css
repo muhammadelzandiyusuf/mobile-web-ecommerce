@@ -1,0 +1,75 @@
+.tradeins{
+    background-color: #ffffff;
+    padding-bottom: 15px;
+}
+.tarde-form{
+    margin: 10px;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 2px #ddd;
+}
+.mat-form-field {
+    width: 100%;
+}
+.file-document {
+    padding: 10px 0;
+}
+.file-document img {
+    width: 80%;
+}
+.file-document p {
+    font-size: 10px;
+    color: #c3071c;
+    margin-bottom: 10px;
+}
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+.upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+.form-textrea{
+    height: 100px;
+}
+.action{
+    float: right;
+}
+.title{
+    padding: 20px;
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+    text-align: center;
+}
+.banner img{
+    width: 100%;
+}
+.active{
+    display: none;
+}
+.term-text{
+    margin: 25px 0 10px;
+    font-size: 16px;
+    color: #666;
+    font-weight: bold;
+    padding: 0 15px;
+    text-transform: capitalize
+}
+.term-conditions{
+    margin-bottom: 15px;
+    padding: 15px 10px 0;
+}
+.term-condition{
+    font-size: 14px;
+    color: #666666;
+    line-height: 1.5rem;
+    word-wrap: break-word;
+    margin-bottom: 15px;
+}

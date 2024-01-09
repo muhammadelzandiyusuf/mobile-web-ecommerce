@@ -1,0 +1,38 @@
+.cooking-success-page{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    text-align: center;
+    height: 100%;
+    z-index: 9;
+}
+.cooking-success-page .check-cooking{
+    text-align: center;
+    color: #c3071c;
+    font-weight: bold;
+    padding: 30px 15px 15px;
+}
+.thanks-text{
+    font-size: 28px;
+    text-align: center;
+    padding: 15px 15px 10px;
+    font-weight: bold;
+}
+.text-email{
+    text-align: center;
+    font-size: 18px;
+    padding: 0px 15px 15px;
+}
+.finish{
+    text-align: center;
+    padding: 0 15px 25px;;
+}
+.finish .button-finish{
+    border: 1px solid #c3071c;
+    border-radius: 5px;
+    padding: 10px 15px;
+    background-color: #c3071c;
+    color: #ffffff;
+    outline: none;
+}

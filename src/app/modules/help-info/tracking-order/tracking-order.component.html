@@ -1,0 +1,42 @@
+<div class="account profile-page">
+  <div class="container">
+      <div class="row">
+          <div class="col-12">
+              <div class="profile-header">
+                  <mat-icon class="back-icon" (click)="backHistory()">keyboard_backspace</mat-icon>
+                  <span>Track Shipping</span>
+              </div>
+          </div>
+          <div class="col-12">
+              <div class="track-shipping" *ngIf="status === false">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-12">
+                              <div class="form-track">
+                                  <mat-form-field>
+                                      <input matInput placeholder="Tracking Number" [formControl]="trackNumber" required>
+                                  </mat-form-field>
+                              </div>
+                          </div>
+                          <div class="col-12">
+                              <div class="form-track">
+                                  <mat-action-row>
+                                      <button class="btn-profile-save" mat-raised-button (click)="trackShipping()">Submit</button>
+                                  </mat-action-row>
+                                  <div class="message-track" *ngIf="description !== null">
+                                      {{ description }}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="track-shipping">
+                  <div class="text-summary">
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

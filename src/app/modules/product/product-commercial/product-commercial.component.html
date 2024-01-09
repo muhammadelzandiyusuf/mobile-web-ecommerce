@@ -1,0 +1,44 @@
+<div class="container-fluid" *ngIf="notLoad === false">
+    <div class="row">
+        <div class="col-12">
+            <div class="load-gif">
+                <img src="/assets/images/load.gif" alt="load" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="commercial" *ngIf="notLoad === true">
+    <div class="commercial__banner">
+        <img class="commercial__banner__image" src="/assets/images/banner-commercial.jpg" alt="{{ bannerName }}" />
+    </div>
+    <h3 class="commercial_h3">{{ nameCategory }}</h3>
+    <h3 class="commercial__more" (click)="goCategory(url)">
+        {{ 'home.show_more' | translate }}
+    </h3>
+    <div class="commercial__title">Brand</div>
+    <div class="commercial_container">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 col-sm-4 col-md-4" *ngFor="let brand of brands">
+                    <div class="commercial__box" (click)="goBrand(brand.url)">
+                        <img src="{{ domainImage }}/{{ pathBrand }}/{{ brand.logo_image }}" alt="{{ brand.name }}" class="commercial__box__image" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="commercial__title">{{'menu.category_product' | translate}}</div>
+    <div class="commercial_container">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 col-sm-4 col-md-4" *ngFor="let category of categories">
+                    <div class="commercial__box" (click)="goCategory(category.url)">
+                        <img src="{{ domainImage }}/{{ pathCategory }}/{{ category.image }}" alt="{{ category.name_english }}" class="commercial__box__image" />
+                        <div class="commercial_box_title" *ngIf="lang === 'en'">{{ category.name_english }}</div>
+                        <div class="commercial_box_title" *ngIf="lang === 'in'">{{ category.name_indonesia }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

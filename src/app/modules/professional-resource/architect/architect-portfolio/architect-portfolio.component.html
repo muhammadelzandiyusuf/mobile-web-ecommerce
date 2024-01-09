@@ -1,0 +1,81 @@
+<div class="portfolio-detail">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="banner-photo">
+                    <swiper class="swiper" [config]="config">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" *ngFor="let banner of portfolioImages">
+                                <img src="{{ imageDomain }}/{{ banner.image_path }}/{{ banner.image }}"  #logo (load)="onLoad()">
+                                <div class="pin-tag" *ngFor="let pin of pinTag; let i = index" [ngStyle]="{'top.px':pin.long, 'left.px':pin.lat}" [ngClass]="{'not-product': banner.id === pin.architect_portfolio_image_id}" (click)="getProductModal(i)">
+                                    <i class="fas fa-tag fa-w-12 fa-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </swiper>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="content-description">
+                    <div class="architect-name">
+                        {{ architectName }}
+                    </div>
+                    <div class="portfolio-title">
+                        {{ title }}
+                    </div>
+                    <div class="content-portfolio" *ngIf="lang === 'en'" [innerHtml]="contentEnglish"></div>
+                    <div class="content-portfolio" *ngIf="lang === 'id'" [innerHtml]="contentIndonesia"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div [@dialog] class="overlay-tag-product dialog" *ngIf="visible" (click)="closeTag()">
+    <div class="banner-tag">
+        <div class="close" (click)="closeTag()">
+            <i class="fa fa-close"></i>
+        </div>
+    </div>
+    <div class="content-product-tag">
+        <div class="box-product">
+            <div class="image">
+                <img src="{{ product.image_domain }}/{{ product.product_image_path }}/{{ product.product_image_name }}">
+            </div>
+            <div class="content" (click)="getProduct(product.url)">
+                <div class="brand">{{ product.brand_name }}</div> 
+                <div class="name">{{ product.name }}
+                    ({{product.code }})
+                </div>
+                <div *ngIf="product.price > 0">
+                    <div class="normal-price">{{ product.price | currency:'Rp':'true':'4.0-0' }}</div>
+                    <div class="diskon-price">{{ product.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                </div>
+                <div *ngIf="product.price == null || product.price == 0">
+                    <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                </div>
+            </div>
+            <div class="installment" *ngIf="product.stock_status_id == 1" (click)="getProduct(product.url)">
+                <span *ngIf="product.price > 0">
+                    {{ product.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                </span>
+            </div>
+            <div class="installment color-red" *ngIf="product.stock_status_id != 1" (click)="getProduct(product.url)">{{ product.stock_status }}</div>
+            <div class="btn-action">
+                <button class="btn-add-chart" *ngIf="token !== null" (click)="addCart(product.product_id)">
+                    <i class="fas fa-cart-plus"></i>
+                </button>
+                <button class="btn-add-chart" *ngIf="token === null" (click)="addChartLocal(product.product_id, product.brand_name, product.discount_price, product.name, product.product_image_path, product.product_image_name)">
+                    <i class="fas fa-cart-plus"></i>
+                </button>
+                <button class="btn-add-wish" *ngIf="token !== null" (click)="addWishlist(product.product_id)">
+                    <i class="fas fa-heart"></i>
+                </button>
+                <button class="btn-add-wish" *ngIf="token === null" (click)="addWishListLocal(product.product_id)">
+                    <i class="fas fa-heart"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

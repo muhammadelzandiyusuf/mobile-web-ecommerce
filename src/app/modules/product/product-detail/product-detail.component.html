@@ -1,0 +1,1933 @@
+<div class="overlay-popup" *ngIf="contactProduct === true">
+    <div class="popup">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-11">
+                        <div class="title">{{ 'product.ask_about_product' | translate }}</div>
+                    </div>
+                    <div class="col-1">
+                        <div class="close" (click)="closePopupContact()"><fa name="close"></fa></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <form novalidate [formGroup]="contactForm">
+                <mat-form-field>
+                  <input matInput placeholder="{{ 'form.name' | translate }}" formControlName="name" required>
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Email" formControlName="email" required>
+                </mat-form-field>
+                <mat-form-field>
+                  <textarea matInput placeholder="{{ 'product.message' | translate }}" formControlName="message" required></textarea>
+                </mat-form-field>
+               
+                <button mat-raised-button type="submit" [disabled]="contactForm.invalid" color="kitchent" (click)="saveProductContact()">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="overlay-popup" *ngIf="issueProduct === true">
+    <div class="popup">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-11">
+                        <div class="title">{{ 'product.report_incorrect_product_information' | translate }}</div>
+                    </div>
+                    <div class="col-1">
+                        <div class="close" (click)="closePopupIssue()"><fa name="close"></fa></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <form novalidate [formGroup]="issueForm">
+                <mat-form-field>
+                    <textarea matInput placeholder="{{'product.comment' | translate}}" formControlName="comment" required></textarea>
+                </mat-form-field>
+                
+                <button mat-raised-button type="submit" [disabled]="issueForm.invalid" color="kitchent" (click)="saveProductIssue()">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="overlay-popup" *ngIf="requestStock === true">
+    <div class="popup">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-11">
+                      <div class="title"></div>
+                    </div>
+                    <div class="col-1">
+                      <div class="close" (click)="closeRequestStock()"><fa name="close"></fa></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <form>
+                <mat-form-field>
+                    <input matInput placeholder="Email" [formControl]="email" required>
+                </mat-form-field>
+               
+                <button mat-raised-button type="submit" color="kitchent" [disabled]="email.invalid" (click)="saveRequestStock()">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="overlay-image product-detail" *ngIf="closeImages">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="header">
+                    <span (click)="closeImage()"><i class="fa fa-times"></i></span>
+                </div>
+                <div class="content">
+                    <swiper class="swiper" [config]="configImage">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" *ngFor="let banner of product_image">
+                                <div class="image-overlay">
+                                    <img src="{{ banner.image_domain }}/{{ banner.product_image_path }}/{{ banner.product_image }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </swiper>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay-popup" *ngIf="showFreeShipping">
+    <div class="layout">
+        <div class="lay-header">
+            <h6>{{ 'order.info_free_city' | translate }}</h6>
+            <span (click)="closeFreeshipping()">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div class="content-lay">
+            <ul>
+                <li *ngFor="let city of freeCities">
+                    {{ city.city_name }}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="checkout-loading" *ngIf="loading">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>
+
+<div class="overlay-popup" *ngIf="showCostShipping">
+    <!-- Layout Master -->
+    <div class="layout silver-color" *ngIf="showMaster">
+        <div class="lay-header">
+            <h6>{{ 'order.info_cost_shipping' | translate }}</h6>
+            <span (click)="closehipping()">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div class="lay-header">
+            <div class="province-shipping" (click)="openProvince()">
+                {{'order.send_to' | translate}}: 
+                <span>
+                    {{ cityName }} <i class="fas fa-angle-right"></i>
+                </span>
+            </div>
+        </div>
+        <div class="content-lay content-lay-scroll padding-0">
+            <div class="detail-cost" *ngFor="let serv of services">
+                <div class="header-cost">
+                    {{ serv.service_display }}
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="cost-courier">{{ serv.etd_from }} - {{ serv.etd_thru }} {{ serv.times }}</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="cost-courier">{{ weight }} Kg</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="cost-courier" *ngIf="freeShipping === 'F'">{{ serv.price | currency:'IDR':'true':'4.0-0' }}</div>
+                            <div class="cost-courier" *ngIf="freeShipping === 'T'">{{ 'order.free_shipping' | translate }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-cost" *ngIf="0 === services?.length">
+                <div class="header-cost">
+                    {{ 'order.free_shipping' | translate }}
+                </div>
+            </div>
+            <div class="btn-cost-shipping" (click)="closehipping()">
+                OK
+            </div>
+        </div>
+    </div>
+
+    <!-- Layout Province -->
+    <div class="layout" *ngIf="showProvince">
+        <div class="lay-header">
+            <h6>{{ 'form.province' | translate }}</h6>
+            <span (click)="openMasterLayout()">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div class="content-lay padding-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12" *ngFor="let prov of provinces">
+                        <div class="list-province" (click)="selectProv(prov.province_id, prov.province)">
+                            {{ prov.province }}
+                            <span *ngIf="prov_id === prov.province_id">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Layout City -->
+    <div class="layout" *ngIf="showCity">
+        <div class="lay-header" (click)="backProvince()"> 
+            <h5><i class="fas fa-angle-left"></i> {{ provinceName }}</h5>
+        </div>
+        <div class="content-lay padding-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12" *ngFor="let city of cities">
+                        <div class="list-province" (click)="selectCity(city.city_id, city.city_name)">
+                            {{ city.city_name }}
+                            <span *ngIf="city_id === city.city_id">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Layout Subdistrict -->
+    <div class="layout" *ngIf="showSubdistrict">
+        <div class="lay-header" (click)="backCity()"> 
+            <h5><i class="fas fa-angle-left"></i> {{ cityName }}</h5>
+        </div>
+        <div class="content-lay padding-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12" *ngFor="let subdist of subdistricts">
+                        <div class="list-province" (click)="selectSubdist(subdist.id, subdist.name)">
+                            {{ subdist.name }}
+                            <span *ngIf="subdist_id === subdist.id">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay-popup" *ngIf="showCostShippingAddress">
+    <!-- Layout Master -->
+    <div class="layout silver-color" *ngIf="showMasterPostal">
+        <div class="lay-header">
+            <h6>{{ 'order.info_cost_shipping' | translate }}</h6>
+            <span (click)="closeShippingAddress()">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div class="lay-header">
+            <div class="province-shipping">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-8">
+                            <mat-form-field class="form-field">
+                                <input matInput type="text" [formControl]="postalCode" #postal maxlength="5" placeholder="Postal Code" />
+                                <mat-hint align="end">{{postal.value.length}} / 5</mat-hint>
+                              </mat-form-field>
+                        </div>
+                        <div class="col-4">
+                            <button class="form-field" mat-raised-button color="primary" (click)="checkPostalCode()">Check</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-lay content-lay-scroll padding-0">
+            <div class="detail-cost" *ngFor="let serv of services">
+                <div class="header-cost">
+                    {{ serv.service_display }}
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="cost-courier">{{ serv.etd_from }} - {{ serv.etd_thru }} {{ serv.times }}</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="cost-courier">{{ weight }} Kg</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="cost-courier" >{{ serv.price | currency:'IDR':'true':'4.0-0' }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-cost-shipping" (click)="closehipping()">
+                OK
+            </div>
+        </div>
+    </div>
+
+    <!-- Layout Shipping Address -->
+    <div class="layout" *ngIf="showDestination">
+        <div class="lay-header">
+            <h6>{{ postalCode.value }}</h6>
+            <span (click)="openMasterLayout()">
+                <i class="fa fa-times"></i>
+            </span>
+        </div>
+        <div class="content-lay padding-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12" *ngFor="let address of shippingAddress">
+                        <div class="address-shipping" (click)="choseAddress(address)">
+                            <div class="conten-address-shipping">
+                                {{ address.province_name }}, {{ address.city_name }}, {{ address.district_name }}, {{ address.subdistrict_name }}, ({{ address.zip_code }})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12" *ngIf="notLoad === false">
+            <div class="load-gif">
+                <img src="/assets/images/load.gif" alt="load" />
+            </div>
+        </div>
+
+        <div class="col-12" *ngIf="notLoad">
+            <div class="detail-product">
+                <div class="overlay-new" *ngIf="new_colletion === 'T'">
+                    <div  class="new-collection">{{'product.new' | translate}}</div>
+                </div>
+
+                <!-- Image Slider -->
+                <div class="slider-image-detail">
+                    <ul>
+                        <li *ngFor="let slider of product_image; let i = index;">
+                            <div class="slide-image" [ngClass]="{'active-slide':slide_active == i}" (click)="openImage()">
+                                <img src="{{ slider.image_domain }}/{{ slider.product_image_path }}/{{ slider.product_image }}">
+                            </div>
+                        </li>
+                    </ul>  
+                </div>
+                <div class="slider-image-detail-thumbnail">
+                    <ul>
+                        <li *ngFor="let slider of product_image; let i = index;" (click)="slideImage(i)">
+                          <div class="thumbnail-image" [ngClass]="{'active-thumb':thumb_active == i}">
+                              <img src="{{ slider.image_domain }}/{{ slider.product_image_path }}/{{ slider.product_image }}">
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+              
+                <div class="detail-countdown deal-zone-count" *ngIf="product_promo === 'deal_zone'">
+                    <count-down [text]="text" units="Hours | Minutes | Seconds" end="{{date_dealzone_end | date: 'MM dd, yyyy HH:mm:ss'}}"></count-down>
+                </div>
+                <div class="detail-countdown" *ngIf="product_promo === 'sale_item'">
+                    <div class="promo-event">{{'menu.sale_item' | translate}} <br>
+                        <span class="promo-discount">{{ product_detail.product_discount }}%</span>
+                    </div>
+                </div>
+                <div class="detail-countdown" *ngIf="product_promo === 'hot_spectacular'">
+                    <div class="promo-event">{{'menu.hot_deals' | translate}} <br>
+                        <span class="promo-discount">{{ product_detail.product_discount }}%</span>
+                    </div>
+                </div>
+                <div class="detail-countdown" *ngIf="product_promo === 'event'">
+                    <div class="promo-event">{{ product_detail.product_event }} <br>
+                        <span class="promo-discount">{{ product_detail.product_discount }}%</span>
+                    </div>
+                </div>
+
+                <div class="detail-content-product">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="box-product-name">
+                                    <div class="brand-name">{{ brand_name }}</div>
+                                    <div class="product-name">{{ name }}
+                                        (<span>{{ code }}</span>)
+                                    </div>
+                                    <div *ngIf="price === null || price === 0">
+                                        <div *ngIf="product_detail.availability_status_id === 1">
+                                            <div class="status-stock">
+                                                {{'product.price_not_yet_available' | translate}}
+                                            </div>
+                                        </div>
+                                        <div *ngIf="product_detail.availability_status_id === 2">
+                                            <div class="status-stock">
+                                                {{'product.this_product_is_discontinued' | translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="price > 0">
+                                        <div *ngIf="product_detail.availability_status_id === 1">
+                                            <div class="discount-price">{{ product_detail.discount_price | currency:'Rp':'true':'4.0-0' }}
+                                                <span class="normal-price" *ngIf="discount_product > 0 || discount_product != null">{{ product_detail.price | currency:'Rp':'true':'4.0-0' }}</span>
+                                            </div>
+                                            <div class="status-stock">
+                                                {{ product_detail.stock_status }}
+                                            </div>
+                                        </div>
+                                        <div *ngIf="product_detail.availability_status_id === 2">
+                                            <div class="status-stock">
+                                                {{'product.this_product_is_discontinued' | translate}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="area-action">
+                                        <div class="button-row">
+                                            <button mat-button class="btn-action" *ngIf="wishlistStatus === false && token === null" (click)="addWishlistLogin()"><fa name="heart" class="fa-icon"></fa> {{'product.add_to_wishlist' | translate}}</button>
+                                            <button mat-button class="btn-action" *ngIf="wishlistStatus === false && token !== null" (click)="addWishlist()"><fa name="heart" class="fa-icon"></fa> {{'product.add_to_wishlist' | translate}}</button>
+                                            <button mat-button class="btn-action" *ngIf="wishlistStatus === true && token !== null"><fa name="heart" class="fa-icon-wish"></fa> {{'product.add_to_wishlist' | translate}}</button>
+                                            <button mat-button class="btn-action" (click)="popupContact()"><fa name="question" class="fa-icon"></fa> {{'product.ask_about_product' | translate}}</button>
+                                        </div>
+                                        <div class="incorrect-product" *ngIf="token != null">
+                                            <button mat-button class="btn-action" (click)="popupIssue()"><fa name="envelope" class="fa-icon"></fa> {{'product.report_incorrect_product_information' | translate}}</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight" *ngIf="countPakageItem > 0">
+                                    <div class="product-title">
+                                        {{'product.package_item' | translate}}
+                                    </div>
+                                    <div class="package-item">
+                                        <mat-chip-list>
+                                            <mat-chip class="item-package" *ngFor="let item of pakage_item" [ngClass]="{'active':selectedIndex === null}" (click)="toggleValueItem(null)">{{ item.label }}</mat-chip>
+                                            <mat-chip class="item-package" *ngFor="let item of pakage_item_chose; let i = index" [ngClass]="{'active':selectedIndex === i}" (click)="toggleValueItem(i, item.product_url)">{{ item.label }}</mat-chip>
+                                        </mat-chip-list>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight" *ngIf="countPackageAccessories > 0">
+                                    <div class="product-title">
+                                        {{'product.package_accessories' | translate}}
+                                    </div>
+                                    <div class="package-item">
+                                        <mat-chip-list>
+                                            <mat-chip class="item-package" *ngFor="let item of package_acess" [ngClass]="{'active':selectedIndexAcc === null}" (click)="toggleValueAccess(null)">{{ item.label }}</mat-chip>
+                                            <mat-chip class="item-package" *ngFor="let item of package_accessories; let i = index" [ngClass]="{'active':selectedIndexAcc === i}" (click)="toggleValueAccess(i, item.product_url)">{{ item.label }}</mat-chip>
+                                        </mat-chip-list>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight" *ngIf="product_detail.stock_status_id === 2">
+                                    <div class="product-title">
+                                        {{'product.estimation' | translate}}
+                                    </div>
+                                    <div class="container-installment">
+                                        <div class="list-instalment">
+                                            {{ expected_availability }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight" *ngIf="price > 0">
+                                    <div class="product-title">
+                                        {{'product.installment' | translate}}
+                                    </div>
+                                    <div class="container-installment">
+                                        <div class="list-instalment">
+                                            {{'product.installment' | translate}} 3 {{'product.months' | translate}} <span>{{ product_detail.installment_3 | currency:'Rp':'true':'4.0-0' }} / Months</span>
+                                        </div>
+                                        <div class="list-instalment">
+                                            {{'product.installment' | translate}} 6 {{'product.months' | translate}} <span>{{ product_detail.installment_6 | currency:'Rp':'true':'4.0-0' }} / Months</span>
+                                        </div>
+                                        <div class="list-instalment">
+                                            {{'product.installment' | translate}} 12 {{'product.months' | translate}} <span>{{ product_detail.installment_12 | currency:'Rp':'true':'4.0-0' }} / Months</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight">
+                                    <div class="product-title">
+                                        {{'product.check_shipping_cost_for_this_product' | translate}}
+                                    </div>
+                                    <div class="container-installment">
+                                        <!-- <div class="box-shipping" (click)="openFreeshipping()">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-1">
+                                                        <div class="img-shipping">
+                                                            <img src="{{image_domain}}{{pathShipping}}{{imgFreeShipping}}" alt="free-shipping" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-11">
+                                                        <div class="name-shipping">{{'order.free_shipping' | translate}}</div>
+                                                        <div class="desc-shipping">{{'order.free_city' | translate}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+                                        <!-- <div class="box-shipping" (click)="openhipping()">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-1">
+                                                        <div class="img-shipping">
+                                                            <img src="{{image_domain}}{{pathShipping}}{{imgShipping}}" alt="shipping" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-11">
+                                                        <div class="name-shipping center-text">
+                                                            {{'order.check_shipping_cost' | translate}}
+                                                            <span *ngIf="freeShipping === 'F'">{{ priceCourier | currency:'Rp':'true':'4.0-0' }}</span>
+                                                            <span *ngIf="freeShipping === 'T'">{{'order.free_shipping' | translate}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="box-shipping" (click)="openShippingAddress()">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-1">
+                                                        <div class="img-shipping">
+                                                            <img src="{{image_domain}}{{pathShipping}}{{imgShipping}}" alt="shipping" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-11">
+                                                        <div class="name-shipping center-text">
+                                                            {{'order.check_shipping_cost' | translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="product-highlight none-border">
+                                    <div class="product-title">
+                                        {{'product.highlight_product' | translate}}
+                                    </div>
+                                    <div class="content-highlight">
+                                        <div class="container-content" *ngIf="lang === 'en'" [innerHTML]="highlight_english"></div>
+                                        <div class="container-content" *ngIf="lang === 'id'" [innerHTML]="highlight_indonesia"></div>
+                                    </div>
+                                </div>
+
+                                <div class="banner-detail">
+                                    <img src="{{ image_domain }}/{{ banner_image_path }}/{{ banner_image_name }}">
+                                </div>
+
+                                <div class="content-tabs">
+                                    <mat-accordion class="example-headers-align">
+                                        <mat-expansion-panel hideToggle>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    {{'product.description' | translate}}
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                        
+                                            <div class="video-url" *ngIf="videoUrl != null">
+                                                <iframe class="e2e-iframe-trusted-src" width="100%" height="{{heightVideo}}" [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+                                            </div>
+                                            <div class="cutsiize-image" *ngIf="cutsize_image_name !== null">
+                                                <img src="{{ image_domain }}/{{ cutsize_image_path }}/{{ cutsize_image_name }}">
+                                            </div>
+                                            <div *ngIf="lang === 'en'" class="list-description" [innerHTML]="description_english"></div>
+                                            <div *ngIf="lang === 'id'" class="list-description" [innerHTML]="description_indonesia"></div>
+                                        </mat-expansion-panel>
+                                    
+                                        <mat-expansion-panel hideToggle>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    {{'product.excellence' | translate}}
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            
+                                            <h4 *ngIf="product_excellence?.length === 0">{{'product.not_found_excellence_product' | translate}}</h4>
+                                            <div class="excellence-container" *ngIf="product_excellence?.length > 0">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-6" *ngFor="let excellence of product_excellence">
+                                                            <div class="box-excellence">
+                                                                <div class="image">
+                                                                    <img src="{{ image_domain }}/{{ excellence.image_path }}/{{ excellence.image_name }}">
+                                                                </div>
+                                                                <div class="title-excellence" *ngIf="lang === 'en'">
+                                                                    {{ excellence.title_english }}
+                                                                </div>
+                                                                <div class="title-excellence" *ngIf="lang === 'id'">
+                                                                    {{ excellence.title_indonesia }}
+                                                                </div>
+                                                                <div class="content-excellence" *ngIf="lang === 'en'">
+                                                                    {{ excellence.content_english }}
+                                                                </div>
+                                                                <div class="content-excellence" *ngIf="lang === 'id'">
+                                                                    {{ excellence.content_indonesia }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    
+                                        <mat-expansion-panel hideToggle>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    {{'product.specification' | translate}}
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                        
+                                            <div class="spesification-container">
+                                                <mat-tab-group>
+                                                    <mat-tab>
+                                                        <ng-template mat-tab-label>
+                                                            {{'product.overview' | translate}}
+                                                        </ng-template>
+                                                        <div class="table-content-specivication">
+                                                            <table>
+                                                                <tr *ngFor="let row of specification">
+                                                                    <td *ngIf="row.specification_category == 'O'">{{ row.specification_value }}</td>
+                                                                    <td *ngIf="row.specification_category == 'O'">
+                                                                        <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                                        <span *ngIf="row.specification_content == null">Null</span>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </mat-tab>
+
+                                                    <mat-tab>
+                                                        <ng-template mat-tab-label>
+                                                            {{'product.dimension_weight' | translate}}
+                                                        </ng-template>
+                                                        <div class="table-content-specivication">
+                                                            <table>
+                                                                <tr *ngFor="let row of specification">
+                                                                <td *ngIf="row.specification_category == 'DW'">{{ row.specification_value }}</td>
+                                                                <td *ngIf="row.specification_category == 'DW'">
+                                                                    <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                                    <span *ngIf="row.specification_content == null">Null</span>
+                                                                </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </mat-tab>
+
+                                                    <mat-tab>
+                                                        <ng-template mat-tab-label>
+                                                            {{'product.perfomance_efficiency' | translate}}
+                                                        </ng-template>
+                                                        <div class="table-content-specivication">
+                                                            <table>
+                                                                <tr *ngFor="let row of specification">
+                                                                <td *ngIf="row.specification_category == 'PE'">{{ row.specification_value }}</td>
+                                                                <td *ngIf="row.specification_category == 'PE'">
+                                                                    <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                                    <span *ngIf="row.specification_content == null">Null</span>
+                                                                </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </mat-tab>
+
+                                                    <mat-tab>
+                                                        <ng-template mat-tab-label>
+                                                            {{'product.comfort_convenience' | translate}}
+                                                        </ng-template>
+                                                        <div class="table-content-specivication">
+                                                            <table>
+                                                                <tr *ngFor="let row of specification">
+                                                                <td *ngIf="row.specification_category == 'CC'">{{ row.specification_value }}</td>
+                                                                <td *ngIf="row.specification_category == 'CC'">
+                                                                    <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                                    <span *ngIf="row.specification_content == null">Null</span>
+                                                                </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </mat-tab>
+
+                                                    <mat-tab>
+                                                        <ng-template mat-tab-label>
+                                                            {{'product.aesthetics_features' | translate}}
+                                                        </ng-template>
+                                                        <div class="table-content-specivication">
+                                                            <table>
+                                                                <tr *ngFor="let row of specification">
+                                                                <td *ngIf="row.specification_category == 'AF'">{{ row.specification_value }}</td>
+                                                                <td *ngIf="row.specification_category == 'AF'">
+                                                                    <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                                    <span *ngIf="row.specification_content == null">Null</span>
+                                                                </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </mat-tab>
+
+                                                    <mat-tab>
+                                                        <ng-template mat-tab-label>
+                                                            {{'product.safety_security' | translate}}
+                                                        </ng-template>
+                                                        <div class="table-content-specivication">
+                                                            <table>
+                                                            <tr *ngFor="let row of specification">
+                                                                <td *ngIf="row.specification_category == 'SS'">{{ row.specification_value }}</td>
+                                                                <td *ngIf="row.specification_category == 'SS'">
+                                                                    <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                                    <span *ngIf="row.specification_content == null">Null</span>
+                                                                </td>
+                                                            </tr>
+                                                            </table>
+                                                        </div>
+                                                    </mat-tab>
+
+                                                    <mat-tab>
+                                                        <ng-template mat-tab-label>
+                                                            {{'product.warranty' | translate}}
+                                                        </ng-template>
+                                                        <div class="table-content-specivication">
+                                                            <table>
+                                                            <tr *ngFor="let row of specification">
+                                                                <td *ngIf="row.specification_category == 'W'">{{ row.specification_value }}</td>
+                                                                <td *ngIf="row.specification_category == 'W'">
+                                                                    <span *ngIf="row.specification_content">{{ row.specification_content }}</span>
+                                                                    <span *ngIf="row.specification_content == null">Null</span>
+                                                                </td>
+                                                            </tr>
+                                                            </table>
+                                                        </div>
+                                                    </mat-tab>
+                                                </mat-tab-group>
+                                                <div class="notes-spesification">*{{'product.spesification_subject_to_change_without_prior_notice' | translate}}</div>
+                                            </div>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </div>
+
+                                <div class="product-highlight" *ngIf="brand_galeries?.length > 0">
+                                    <div class="product-title">
+                                        {{'product.inspiration_for_your_kitchen' | translate}}
+                                    </div>
+                                    <div class="swipper-others-color">
+                                        <swiper class="swiper" [config]="config">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide" *ngFor="let slide of brand_galeries">
+                                                    <div class="brand-galery" (click)="detailGalery(slide.url)">
+                                                        <div class="image">
+                                                            <img src="{{ image_domain }}/{{ galery_image_path }}/{{ slide.thumb_image }}" alt="{{ slide.title }}">
+                                                        </div>
+                                                        <div class="title-brand-galery">
+                                                            {{ slide.title }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </swiper>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight" *ngIf="project_references?.length > 0">
+                                    <div class="product-title">
+                                        {{'product.reference' | translate}}
+                                    </div>
+                                    <div class="swipper-others-color">
+                                        <swiper class="swiper" [config]="config">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide" *ngFor="let project of project_references">
+                                                    <a href="project_references/{{ project.url }}">
+                                                        <div class="brand-galery">
+                                                            <div class="image">
+                                                                <img src="{{ image_domain }}/{{ proejct_reference_path }}/{{ project.thumb_image }}" alt="{{ project.title }}">
+                                                            </div>
+                                                            <div class="title-brand-galery">
+                                                                {{ project.title }}
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </swiper>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight" *ngIf="restaurants?.length > 0">
+                                    <div class="product-title">
+                                        {{'product.cafe' | translate}}
+                                    </div>
+                                    <div class="swipper-others-color">
+                                        <swiper class="swiper" [config]="config">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide" *ngFor="let cafe of restaurants">
+                                                    <a href="cafe_resto/{{ cafe.url }}">
+                                                        <div class="brand-galery">
+                                                            <div class="image">
+                                                                <img src="{{ image_domain }}/{{ restaurant_path }}/{{ cafe.thumb_image }}" alt="{{ cafe.name }}">
+                                                            </div>
+                                                            <div class="title-brand-galery">
+                                                                {{ cafe.name }}
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </swiper>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight" *ngIf="recipes?.length > 0">
+                                    <div class="product-title">
+                                        {{'product.recipe' | translate}}
+                                    </div>
+                                    <div class="swipper-others-color">
+                                        <swiper class="swiper" [config]="config">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide" *ngFor="let recipe of recipes">
+                                                    <a href="recipes/{{ recipe.url }}">
+                                                        <div class="brand-galery">
+                                                            <div class="image">
+                                                                <img src="{{ image_domain }}/{{ recipe_path }}/{{ recipe.thumb_image }}" alt="{{ recipe.title }}">
+                                                            </div>
+                                                            <div class="title-brand-galery">
+                                                                {{ recipe.title }}
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </swiper>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight">
+                                    <div class="product-title">
+                                        {{'product.rating' | translate}}
+                                    </div>
+                                    <div class="review-discuss">
+                                        <div *ngIf="count_review === 0">
+                                            <div class="title-product">
+                                                <span class="brand-rating">{{ brand_name }}</span> {{ name }} ({{ product_detail.code }}) REVIEWS
+                                            </div>
+                                            <div class="rating">
+                                                <rating [readonly]="true"></rating> <span class="count-review"> 0 {{'product.review' | translate}}</span>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="count_review > 0">
+                                            <div class="title-product">
+                                                <span class="brand-rating">{{ brand_name }}</span> {{ name }} ({{ product_detail.code }}) REVIEWS
+                                            </div>
+                                            <div class="rating">
+                                                <rating [(ngModel)]="starsCount" [readonly]="true"></rating> <span class="count-review">{{ product_detail.count_review }} {{'product.review' | translate}}</span>
+                                            </div>
+                                            <div class="progress-rating">
+                                                <div class="rating-progress">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-2">5 {{'product.stars' | translate}}</div>
+                                                            <div class="col-8">
+                                                                <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="rate_5"></mat-progress-bar>
+                                                            </div>
+                                                            <div class="col-2">({{count_rate_5}})</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-2">4 {{'product.stars' | translate}}</div>
+                                                            <div class="col-8">
+                                                                <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="rate_4"></mat-progress-bar>
+                                                            </div>
+                                                            <div class="col-2">({{count_rate_4}})</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-2">3 {{'product.stars' | translate}}</div>
+                                                            <div class="col-8">
+                                                                <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="rate_3"></mat-progress-bar>
+                                                            </div>
+                                                            <div class="col-2">({{count_rate_3}})</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-2">2 {{'product.stars' | translate}}</div>
+                                                            <div class="col-8">
+                                                                <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="rate_2"></mat-progress-bar>
+                                                            </div>
+                                                            <div class="col-2">({{count_rate_2}})</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="rating-progress">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-2">1 {{'product.stars' | translate}}</div>
+                                                            <div class="col-8">
+                                                                <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="rate_1"></mat-progress-bar>
+                                                            </div>
+                                                            <div class="col-2">({{count_rate_1}})</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="review-detail" *ngFor="let review of product_detail.reviews">
+                                                <div class="ratings">
+                                                    <div class="rating-starts">
+                                                        <rating class="rating-detail" [(ngModel)]="review.rating" [readonly]="true"></rating>
+                                                    </div>
+                                                    <div class="rating-date">
+                                                        {{ review.created_at | date }}
+                                                    </div>
+                                                    <div style="clear: both"></div>
+                                                </div>
+                                                <div class="titile">{{ review.title }}</div>
+                                                <div class="name">{{ review.text }}</div>
+                                                <div class="comment">{{ review.first_name }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="product-highlight" *ngIf="product_discussions_parent?.length > 0">
+                                    <div class="product-title">
+                                        {{'product.discuss' | translate}}
+                                    </div>
+                                    <div class="review-discuss">
+                                        <div class="discuss">
+                                            <div *ngFor="let discuss of product_discussions_parent">
+                                                <form [formGroup]="questionChildForm">
+                                                    <div class="question">
+                                                        <div class="name" *ngIf="discuss.user_first_name === null"> {{ discuss.first_name }} {{ discuss.last_name }}</div>
+                                                        <div class="name" *ngIf="discuss.user_first_name"> {{ discuss.user_first_name }} {{ discuss.user_last_name }}</div>
+                                                        <div class="description">{{ discuss.text }}</div>
+                                                        <div *ngIf="product_detail.product_discussions_child[discuss.id]?.length > 0">
+                                                            <div class="child-discuss" *ngFor="let child of product_detail.product_discussions_child[discuss.id]">
+                                                                <div class="name" *ngIf="child.user_first_name === null"> {{ child.first_name }} {{ child.last_name }}</div>
+                                                                <div class="name" *ngIf="child.user_first_name"> {{ child.user_first_name }} {{ child.user_last_name }}</div>
+                                                                <div class="description">{{ child.text }}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-comment" [ngClass]="{'active-discuss':selectComment === discuss.id}">
+                                                            <div class="title-comment">{{'product.comment_here' | translate}}</div>
+                                                            <textarea class="comment-child" formControlName="text"></textarea>
+                                                        </div>
+                                                        <div class="button-send" *ngIf="selectComment === discuss.id">
+                                                            <button mat-raised-button color="action" *ngIf="token" [disabled]="questionChildForm.invalid" (click)="postQuestionChild(discuss.id)">Submit</button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="button-add" (click)="addDiscuss(discuss.id)">
+                                                        <fa name="plus"></fa> {{'product.add_new' | translate}}
+                                                    </div>
+                                                </form>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <div class="product-highlight" *ngIf="product_variants?.length > 0">
+                                    <div class="product-title">
+                                        {{'product.other_color' | translate}}
+                                    </div>
+                                    <div class="swipper-others-color">
+                                        <swiper class="swiper" [config]="config">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide" *ngFor="let slide of product_variants" [ngClass]="{'not-actived':slide.stock_status_id == 2 && today > slide.date_end_periode}">
+                                                    <div class="box-product" (click)="goQuickProductDetail(slide.url)" *ngIf="slide.stock_status_id != 2">
+                                                        <div class="product-discount-all" *ngIf="slide.discount > 32">
+                                                            <span>{{ slide.discount }}%</span>
+                                                        </div>
+                                                        <div class="image">
+                                                            <img src="{{ slide.image_domain }}/{{ slide.product_image_path }}/{{ slide.product_image_name }}">
+                                                        </div>
+                                                        <div class="content">
+                                                            <div class="brand">{{ slide.brand_name }}</div>
+                                                            <div class="name">{{ slide.name }}
+                                                                ({{ slide.code }})
+                                                            </div>
+                                                            <div *ngIf="slide.price > 0">
+                                                                <div class="normal-price" *ngIf="slide.discount !== 0">{{ slide.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                <div class="diskon-price">{{ slide.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                            </div>
+                                                            <div *ngIf="slide.price == null || slide.price == 0">
+                                                                <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="installment" *ngIf="slide.stock_status_id == 1">
+                                                            <span *ngIf="slide.price > 0">
+                                                                {{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                                            </span>
+                                                        </div>
+                                                        <div class="installment" *ngIf="slide.stock_status_id != 1">{{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                                    </div>
+
+                                                    <div *ngIf="(today | date) >= (slide.date_start_periode | date)">
+                                                        <div *ngIf="(slide.date_end_periode | date) >= (today | date)">
+                                                            <div class="box-product" (click)="goQuickProductDetail(slide.url)" *ngIf="slide.stock_status_id == 2">
+                                                                <div class="product-discount-all" *ngIf="slide.discount > 32">
+                                                                    <span>{{ slide.discount }}%</span>
+                                                                </div>
+                                                                <div class="image">
+                                                                    <img src="{{ slide.image_domain }}/{{ slide.product_image_path }}/{{ slide.product_image_name }}">
+                                                                </div>
+                                                                <div class="content">
+                                                                    <div class="brand">{{ slide.brand_name }}</div>
+                                                                    <div class="name">{{ slide.name }}
+                                                                        ({{ slide.code }})
+                                                                    </div>
+                                                                    <div *ngIf="slide.price > 0">
+                                                                        <div class="normal-price" *ngIf="slide.discount !== 0">{{ slide.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                        <div class="diskon-price">{{ slide.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                    </div>
+                                                                    <div *ngIf="slide.price == null || slide.price == 0">
+                                                                        <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="installment" *ngIf="slide.stock_status_id == 1">
+                                                                    <span *ngIf="slide.price > 0">
+                                                                        {{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                                                    </span>
+                                                                </div>
+                                                                <div class="installment" *ngIf="slide.stock_status_id != 1">{{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </swiper>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight" *ngIf="product_series?.length > 0">
+                                    <div class="product-title">
+                                        {{'product.product_series' | translate}} {{ series[0].name }}
+                                    </div>
+                                    <div class="swipper-others-color">
+                                        <swiper class="swiper" [config]="config">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide" *ngFor="let slide of product_series" [ngClass]="{'not-actived':slide.stock_status_id == 2 && today > slide.date_end_periode}">
+                                                    <div class="box-product" (click)="goQuickProductDetail(slide.url)" *ngIf="slide.stock_status_id != 2">
+                                                        <div class="product-discount-all" *ngIf="slide.discount > 32">
+                                                            <span>{{ slide.discount }}%</span>
+                                                        </div>
+                                                        <div class="image">
+                                                            <img src="{{ slide.image_domain }}/{{ slide.product_image_path }}/{{ slide.product_image_name }}">
+                                                        </div>
+                                                        <div class="content">
+                                                            <div class="brand">{{ slide.brand_name }}</div>
+                                                            <div class="name">{{ slide.name }}
+                                                                ({{ slide.code }})
+                                                            </div>
+                                                            <div *ngIf="slide.price > 0">
+                                                                <div class="normal-price" *ngIf="slide.discount !== 0">{{ slide.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                <div class="diskon-price">{{ slide.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                            </div>
+                                                            <div *ngIf="slide.price == null || slide.price == 0">
+                                                                <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="installment" *ngIf="slide.stock_status_id == 1">
+                                                            <span *ngIf="slide.price > 0">
+                                                                {{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                                            </span>
+                                                        </div>
+                                                        <div class="installment" *ngIf="slide.stock_status_id != 1">{{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                                    </div>
+
+                                                    <div *ngIf="(today | date) >= (slide.date_start_periode | date)">
+                                                        <div *ngIf="(slide.date_end_periode | date) >= (today | date)">
+                                                            <div class="box-product" (click)="goQuickProductDetail(slide.url)" *ngIf="slide.stock_status_id == 2">
+                                                                <div class="product-discount-all" *ngIf="slide.discount > 32">
+                                                                    <span>{{ slide.discount }}%</span>
+                                                                </div>
+                                                                <div class="image">
+                                                                    <img src="{{ slide.image_domain }}/{{ slide.product_image_path }}/{{ slide.product_image_name }}">
+                                                                </div>
+                                                                <div class="content">
+                                                                    <div class="brand">{{ slide.brand_name }}</div>
+                                                                    <div class="name">{{ slide.name }}
+                                                                        ({{ slide.code }})
+                                                                    </div>
+                                                                    <div *ngIf="slide.price > 0">
+                                                                        <div class="normal-price" *ngIf="slide.discount !== 0">{{ slide.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                        <div class="diskon-price">{{ slide.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                    </div>
+                                                                    <div *ngIf="slide.price == null || slide.price == 0">
+                                                                        <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="installment" *ngIf="slide.stock_status_id == 1">
+                                                                    <span *ngIf="slide.price > 0">
+                                                                        {{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                                                    </span>
+                                                                </div>
+                                                                <div class="installment" *ngIf="slide.stock_status_id != 1">{{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </swiper>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight" *ngIf="products_similars?.length > 0">
+                                    <div class="product-title">
+                                        {{'product.similar_product' | translate}}
+                                    </div>
+                                    <div class="swipper-others-color">
+                                        <swiper class="swiper" [config]="config">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide" *ngFor="let slide of products_similars" [ngClass]="{'not-actived':slide.stock_status_id == 2 && today > slide.date_end_periode}">
+                                                    <div class="box-product" (click)="goQuickProductDetail(slide.url)" *ngIf="slide.stock_status_id != 2">
+                                                        <div class="product-discount-all" *ngIf="slide.discount > 32">
+                                                            <span>{{ slide.discount }}%</span>
+                                                        </div>
+                                                        <div class="image">
+                                                            <img src="{{ slide.image_domain }}/{{ slide.product_image_path }}/{{ slide.product_image_name }}">
+                                                        </div>
+                                                        <div class="content">
+                                                            <div class="brand">{{ slide.brand_name }}</div>
+                                                            <div class="name">{{ slide.name }}
+                                                                ({{ slide.code }})
+                                                            </div>
+                                                            <div *ngIf="slide.price > 0">
+                                                                <div class="normal-price" *ngIf="slide.discount !== 0">{{ slide.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                <div class="diskon-price">{{ slide.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                            </div>
+                                                            <div *ngIf="slide.price == null || slide.price == 0">
+                                                                <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="installment" *ngIf="slide.stock_status_id == 1">
+                                                            <span *ngIf="slide.price > 0">
+                                                                {{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                                            </span>
+                                                        </div>
+                                                        <div class="installment" *ngIf="slide.stock_status_id != 1">{{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                                    </div>
+
+                                                    <div *ngIf="(today | date) >= (slide.date_start_periode | date)">
+                                                        <div *ngIf="(slide.date_end_periode | date) >= (today | date)">
+                                                            <div class="box-product" (click)="goQuickProductDetail(slide.url)" *ngIf="slide.stock_status_id == 2">
+                                                                <div class="product-discount-all" *ngIf="slide.discount > 32">
+                                                                    <span>{{ slide.discount }}%</span>
+                                                                </div>
+                                                                <div class="image">
+                                                                    <img src="{{ slide.image_domain }}/{{ slide.product_image_path }}/{{ slide.product_image_name }}">
+                                                                </div>
+                                                                <div class="content">
+                                                                    <div class="brand">{{ slide.brand_name }}</div>
+                                                                    <div class="name">{{ slide.name }}
+                                                                        ({{ slide.code }})
+                                                                    </div>
+                                                                    <div *ngIf="slide.price > 0">
+                                                                        <div class="normal-price" *ngIf="slide.discount !== 0">{{ slide.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                        <div class="diskon-price">{{ slide.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                    </div>
+                                                                    <div *ngIf="slide.price == null || slide.price == 0">
+                                                                        <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="installment" *ngIf="slide.stock_status_id == 1">
+                                                                    <span *ngIf="slide.price > 0">
+                                                                        {{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                                                    </span>
+                                                                </div>
+                                                                <div class="installment" *ngIf="slide.stock_status_id != 1">{{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </swiper>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight" *ngIf="product_accessories?.length > 0">
+                                    <div class="product-title">
+                                        {{'product.product_accessories' | translate}}
+                                    </div>
+                                    <div class="swipper-others-color">
+                                        <swiper class="swiper" [config]="config">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide" *ngFor="let slide of product_accessories" [ngClass]="{'not-actived':slide.stock_status_id == 2 && today > slide.date_end_periode}">
+                                                    <div class="box-product" (click)="goQuickProductDetail(slide.url)" *ngIf="slide.stock_status_id != 2">
+                                                        <div class="product-discount-all" *ngIf="slide.discount > 32">
+                                                            <span>{{ slide.discount }}%</span>
+                                                        </div>
+                                                        <div class="image">
+                                                            <img src="{{ slide.image_domain }}/{{ slide.product_image_path }}/{{ slide.product_image_name }}">
+                                                        </div>
+                                                        <div class="content">
+                                                            <div class="brand">{{ slide.brand_name }}</div>
+                                                            <div class="name">{{ slide.name }}
+                                                                ({{ slide.code }})
+                                                            </div>
+                                                            <div *ngIf="slide.price > 0">
+                                                                <div class="normal-price" *ngIf="slide.discount !== 0">{{ slide.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                <div class="diskon-price">{{ slide.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                            </div>
+                                                            <div *ngIf="slide.price == null || slide.price == 0">
+                                                                <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="installment" *ngIf="slide.stock_status_id == 1">
+                                                            <span *ngIf="slide.price > 0">
+                                                                {{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                                            </span>
+                                                        </div>
+                                                        <div class="installment" *ngIf="slide.stock_status_id != 1">{{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                                    </div>
+                        
+                                                    <div *ngIf="(today | date) >= (slide.date_start_periode | date)">
+                                                        <div *ngIf="(slide.date_end_periode | date) >= (today | date)">
+                                                            <div class="box-product" (click)="goQuickProductDetail(slide.url)" *ngIf="slide.stock_status_id == 2">
+                                                                <div class="product-discount-all" *ngIf="slide.discount > 32">
+                                                                    <span>{{ slide.discount }}%</span>
+                                                                </div>
+                                                                <div class="image">
+                                                                    <img src="{{ slide.image_domain }}/{{ slide.product_image_path }}/{{ slide.product_image_name }}">
+                                                                </div>
+                                                                <div class="content">
+                                                                    <div class="brand">{{ slide.brand_name }}</div>
+                                                                    <div class="name">{{ slide.name }}
+                                                                        ({{ slide.code }})
+                                                                    </div>
+                                                                    <div *ngIf="slide.price > 0">
+                                                                        <div class="normal-price" *ngIf="slide.discount !== 0">{{ slide.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                        <div class="diskon-price">{{ slide.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                    </div>
+                                                                    <div *ngIf="slide.price == null || slide.price == 0">
+                                                                        <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="installment" *ngIf="slide.stock_status_id == 1">
+                                                                    <span *ngIf="slide.price > 0">
+                                                                        {{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                                                    </span>
+                                                                </div>
+                                                                <div class="installment" *ngIf="slide.stock_status_id != 1">{{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide" *ngIf="product_accessories?.length >= 10">
+                                                    <div class="box-see-more" (click)="goAcessories()">
+                                                        <div class="text-see-more">
+                                                            {{'home.show_more' | translate}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </swiper>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight" *ngIf="related_product?.length > 0">
+                                    <div class="product-title">
+                                        {{'product.related_products' | translate}}
+                                    </div>
+                                    <div class="swipper-others-color">
+                                        <swiper class="swiper" [config]="config">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide" *ngFor="let slide of related_product" [ngClass]="{'not-actived':slide.stock_status_id == 2 && today > slide.date_end_periode}">
+                                                    <div class="box-product" (click)="goQuickProductDetail(slide.url)" *ngIf="slide.stock_status_id != 2">
+                                                        <div class="product-discount-all" *ngIf="slide.discount > 32">
+                                                            <span>{{ slide.discount }}%</span>
+                                                        </div>
+                                                        <div class="image">
+                                                            <img src="{{ slide.image_domain }}/{{ slide.product_image_path }}/{{ slide.product_image_name }}">
+                                                        </div>
+                                                        <div class="content">
+                                                            <div class="brand">{{ slide.brand_name }}</div>
+                                                            <div class="name">{{ slide.name }}
+                                                                ({{ slide.code }})
+                                                            </div>
+                                                            <div *ngIf="slide.price > 0">
+                                                                <div class="normal-price" *ngIf="slide.discount !== 0">{{ slide.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                <div class="diskon-price">{{ slide.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                            </div>
+                                                            <div *ngIf="slide.price == null || slide.price == 0">
+                                                                <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="installment" *ngIf="slide.stock_status_id == 1">
+                                                            <span *ngIf="slide.price > 0">
+                                                                {{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                                            </span>
+                                                        </div>
+                                                        <div class="installment" *ngIf="slide.stock_status_id != 1">{{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                                    </div>
+                        
+                                                    <div *ngIf="(today | date) >= (slide.date_start_periode | date)">
+                                                        <div *ngIf="(slide.date_end_periode | date) >= (today | date)">
+                                                            <div class="box-product" (click)="goQuickProductDetail(slide.url)" *ngIf="slide.stock_status_id == 2">
+                                                                <div class="product-discount-all" *ngIf="slide.discount > 32">
+                                                                    <span>{{ slide.discount }}%</span>
+                                                                </div>
+                                                                <div class="image">
+                                                                    <img src="{{ slide.image_domain }}/{{ slide.product_image_path }}/{{ slide.product_image_name }}">
+                                                                </div>
+                                                                <div class="content">
+                                                                    <div class="brand">{{ slide.brand_name }}</div>
+                                                                    <div class="name">{{ slide.name }}
+                                                                        ({{ slide.code }})
+                                                                    </div>
+                                                                    <div *ngIf="slide.price > 0">
+                                                                        <div class="normal-price" *ngIf="slide.discount !== 0">{{ slide.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                        <div class="diskon-price">{{ slide.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                    </div>
+                                                                    <div *ngIf="slide.price == null || slide.price == 0">
+                                                                        <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="installment" *ngIf="slide.stock_status_id == 1">
+                                                                    <span *ngIf="slide.price > 0">
+                                                                        {{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                                                    </span>
+                                                                </div>
+                                                                <div class="installment" *ngIf="slide.stock_status_id != 1">{{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </swiper>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight" *ngIf="more_from?.length > 0">
+                                    <div class="product-title">
+                                        {{'product.more_from' | translate}} {{ brand_name }}
+                                    </div>
+                                    <div class="swipper-others-color">
+                                        <swiper class="swiper" [config]="config">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide" *ngFor="let slide of more_from" [ngClass]="{'not-actived':slide.stock_status_id == 2 && today > slide.date_end_periode}">
+                                                    <div class="box-product" (click)="goQuickProductDetail(slide.url)" *ngIf="slide.stock_status_id != 2">
+                                                        <div class="product-discount-all" *ngIf="slide.discount > 32">
+                                                            <span>{{ slide.discount }}%</span>
+                                                        </div>
+                                                        <div class="image">
+                                                            <img src="{{ slide.image_domain }}/{{ slide.product_image_path }}/{{ slide.product_image_name }}">
+                                                        </div>
+                                                        <div class="content">
+                                                            <div class="brand">{{ slide.brand_name }}</div>
+                                                            <div class="name">{{ slide.name }}
+                                                                ({{ slide.code }})
+                                                            </div>
+                                                            <div *ngIf="slide.price > 0">
+                                                                <div class="normal-price" *ngIf="slide.discount !== 0">{{ slide.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                <div class="diskon-price">{{ slide.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                            </div>
+                                                            <div *ngIf="slide.price == null || slide.price == 0">
+                                                                <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="installment" *ngIf="slide.stock_status_id == 1">
+                                                            <span *ngIf="slide.price > 0">
+                                                                {{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                                            </span>
+                                                        </div>
+                                                        <div class="installment" *ngIf="slide.stock_status_id != 1">{{ slide.stock_status }}</div>
+                                                    </div>
+                        
+                                                    <div *ngIf="(today | date) >= (slide.date_start_periode | date)">
+                                                        <div *ngIf="(slide.date_end_periode | date) >= (today | date)">
+                                                            <div class="box-product" (click)="goQuickProductDetail(slide.url)" *ngIf="slide.stock_status_id == 2">
+                                                                <div class="product-discount-all" *ngIf="slide.discount > 32">
+                                                                    <span>{{ slide.discount }}%</span>
+                                                                </div>
+                                                                <div class="image">
+                                                                    <img src="{{ slide.image_domain }}/{{ slide.product_image_path }}/{{ slide.product_image_name }}">
+                                                                </div>
+                                                                <div class="content">
+                                                                    <div class="brand">{{ slide.brand_name }}</div>
+                                                                    <div class="name">{{ slide.name }}
+                                                                        ({{ slide.code }})
+                                                                    </div>
+                                                                    <div *ngIf="slide.price > 0">
+                                                                        <div class="normal-price" *ngIf="slide.discount !== 0">{{ slide.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                        <div class="diskon-price">{{ slide.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                    </div>
+                                                                    <div *ngIf="slide.price == null || slide.price == 0">
+                                                                        <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="installment" *ngIf="slide.stock_status_id == 1">
+                                                                    <span *ngIf="slide.price > 0">
+                                                                        {{ slide.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                                                    </span>
+                                                                </div>
+                                                                <div class="installment" *ngIf="slide.stock_status_id != 1">{{ slide.stock_status }}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </swiper>
+                                    </div>
+                                </div>
+
+                                <div class="product-highlight">
+                                    <div class="product-title">
+                                        {{'product.quick_compare' | translate}}
+                                    </div>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <button class="btn-quic-compare" [ngClass]="{'quic-active' : quickCompare === true}" (click)="getSimiliar()">
+                                                    {{ 'product.similiar_price' | translate }}
+                                                </button>
+                                                <button class="btn-quic-compare" [ngClass]="{'quic-active' : quickCompare === false}" (click)="getRating()">
+                                                    {{ 'product.customer_rating' | translate }}
+                                                </button>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="center">&nbsp;</div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="quick-product" (click)="goQuickProductDetail(currentUrl)">
+                                                    <div class="images">
+                                                        <img src="{{ imageDomain }}/{{ imagePath }}/{{ currentImage }}">
+                                                    </div>
+                                                    <div class="brands">
+                                                        {{ currentBrand }}
+                                                    </div>
+                                                    <div class="code-name">
+                                                        {{ currentName }} {{ currentCode }} 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4" *ngIf="quickCompare">
+                                                <div class="quick-product" *ngIf="similiarImage" (click)="goQuickProductDetail(similiarUrl)">
+                                                    <div class="images">
+                                                        <img src="{{ imageDomain }}/{{ imagePath }}/{{ similiarImage }}">
+                                                    </div>
+                                                    <div class="brands">
+                                                        {{ similiarBrand }}
+                                                    </div>
+                                                    <div class="code-name">
+                                                        {{ similiarName }} {{ similiarCode }} 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4" *ngIf="quickCompare === false">
+                                                <div class="quick-product" *ngIf="ratingImage" (click)="goQuickProductDetail(ratingUrl)">
+                                                    <div class="images">
+                                                        <img src="{{ imageDomain }}/{{ imagePath }}/{{ ratingImage }}">
+                                                    </div>
+                                                    <div class="brands">
+                                                        {{ ratingBrand }}
+                                                    </div>
+                                                    <div class="code-name">
+                                                        {{ ratingName }} {{ ratingCode }} 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="table-content-specivication" *ngIf="quickCompare">
+                                                    <table>
+                                                        <tr>
+                                                            <td>{{'product.price' | translate}}</td>
+                                                            <td class="center">
+                                                                <div class="quick-normal-price">{{ currentPrice | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                <div class="quick-diskon-price">{{ currentDiscountPrice | currency:'Rp':'true':'4.0-0' }}</div>
+                                                            </td>
+                                                            <td class="center" *ngIf="similiarProductPrice">
+                                                                <div class="quick-normal-price">{{ similiarProductPrice | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                <div class="quick-diskon-price">{{ similiarDiscountPrice | currency:'Rp':'true':'4.0-0' }}</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Rating</td>
+                                                            <td class="center">
+                                                                <div class="rating">
+                                                                    <rating [(ngModel)]="currentRating" [readonly]="true"></rating> <br>{{ currentReview }} {{'product.review' | translate}}
+                                                                </div>
+                                                            </td>
+                                                            <td class="center" *ngIf="similiar?.length > 0">
+                                                                <div class="rating">
+                                                                    <rating [(ngModel)]="similiarRating" [readonly]="true"></rating> <br>{{ similiarReview }} {{'product.review' | translate}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr *ngFor="let current of spesificationCurrentProduct">
+                                                            <td>{{ current.specification_name }}</td>
+                                                            <td class="center">
+                                                                <span>{{ current.specification_content }}</span>
+                                                            </td>
+                                                            <td class="center" *ngFor="let similiar of similiarSpesification" [ngClass]="{'not-quick': similiar.specification_name !== current.specification_name}">
+                                                                <span *ngIf="similiar.specification_name === current.specification_name">
+                                                                    {{ similiar.specification_content }}
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-12" *ngIf="quickCompare === false">
+                                                <div class="table-content-specivication">
+                                                    <table>
+                                                        <tr>
+                                                            <td>{{'product.price' | translate}}</td>
+                                                            <td class="center">
+                                                                <div class="quick-normal-price">{{ currentPrice | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                <div class="quick-diskon-price">{{ currentDiscountPrice | currency:'Rp':'true':'4.0-0' }}</div>
+                                                            </td>
+                                                            <td class="center">
+                                                                <div class="quick-normal-price">{{ ratingPrice | currency:'Rp':'true':'4.0-0' }}</div>
+                                                                <div class="quick-diskon-price">{{ ratingDiscountPrice | currency:'Rp':'true':'4.0-0' }}</div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Rating</td>
+                                                            <td class="center">
+                                                                <div class="rating">
+                                                                    <rating [(ngModel)]="currentRating" [readonly]="true"></rating> <br>{{ currentReview }} {{'product.review' | translate}}
+                                                                </div>
+                                                            </td>
+                                                            <td class="center" *ngIf="customerReview?.length > 0">
+                                                                <div class="rating">
+                                                                    <rating [(ngModel)]="customerRatingStar" [readonly]="true"></rating> <br>{{ customerRatingReview }} {{'product.review' | translate}}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr *ngFor="let current of spesificationCurrentProduct">
+                                                            <td>{{ current.specification_name }}</td>
+                                                            <td class="center">
+                                                                <span>{{ current.specification_content }}</span>
+                                                            </td>
+                                                            <td class="center" *ngFor="let rating of customerRatingSpesification" [ngClass]="{'not-quick': rating.specification_name !== current.specification_name}">
+                                                                <span *ngIf="rating.specification_name === current.specification_name">
+                                                                    {{ rating.specification_content }}
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="price == 0 || price == null">
+    <div *ngIf="product_detail.availability_status_id == 1">
+        <div class="box-method">
+            <div class="container">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="box-action-detail">
+                        <button class="btn-action-icon" (click)="goProductDetailDiscuss()">
+                            <i class="fa fa-comment"></i>
+                        </button>
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <div class="box-action-detail">
+                            <button class="btn-action-icon add-chart" (click)="openRequestStock()">
+                                {{'product.notify_when_available' | translate}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="price > 0">
+    <div *ngIf="product_detail.availability_status_id === 1">
+        <div *ngIf="product_detail.stock_status_id === 1">
+            <div *ngIf="product_detail.able_to_order === 'T'">
+                <div class="box-method">
+                    <div class="container">
+                        <div class="row" *ngIf="quantity === null || quantity === 0">
+                            <div class="col-2">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon" (click)="goProductDetailDiscuss()">
+                                        <i class="fa fa-comment"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon add-chart" (click)="openRequestStock()">
+                                        {{'product.request_stock_alert' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="quantity > 0">
+                            <div class="col-2">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon" (click)="goProductDetailDiscuss()">
+                                        <i class="fa fa-comment"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-5" *ngIf="statusTradein === true">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon" (click)="goProductTrade(product_detail.url)">
+                                        <fa name="retweet"></fa> {{ 'account.tradein' | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-5" *ngIf="statusTradein === true">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon add-chart" (click)="addCart()" *ngIf="token !== null">
+                                        <i class="fa fa-cart-plus"></i> {{'product.add_to_chart' | translate}}
+                                    </button>
+                                    <button class="btn-action-icon add-chart" (click)="addChartLocal()" *ngIf="token === null">
+                                        <i class="fa fa-cart-plus"></i> {{'product.add_to_chart' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-10" *ngIf="statusTradein === false">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon add-chart" (click)="addCart()" *ngIf="token !== null">
+                                        <i class="fa fa-cart-plus"></i> {{'product.add_to_chart' | translate}}
+                                    </button>
+                                    <button class="btn-action-icon add-chart" (click)="addChartLocal()" *ngIf="token === null">
+                                        <i class="fa fa-cart-plus"></i> {{'product.add_to_chart' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+
+        <div *ngIf="product_detail.stock_status_id === 2">
+            <div *ngIf="product_detail.able_to_order === 'T'">
+                <div class="box-method">
+                    <div class="container" *ngIf="quantity === null || quantity === 0">
+                        <div *ngIf="(today | date: 'MM dd, yyyy HH:mm:ss') >= (date_start_periode | date: 'MM dd, yyyy HH:mm:ss')">
+                            <div class="row" *ngIf="(date_end_periode | date: 'MM dd, yyyy HH:mm:ss') >= (today | date: 'MM dd, yyyy HH:mm:ss')">
+                                <div class="col-2">
+                                    <div class="box-action-detail">
+                                        <button class="btn-action-icon" (click)="goProductDetailDiscuss()">
+                                            <i class="fa fa-comment"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="box-action-detail">
+                                        <button class="btn-action-icon add-chart" (click)="openRequestStock()">
+                                            {{'product.request_stock_alert' | translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="box-action-detail">
+                                        <button class="btn-action-icon add-chart" (click)="addCart()" *ngIf="token !== null">
+                                            Pre Order
+                                        </button>
+                                        <button class="btn-action-icon add-chart" (click)="addChartLocal()" *ngIf="token === null">
+                                            Pre Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="(today| date: 'MM dd, yyyy HH:mm:ss') > (date_end_periode  | date: 'MM dd, yyyy HH:mm:ss')">
+                                <div class="col-2">
+                                    <div class="box-action-detail">
+                                        <button class="btn-action-icon" (click)="goProductDetailDiscuss()">
+                                            <i class="fa fa-comment"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-10">
+                                    <div class="box-action-detail">
+                                        <button class="btn-action-icon add-chart" (click)="openRequestStock()">
+                                            {{'product.request_stock_alert' | translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container" *ngIf="quantity > 0">
+                        <div class="row" *ngIf="(date_end_periode | date: 'MM dd, yyyy HH:mm:ss') >= (today | date: 'MM dd, yyyy HH:mm:ss')">
+                            <div class="col-2">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon" (click)="goProductDetailDiscuss()">
+                                        <i class="fa fa-comment"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon add-chart" (click)="openRequestStock()">
+                                        {{'product.request_stock_alert' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon add-chart" (click)="addCart()" *ngIf="token !== null">
+                                        Pre Order
+                                    </button>
+                                    <button class="btn-action-icon add-chart" (click)="addChartLocal()" *ngIf="token === null">
+                                        Pre Order
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="(today| date: 'MM dd, yyyy HH:mm:ss') > (date_end_periode  | date: 'MM dd, yyyy HH:mm:ss')">
+                            <div class="col-2">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon" (click)="goProductDetailDiscuss()">
+                                        <i class="fa fa-comment"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-5" *ngIf="statusTradein === true">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon" (click)="goProductTrade(product_detail.url)">
+                                        <fa name="retweet"></fa> {{ 'account.tradein' | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-10" *ngIf="statusTradein === false">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon add-chart" (click)="addCart()" *ngIf="token !== null">
+                                        <i class="fa fa-cart-plus"></i> {{'product.add_to_chart' | translate}}
+                                    </button>
+                                    <button class="btn-action-icon add-chart" (click)="addChartLocal()" *ngIf="token === null">
+                                        <i class="fa fa-cart-plus"></i> {{'product.add_to_chart' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-5" *ngIf="statusTradein === true">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon add-chart" (click)="addCart()" *ngIf="token !== null">
+                                        <i class="fa fa-cart-plus"></i> {{'product.add_to_chart' | translate}}
+                                    </button>
+                                    <button class="btn-action-icon add-chart" (click)="addChartLocal()" *ngIf="token === null">
+                                        <i class="fa fa-cart-plus"></i> {{'product.add_to_chart' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+
+            <div *ngIf="product_detail.able_to_order === 'F'">
+                <div class="box-method">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon" (click)="goProductDetailDiscuss()">
+                                        <i class="fa fa-comment"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon add-chart" (click)="openRequestStock()">
+                                        {{'product.request_stock_alert' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+
+        <div *ngIf="product_detail.stock_status_id === 3">
+            <div class="box-method">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="box-action-detail">
+                                <button class="btn-action-icon" (click)="goProductDetailDiscuss()">
+                                    <i class="fa fa-comment"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <div class="box-action-detail">
+                                <button class="btn-action-icon add-chart" (click)="openRequestStock()">
+                                    {{'product.request_stock_alert' | translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="product_detail.availability_status_id !== 1">
+        <div *ngIf="product_detail.stock_status_id === 2">
+            <div *ngIf="product_detail.able_to_order === 'T'">
+                <div class="box-method">
+                    <div class="container" *ngIf="quantity === null || quantity === 0">
+                        <div *ngIf="(today | date: 'MM dd, yyyy HH:mm:ss') >= (date_start_periode | date: 'MM dd, yyyy HH:mm:ss')">
+                            <div class="row" *ngIf="(date_end_periode | date: 'MM dd, yyyy HH:mm:ss') >= (today | date: 'MM dd, yyyy HH:mm:ss')">
+                                <div class="col-2">
+                                    <div class="box-action-detail">
+                                        <button class="btn-action-icon" (click)="goProductDetailDiscuss()">
+                                            <i class="fa fa-comment"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="box-action-detail">
+                                        <button class="btn-action-icon add-chart" (click)="openRequestStock()">
+                                            {{'product.request_stock_alert' | translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="box-action-detail">
+                                        <button class="btn-action-icon add-chart" (click)="addCart()" *ngIf="token !== null">
+                                            Pre Order
+                                        </button>
+                                        <button class="btn-action-icon add-chart" (click)="addChartLocal()" *ngIf="token === null">
+                                            Pre Order
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="(today | date: 'MM dd, yyyy HH:mm:ss') > (date_end_periode | date: 'MM dd, yyyy HH:mm:ss')">
+                                <div class="col-2">
+                                    <div class="box-action-detail">
+                                        <button class="btn-action-icon" (click)="goProductDetailDiscuss()">
+                                            <i class="fa fa-comment"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-10">
+                                    <div class="box-action-detail">
+                                        <button class="btn-action-icon add-chart" (click)="openRequestStock()">
+                                            {{'product.request_stock_alert' | translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container" *ngIf="quantity > 0">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon" (click)="goProductDetailDiscuss()">
+                                        <i class="fa fa-comment"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-5" *ngIf="statusTradein === true">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon" (click)="goProductTrade(product_detail.url)">
+                                        <fa name="retweet"></fa> {{ 'account.tradein' | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-10" *ngIf="statusTradein === false">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon add-chart" (click)="addCart()" *ngIf="token !== null">
+                                        <i class="fa fa-cart-plus"></i> {{'product.add_to_chart' | translate}}
+                                    </button>
+                                    <button class="btn-action-icon add-chart" (click)="addChartLocal()" *ngIf="token === null">
+                                        <i class="fa fa-cart-plus"></i> {{'product.add_to_chart' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-5" *ngIf="statusTradein === true">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon add-chart" (click)="addCart()" *ngIf="token !== null">
+                                        <i class="fa fa-cart-plus"></i> {{'product.add_to_chart' | translate}}
+                                    </button>
+                                    <button class="btn-action-icon add-chart" (click)="addChartLocal()" *ngIf="token === null">
+                                        <i class="fa fa-cart-plus"></i> {{'product.add_to_chart' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+
+            <div *ngIf="product_detail.able_to_order === 'F'">
+                <div class="box-method">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon" (click)="goProductDetailDiscuss()">
+                                        <i class="fa fa-comment"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div class="box-action-detail">
+                                    <button class="btn-action-icon add-chart" (click)="openRequestStock()">
+                                        {{'product.request_stock_alert' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="checkout-loading" *ngIf="commentPost">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>

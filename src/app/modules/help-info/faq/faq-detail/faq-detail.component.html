@@ -1,0 +1,25 @@
+<div class="faq-detail">
+  <div class="container">
+      <div class="row">
+          <div class="col-12">
+              <div class="title-terms" *ngIf="lang === 'en'">{{ termNameEng }}</div>
+              <div class="title-terms" *ngIf="lang === 'id'">{{ termNameIndo }}</div>
+              <div class="sub-title-trems" *ngIf="lang === 'en'">{{ titleCategoryEnglish }}</div>
+              <div class="sub-title-trems" *ngIf="lang === 'id'">{{ titleCategoryIndonesia }}</div>
+          </div>
+          <div class="col-12">
+              <div class="title-faq" *ngIf="lang === 'en'">{{ titleEnglish }}</div>
+              <div class="title-faq" *ngIf="lang === 'id'">{{ titleIndonesia }}</div>
+              <div class="content-faq" *ngIf="lang === 'en'" [innerHtml]="contentEnglish"></div>
+              <div class="content-faq" *ngIf="lang === 'id'" [innerHtml]="contentIndonesia"></div>
+          </div>
+          <div class="col-12" *ngIf="relateds?.length > 0">
+              <div class="header-title-faq-related">{{'account.related_question' | translate}}</div>
+              <div class="related-question" *ngFor="let related of relateds" (click)="getDetailFaqRelated(related.url)">
+                  <span *ngIf="lang === 'en'">{{ related.title_english }}</span>
+                  <span *ngIf="lang === 'id'">{{ related.title_indonesia }}</span>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="kitchen-partner" (scroll)="onScroll($event)">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+          <div class="title-kitchen">{{'shopping.preferred_kitchen_partners' | translate}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="container-partner">
+    <div class="container-fluid">
+      <div class="row">  
+        <div class="col-12 col-sm-4 col-md-4" *ngFor="let kitchen of kitchenPartner">
+          <div class="kitchen-content" (click)="goKitchenDetail(kitchen.url)">
+            <div class="image">
+              <img src="{{ kitchen.image_domain }}/{{ kitchen.thumb_path }}/{{ kitchen.image }}">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

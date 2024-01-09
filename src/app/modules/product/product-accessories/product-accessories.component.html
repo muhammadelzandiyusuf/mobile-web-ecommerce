@@ -1,0 +1,60 @@
+<div class="list-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-12" *ngIf="count === 0">
+                <div class="load-gif">
+                    <img src="/assets/images/load.gif" alt="load" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="product-search" *ngIf="count > 0">
+        <div class="title-search">
+            {{'product.product_accessories' | translate}} <span class="product-name">"{{name}}"</span>
+        </div>
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12" *ngIf="statusCode === 404">
+                        <div class="not-wihslish">
+                            <div class="not-found-data">
+                                {{'product.product_not_found' | translate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="statusCode !== 404">
+                    <div class="col-6 col-sm-4 col-md-4" *ngFor="let product of products">
+                        <div class="box-product" (click)="goProductDetail(product.url)">
+                            <div class="product-discount-all" *ngIf="product.discount > 32">
+                                <span>{{ product.discount }}%</span>
+                            </div>
+                            <div class="image">
+                                <img src="{{ product?.image_domain }}/{{ product?.product_image_path }}/{{ product?.product_image_name }}">
+                            </div>
+                            <div class="content">
+                                <div class="brand">{{ product?.brand_name }}</div> 
+                                <div class="name">{{ product?.name }}
+                                    ({{product?.code }})
+                                </div>
+                                <div *ngIf="product?.price > 0">
+                                    <div class="normal-price" *ngIf="product.discount !== 0">{{ product?.price | currency:'Rp':'true':'4.0-0' }}</div>
+                                    <div class="diskon-price">{{ product?.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                                </div>
+                                <div *ngIf="product?.price == null || product?.price == 0">
+                                    <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                                </div>
+                            </div>
+                            <div class="installment" *ngIf="product?.stock_status_id == 1">
+                                <span *ngIf="product?.price > 0">
+                                    {{ product?.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                                </span>
+                            </div>
+                            <div class="installment color-red" *ngIf="product?.stock_status_id != 1">{{ product?.stock_status }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

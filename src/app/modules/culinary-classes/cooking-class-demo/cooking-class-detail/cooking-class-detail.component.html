@@ -1,0 +1,136 @@
+<div class="exhibition">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="detail-exhibition">
+                    <div class="image">
+                        <img src="{{ imageDomain }}/{{ bannerPath }}/{{ bannerImage }}">
+                    </div>
+                    <div class="name-event">{{ title }}</div>
+
+                    <div class="date-time-detail">
+                        <div class="title-exhibition">{{'culinary.date_time' | translate}}</div>
+                        <div class="text-date">{{'culinary.date' | translate}} :</div>
+                        <div class="content-date">
+                            {{ dateStart | date: 'd MMMM yyyy'}}
+                            {{'culinary.to' | translate}}
+                            {{ dateEnd | date: 'd MMMM yyyy'}}
+                        </div>
+                        <div class="text-date">Time :</div>
+                        <div class="content-date">
+                            {{ timeOpen }}
+                            {{'culinary.to' | translate}}
+                            {{ timeClose }}
+                        </div>
+                    </div>
+                    <div class="date-time-detail">
+                        <div class="title-exhibition">{{'culinary.cost' | translate}}</div>
+                        <div class="list-host">
+                            <div class="host">
+                                <a *ngIf="cost !== null">
+                                    {{ cost | currency:'Rp':'true':'4.0-0' }} / Participant
+                                </a>
+                                <a *ngIf="cost === null">
+                                    {{'culinary.free' | translate}}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="date-time-detail" *ngIf="hosts?.length > 0">
+                        <div class="title-exhibition">{{'culinary.host' | translate}}</div>
+                        <div class="list-host">
+                            <div class="host" *ngFor="let item of hosts">
+                                <a (click)="getDetailHost(item.url)">{{ item.name }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="date-time-detail">
+                        <div class="title-exhibition">{{'culinary.location' | translate}}</div>
+                        <div class="list-host">
+                            <div class="host">
+                                <a (click)="getDetailShowroom(locationUrl)">
+                                    {{ location }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="date-time-detail">
+                        <div class="title-exhibition">{{'culinary.quota' | translate}}</div>
+                        <div class="list-host">
+                            <div class="host">
+                                <a>
+                                    {{ countParticipant }} / {{ quota }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="date-time-detail">
+                        <div class="title-exhibition">{{'culinary.description' | translate}}</div>
+                        <div class="description-exhibition" [innerHtml]="contentEnglish"></div>
+                    </div>
+                    <div class="date-time-detail" *ngIf="videoUrl != null">
+                        <div class="title-exhibition">Video</div>
+                        <div class="video-url-exhibition">
+                            <iframe
+                                class="e2e-iframe-trusted-src"
+                                width="100%"
+                                height="{{heightVideo}}"
+                                [src]="videoUrl"
+                                frameborder="0"
+                                allowfullscreen="allowfullscreen"></iframe>
+                        </div>
+                    </div>
+                    <div class="date-time-detail" *ngIf="photoImage?.length > 0">
+                        <div class="title-exhibition center">{{'culinary.photo_on_this_event' | translate}}</div>
+                        <div class="list-host">
+                            <swiper class="swiper" [config]="configExhibition">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide" *ngFor="let photo of album; let i = index">
+                                        <div class="photo-image" (click)="open(i)">
+                                            <img [src]="photo.thumb">
+                                        </div>
+                                    </div>
+                                </div>
+                            </swiper>
+                        </div>
+                    </div>
+                    <div class="share-this">
+                        <div class="share-button-box">
+                            <div class="share-button fb" (click)="shareButtonFB()">
+                                <i class="fab fa-facebook-f"></i>
+                            </div>
+                            <div class="share-button wa" (click)="shareButtonWA()">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="share-button tw" (click)="shareButtonTW()">
+                                <i class="fab fa-twitter"></i>
+                            </div>
+                            <div class="share-button pt" (click)="shareButtonPinterest()">
+                                <i class="fab fa-pinterest-p"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box-method">
+    <div class="container">
+        <div class="row">
+            <div class="col-12" *ngIf="quota > countParticipant">
+                <button class="btn-action-icon add-chart" (click)="login()" *ngIf="token === null">
+                    {{'culinary.sign_up_now' | translate}}
+                </button>
+                <button class="btn-action-icon add-chart" (click)="formSignUp()" *ngIf="token !== null">
+                    {{'culinary.sign_up_now' | translate}}
+                </button>
+            </div> 
+            <div class="col-12" *ngIf="countParticipant >= quota">
+                <button class="btn-action-icon add-chart">
+                    {{'culinary.sold' | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

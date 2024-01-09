@@ -1,0 +1,64 @@
+.content-internship{
+    margin: 10px 10px 0;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+.mat-form-field {
+    width: 100%;
+}
+.form-file {
+    width: 50%;
+    height: 30px;
+    margin-bottom: 10px;
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 5px 0;
+    margin-top: 5px;
+    color: #666;
+    outline: none
+}
+.document-files{
+    margin-top: 10px;
+}
+.document-files .title-files{
+    font-size: 14px;
+    color: #666;
+}
+.riquired-files{
+    color: red;
+    font-size: 12px !important;
+}
+.action{
+    text-align: right;
+}
+.btn-default{
+    background-color: #ad2825;
+    color: #fff;
+}
+.full-time-job{
+    padding: 10px;
+}
+.title-position{
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #666;
+    text-transform: capitalize;
+    padding: 10px;
+}
+.job-description{
+    margin-top: 10px;
+}
+.job-description .job-title{
+    font-size: 16px;
+    color: #999;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+.job-description .job-content{
+    font-size: 14px;
+    color: #666;
+    padding: 10px;
+    word-wrap: break-word;
+}

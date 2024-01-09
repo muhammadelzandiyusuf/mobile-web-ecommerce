@@ -1,0 +1,14 @@
+.mat-form-field {
+    width: 100%;
+}
+.button-row{
+    text-align: right
+}
+.save-btn{
+    background-color: #ad2825;
+    color: #fff;
+}
+.shipping-address{
+    background-color: #ffffff;
+    padding: 20px;
+}

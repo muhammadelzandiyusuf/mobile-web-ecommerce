@@ -1,0 +1,296 @@
+<div class="cart">
+    <div class="container">
+        <div class="row" *ngIf="token != null">
+            <div class="col-12">
+                <div class="header-cart">
+                    <div class="text-cart">{{'order.cart' | translate}}</div>
+                    <div class="action-cart" *ngIf="totalCart != 0">
+                        <span (click)="emptyCart()">{{'order.empty_cart' | translate}}</span>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="totalCart == 0">
+                <div class="empty-product-cart">
+                    <div class="image">
+                        <img src="assets/images/cart-empty.png">
+                    </div>
+                    <div class="text-empty-cart">{{'order.your_cart_is_empty' | translate}}</div>
+                    <div class="button-empty-cart">
+                        <button mat-raised-button color="action" (click)="startShopping()">{{'order.start_shopping' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" *ngFor="let item of contents">
+                <div class="cart-product" *ngIf="carts !== null" [ngClass]="{'not-action': item.error_code !== null}">
+                    <div class="row">
+                        <div class="col-4">
+                          <div class="image-prod">
+                              <img src="{{ item.image }}">
+                          </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="cart-brand">
+                                <div class="name-brand">{{ item.brand }}</div>
+                                <div class="action-delete">
+                                  <div (click)="deleteProduct(item.id)">
+                                      <fa name="trash"></fa>
+                                  </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="cart-name-prod">{{ item.name | slice:0:25 }}...</div>
+                            <div class="cart-prod-price">{{ item.subtotal | currency:'Rp':'true':'4.0-0' }}</div>
+                            <div class="status-product" *ngIf="item.stock_status_id === 2">Pre Order</div>
+                            <div class="action-chart">
+                                <ul>
+                                    <!-- <li>
+                                        <button class="btn-chart-action wishlist" mat-mini-fab disabled="{{ item.wishlist }}" (click)="addWishlist(item.product_id)">
+                                          <fa name="heart"></fa>
+                                        </button>
+                                    </li> -->
+                                    <li>
+                                        <button class="btn-chart-action" mat-button (click)="minusQuantity(item.quantity, item.id)">
+                                          <fa name="minus"></fa>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <div class="quantity">
+                                            <mat-form-field color="warn">
+                                              <input matInput type="number" min="1" value="{{ item.quantity }}">
+                                            </mat-form-field>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <button class="btn-chart-action" mat-button (click)="plusQuantity(item.quantity, item.max_quantity, item.id)">
+                                          <fa name="plus"></fa>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-12" *ngIf="item.selected_extended_warranty === null">
+                            <div class="extended-warranty" *ngIf="item.extended_warranties?.length > 0">
+                                <div class="form-warranty">
+                                    <mat-form-field>
+                                        <mat-select placeholder="{{'order.extended_warranty' | translate}}" name="warranty" [formControl]="warranty">
+                                          <mat-option *ngFor="let warranty of item.extended_warranties" [value]="warranty.id">
+                                            <span *ngIf="lang === 'en'">{{warranty.periode_english}} ({{ warranty.price | currency:'Rp':'true':'4.0-0' }})</span>
+                                            <span *ngIf="lang === 'id'">{{warranty.periode_indonesia}} ({{ warranty.price | currency:'Rp':'true':'4.0-0' }})</span>
+                                          </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <button class="warranty-btn" mat-raised-button (click)="cartAddWarranty(item.id)">{{'order.add' | translate}}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12" *ngIf="item.selected_extended_warranty">
+                            <div class="extended-warranty select-warranty">
+                                {{'order.extended_warranty' | translate}} {{ item.selected_extended_warranty.periode_english }} 
+                                <span>( + {{ item.selected_extended_warranty.total | currency:'Rp':'true':'4.0-0' }} )</span>
+                                <div class="icon-remove" (click)="removeWarranty(item.id)">
+                                    <i class="fa fa-close"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12" *ngIf="item.selected_contract_service === null">
+                            <div class="extended-warranty" *ngIf="item.contract_services?.length > 0">
+                                <div class="form-warranty">
+                                    <mat-form-field>
+                                        <mat-select placeholder="{{'order.contract_service' | translate}}" name="contractService" [formControl]="contractService">
+                                          <mat-option *ngFor="let contract of item.contract_services" [value]="contract.id">
+                                            <span *ngIf="lang === 'en'">{{contract.periode_english}} ({{ contract.price | currency:'Rp':'true':'4.0-0' }})</span>
+                                            <span *ngIf="lang === 'id'">{{contract.periode_indonesia}} ({{ contract.price | currency:'Rp':'true':'4.0-0' }})</span>
+                                          </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <button class="warranty-btn" mat-raised-button (click)="cartAddContractService(item.id)">{{'order.add' | translate}}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12" *ngIf="item.selected_contract_service">
+                            <div class="extended-warranty select-warranty">
+                                {{'order.contract_service' | translate}} {{ item.selected_contract_service.periode_english }} 
+                                <span>( + {{ item.selected_contract_service.total | currency:'Rp':'true':'4.0-0' }} )</span>
+                                <div class="icon-remove" (click)="removeContractService(item.id)">
+                                    <i class="fa fa-close"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12" *ngIf="item.error_code !== null">
+                            <div class="message-product">
+                                {{ item.message }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="download-file">
+                    <a href="{{ pdfFile }}" download="Syarat_dan_Ketentuan_Extended_Warranty.pdf">
+                        {{ 'footer.term_condition' | translate }}
+                    </a>
+                </div>
+            </div>
+            <div class="overlay-chart-delete" *ngIf="actionDelete" (click)="closeDelete()">
+                <div class="box-chart-delete">
+                    <div class="header-title-delete">{{'order.remove_selected_item' | translate}} ?</div>
+                    <div class="sub-title-delete">{{'order.selected_items_will_be_removed_from_your_basket' | translate}}</div>
+                    <div class="delete-whislist">
+                        <button class="btn-remove-whislist" mat-button color="action" (click)="removeItemAddWishlist()">
+                            {{'order.remove_add_to_wishlist' | translate}}
+                        </button>
+                    </div>
+                    <div class="delete-whislist">
+                        <button class="btn-remove" mat-button color="action" (click)="removeItem()">
+                            {{'order.remove' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Layout Session Cart -->
+        <div class="row" *ngIf="token == null">
+            <div class="col-12">
+                <div class="header-cart">
+                    <div class="text-cart">{{'order.cart' | translate}}</div>
+                    <div class="action-cart" *ngIf="localItemCart !== null">
+                        <span (click)="emptyCartLocal()">{{'order.empty_cart' | translate}}</span>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="localItemCart == null">
+                <div class="empty-product-cart">
+                    <div class="image">
+                        <img src="assets/images/cart-empty.png">
+                    </div>
+                    <div class="text-empty-cart">{{'order.your_cart_is_empty' | translate}}</div>
+                    <div class="button-empty-cart">
+                        <button mat-raised-button color="action" (click)="startShopping()">{{'order.start_shopping' | translate}}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12" *ngFor="let item of localCart">
+                <div class="cart-product" *ngIf="localItemCart != null">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="image-prod">
+                                <img src="{{ item.image_domain }}/{{ item.product_image_path }}/{{ item.unit_image }}">
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="cart-brand">
+                                <div class="name-brand">{{ item.brand }}</div>
+                                <div class="action-delete">
+                                    <div (click)="deleteProduct()">
+                                        <fa name="trash"></fa>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="cart-name-prod">{{ item.name | slice:0:25 }}...</div>
+                            <div class="cart-prod-price">{{ item.subtotal | currency:'Rp':'true':'4.0-0' }}</div>
+                            <div class="action-chart">
+                                <ul>
+                                    <li>
+                                        <button class="btn-chart-action" mat-button (click)="minusQuantityLocal(item.quantity, item.product_id)">
+                                            <fa name="minus"></fa>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <div class="quantity">
+                                            <mat-form-field color="warn">
+                                                <input matInput type="number" min="1" max="5" value="{{ item.quantity }}">
+                                            </mat-form-field>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <button class="btn-chart-action" mat-button (click)="plusQuantityLocal(item.quantity, item.product_id)">
+                                            <fa name="plus"></fa>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="overlay-chart-delete" *ngIf="actionDelete" (click)="closeDelete()">
+                    <div class="box-chart-delete">
+                        <div class="header-title-delete">{{'order.remove_selected_item' | translate}} ?</div>
+                        <div class="sub-title-delete">{{'order.selected_items_will_be_removed_from_your_basket' | translate}}</div>
+                        <div class="delete-whislist">
+                            <button class="btn-remove" mat-button color="action" (click)="removeItemLocal(item.product_id)">{{'order.remove' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="download-file">
+                    <a href="https://api.kitchenart.id/warranty/download_pdf" target="_blank">
+                        {{ 'footer.term_condition' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="checkout-chart" *ngIf="totalCart != 0 && token != null">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <div class="text-count-price">
+                    {{'order.total_price' | translate}}
+                </div>
+                <div class="count-price">{{ total | currency:'Rp':'true':'4.0-0' }}</div>
+            </div>
+            <div class="col-6">
+                <div class="checkout-chart-button">
+                    <button mat-raised-button color="action" (click)="cartCheckout()">{{'order.checkout' | translate}} ({{totalItems}})</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="checkout-chart" *ngIf="localItemCart != null && token == null">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <div class="text-count-price">
+                    {{'order.total_price' | translate}}
+                </div>
+                <div class="count-price">{{ totalLocal | currency:'Rp':'true':'4.0-0' }}</div>
+            </div>
+            <div class="col-6">
+                <div class="checkout-chart-button">
+                    <button mat-raised-button color="action" (click)="checkOutLocal()">{{'order.checkout' | translate}} ({{ countCart }})</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="overlay-chart-delete" *ngIf="actionDestroy" (click)="closeDelete()">
+    <div class="box-chart-delete">
+        <div class="header-title-delete">{{'order.remove_all_item' | translate}} ?</div>
+        <div class="sub-title-delete">{{'order.items_will_be_removed_from_your_basket' | translate}}</div>
+        <div class="delete-whislist">
+            <button class="btn-remove-whislist empty-cart" mat-button color="action" (click)="destroyChart()">{{'order.remove' | translate}}</button>
+        </div>
+    </div>
+</div>
+<div class="overlay-chart-delete" *ngIf="actionDestroyLocal" (click)="closeDelete()">
+    <div class="box-chart-delete">
+        <div class="header-title-delete">{{'order.remove_all_item' | translate}} ?</div>
+        <div class="sub-title-delete">{{'order.items_will_be_removed_from_your_basket' | translate}}</div>
+        <div class="delete-whislist">
+            <button class="btn-remove-whislist empty-cart" mat-button color="action" (click)="destroyChartLocal()">{{'order.remove' | translate}}</button>
+        </div>
+    </div>
+</div>
+<div class="checkout-loading" *ngIf="checkoutCart">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>

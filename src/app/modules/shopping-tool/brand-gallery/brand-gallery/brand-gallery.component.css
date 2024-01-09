@@ -1,0 +1,26 @@
+.brand-gallery{
+    background-color: #ffffff
+}
+
+.list-brand{
+    background-color: #fff;
+    border: 1px solid #eee;
+    margin: 10px;
+    height: 200px;
+    box-shadow: 0 0 3px 1px #ddd;
+    overflow: hidden;
+}
+.list-brand img{
+    width: 100%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.gallery-title{
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    padding: 15px;
+    color: #666;
+}

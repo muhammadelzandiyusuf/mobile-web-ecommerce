@@ -1,0 +1,244 @@
+<div class="tarde-form">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="title-header-service-installation">{{ nameEnglish }}</div>
+            </div>
+            <div class="col-12">
+                <form novalidate [formGroup]="serviceForm" enctype="multipart/form-data">
+                <mat-accordion class="example-headers-align">
+                    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{'helpinfo.personal_data' | translate}}
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                  
+                      <mat-form-field>
+                        <mat-select placeholder="{{'helpinfo.salutation' | translate}}" formControlName="salutation" required>
+                          <mat-option *ngFor="let item of salutaion" [value]="item.name">
+                            {{item.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="{{'form.first_name' | translate}}" formControlName="first_name" required>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                          <input matInput placeholder="{{'form.last_name' | translate}}" formControlName="last_name">
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="{{'form.mobile' | translate}}" [textMask]="{mask: mask}" formControlName="handphone" required>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="{{'form.phone' | translate}}" [textMask]="{mask: mask}" formControlName="telephone">
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="Email" formControlName="email" required>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="{{'form.confirm_email' | translate}}" formControlName="same_email" required>
+                      </mat-form-field>
+                  
+                      <mat-action-row>
+                        <button type="button" mat-button color="primary" (click)="nextStep()">{{'form.next' | translate}}</button>
+                      </mat-action-row>
+                    </mat-expansion-panel>
+                  
+                    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{'form.address' | translate}}
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                  
+                      <mat-form-field>
+                          <textarea class="form-textrea" matInput placeholder="{{'form.address' | translate}}" formControlName="address" required></textarea>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <mat-select placeholder="{{'form.province' | translate}}" formControlName="province_id" required>
+                          <mat-option *ngFor="let province of provinces" [value]="province.province_id">
+                            {{province.province}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <mat-select placeholder="{{'helpinfo.technician' | translate}}" formControlName="technician" required>
+                          <mat-option *ngFor="let technician of technicians" [value]="technician.id">
+                            {{technician.full_name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field *ngIf="categoryId === 2">
+                        <mat-select placeholder="{{'helpinfo.service_type' | translate}}" formControlName="service_type" required>
+                          <mat-option *ngFor="let demo of service_type_demos" [value]="demo.name">
+                            {{demo.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                          <textarea class="form-textrea" matInput placeholder="{{'product.message' | translate}}" formControlName="message" required></textarea>
+                      </mat-form-field>
+                  
+                      <mat-action-row>
+                        <button type="button" mat-button color="warn" (click)="prevStep()">{{'form.previous' | translate}}</button>
+                        <button type="button" mat-button color="primary" (click)="nextStep()">{{'form.next' | translate}}</button>
+                      </mat-action-row>
+                    </mat-expansion-panel>
+                    
+                    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{'helpinfo.product' | translate}} <span *ngIf="countProduct > 1">&nbsp;1</span>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+
+                      <mat-form-field>
+                        <mat-select placeholder="Brand" formControlName="brand_id_1" required>
+                          <mat-option *ngFor="let brand of brands" [value]="brand.id">
+                            {{brand.brand_name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-select placeholder="{{'helpinfo.category' | translate}}" formControlName="category_id_1" required>
+                                <mat-option *ngFor="let category of categories" [value]="category.id">
+                                {{category.category_name_english}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input matInput placeholder="{{'helpinfo.product_model' | translate}}" formControlName="product_model_1" required>
+                        </mat-form-field>
+                    
+                      <mat-form-field>
+                          <input matInput placeholder="{{'helpinfo.serial_number' | translate}}" formControlName="serial_number_1" required>
+                      </mat-form-field>
+
+                      <div class="file-document">
+                        <p>{{'helpinfo.upload_product' | translate}} <span>*</span></p>
+                        <div>
+                            <input type="file" accept="image/*" class="upload-images-service" id="product_file_1" formControlName="product_file_1" (change)="onFileChange($event)" #fileInput1>
+                        </div>       
+                      </div>
+                  
+                      <mat-action-row>
+                        <button type="button" mat-button color="warn" (click)="prevStep()">{{'form.previous' | translate}}</button>
+                        <button *ngIf="countProduct >= 2" type="button" mat-button color="primary" (click)="nextStep()">{{'form.next' | translate}}</button>
+                      </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle *ngIf="formProduct1">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{'helpinfo.product' | translate}} 2
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+
+                      <mat-form-field>
+                        <mat-select placeholder="Brand" formControlName="brand_id_2" required>
+                          <mat-option *ngFor="let brand of brands" [value]="brand.id">
+                            {{brand.brand_name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-select placeholder="{{'helpinfo.category' | translate}}" formControlName="category_id_2" required>
+                                <mat-option *ngFor="let category of categories" [value]="category.id">
+                                {{category.category_name_english}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input matInput placeholder="{{'helpinfo.product_model' | translate}}" formControlName="product_model_2" required>
+                        </mat-form-field>
+                    
+                      <mat-form-field>
+                          <input matInput placeholder="{{'helpinfo.serial_number' | translate}}" formControlName="serial_number_2" required>
+                      </mat-form-field>
+
+                      <div class="file-document">
+                        <p>{{'helpinfo.upload_product' | translate}} <span>*</span></p>
+                        <input type="file" accept="image/*" class="upload-images-service" id="product_file_2" formControlName="product_file_2" (change)="onFileChangeService($event)" #fileInput2>
+                             
+                      </div>
+                  
+                      <mat-action-row>
+                        <button type="button" mat-button color="warn" (click)="prevStep()">{{'form.previous' | translate}}</button>
+                        <button *ngIf="countProduct === 3" type="button" mat-button color="primary" (click)="nextStep()">{{'helpinfo.next' | translate}}</button>
+                      </mat-action-row>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle *ngIf="formProduct2">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{'helpinfo.product' | translate}} 3
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+
+                      <mat-form-field>
+                        <mat-select placeholder="Brand" formControlName="brand_id_3" required>
+                          <mat-option *ngFor="let brand of brands" [value]="brand.id">
+                            {{brand.brand_name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-select placeholder="{{'helpinfo.category' | translate}}" formControlName="category_id_3" required>
+                                <mat-option *ngFor="let category of categories" [value]="category.id">
+                                {{category.category_name_english}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input matInput placeholder="{{'helpinfo.product_model' | translate}}" formControlName="product_model_3" required>
+                        </mat-form-field>
+                    
+                      <mat-form-field>
+                          <input matInput placeholder="{{'helpinfo.serial_number' | translate}}" formControlName="serial_number_3" required>
+                      </mat-form-field>
+
+                      <div class="file-document">
+                        <p>{{'helpinfo.upload_product' | translate}} <span>*</span></p>
+                        <input type="file" accept="image/*" class="upload-images-service" id="product_file_3" formControlName="product_file_3" (change)="onFileChangeInstallation($event)" #fileInput3>   
+                      </div>
+                  
+                      <mat-action-row>
+                        <button type="button" mat-button color="warn" (click)="prevStep()">{{'form.previous' | translate}}</button>
+                      </mat-action-row>
+                    </mat-expansion-panel>
+                  
+                  </mat-accordion>
+                  <div class="button-add-product">
+                      <button *ngIf="countProduct > 1" type="button" mat-stroked-button (click)="removeProduct()">{{'helpinfo.remove_product' | translate}}</button>
+                      <button *ngIf="2 >= countProduct" type="button" mat-stroked-button color="warn" (click)="addProduct()">{{'helpinfo.add_product' | translate}}</button>
+                  </div>
+                  <div class="button-submit">
+                      <mat-action-row>
+                        <button *ngIf="spinner === false" type="submit" mat-raised-button color="action" [disabled]="serviceForm.invalid" (click)="saveServiceInstallation()">Submit</button>
+                        <button *ngIf="spinner" type="button" mat-raised-button disabled="true">
+                          <img src="assets/images/spin.gif" class="image-spinner">
+                        </button>
+                      </mat-action-row>
+                  </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

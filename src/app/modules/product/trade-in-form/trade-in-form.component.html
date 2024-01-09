@@ -1,0 +1,94 @@
+<div class="tradeins">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="banner">
+                    <img src="{{ domainImage }}/{{ bannerPath }}/{{ bannerImage }}">
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="title">
+                    {{'product.tell_us_about_your_equipment' | translate}} <br>
+                    {{'product.which_types_of_products_are_you_looking_to_sell' | translate}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tarde-form">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form novalidate [formGroup]="tradeinForm" enctype="multipart/form-data">
+                        <mat-form-field>
+                            <input matInput placeholder="{{'menu.brand' | translate}}" name="brand" formControlName="brand" required>
+                        </mat-form-field>
+
+                        <!-- <mat-form-field>
+                            <input matInput placeholder="{{'menu.category_product' | translate}}" name="category" formControlName="category" required>
+                        </mat-form-field> -->
+
+                        <mat-form-field>
+                            <mat-select placeholder="{{'menu.produck_condition' | translate}}" formControlName="produck_condition" required>
+                                <mat-option *ngFor="let condition of produkCondition" [value]="condition.name">
+                                    <span>{{ condition.name }}</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <!-- <mat-form-field>
+                            <mat-select placeholder="Category" formControlName="category" required>
+                                <mat-option>-- {{'product.none' | translate}} --</mat-option>
+                                <mat-optgroup *ngFor="let group of categories" [label]="group.category_name_english"
+                                              [disabled]="group.disabled">
+                                    <mat-option *ngFor="let cat of category" [value]="cat.category_name_english" [ngClass]="{'active':cat.parent_id != group.id}">
+                                        <span *ngIf="lang === 'en'">{{ cat.category_name_english }}</span>
+                                        <span *ngIf="lang === 'id'">{{ cat.category_name_indonesia }}</span>
+                                    </mat-option>
+                                </mat-optgroup>
+                            </mat-select>
+                        </mat-form-field> -->
+
+                        <div class="file-document">
+                            <img *ngIf="url != null" [src]="url">
+                            <img *ngIf="url == null" src="assets/images/image.png">
+                            <p>*{{ 'product.image_size' | translate }}</p>
+                            <div class="upload-btn-wrapper">
+                                <button mat-raised-button color="primary">{{'product.browse' | translate}}</button>
+                                <input type="file" accept="image/*" class="form-file" id="product_file" (change)="onFileChange($event)" #fileInput1>
+                            </div>       
+                        </div>
+
+                        <mat-form-field>
+                            <textarea class="form-textrea" matInput placeholder="{{'product.description' | translate}}" formControlName="description" required></textarea>
+                        </mat-form-field>
+
+                        <div class="action">
+                            <button mat-raised-button color="action" (click)="tradeInRequest()">{{'product.send_your_pict' | translate}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="term-conditions">
+        <mat-accordion class="example-headers-align">
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{'footer.term_condition' | translate}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="term-condition" [innerHtml]="termConditionEnglish"></div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
+
+<div class="checkout-loading" *ngIf="cekTrade">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>

@@ -1,0 +1,228 @@
+<div class="overlay-popup" *ngIf="contactProduct == true">
+    <div class="popup">
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="title">{{'professional.contact_me' | translate}}</div>
+                    </div>
+                    <div class="col-6">
+                        <div class="close" (click)="closePopupContact()">
+                            <fa name="close"></fa>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <form novalidate [formGroup]="contactForm">
+                <mat-form-field>
+                    <input matInput placeholder="{{'form.full_name' | translate}}" formControlName="full_name" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="{{'form.phone' | translate}}" [textMask]="{mask: mask}" formControlName="phone" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Email" formControlName="email" required>
+                </mat-form-field>
+                <mat-form-field>
+                    <textarea matInput placeholder="{{'form.message' | translate}}" formControlName="message" required></textarea>
+                </mat-form-field>
+                <mat-action-row>
+                    <button mat-raised-button type="submit" [disabled]="contactForm.invalid" color="kitchent" (click)="saveContact()">{{'form.save' | translate}}</button>
+                </mat-action-row>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="architect-detail">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="photo-architect">
+                    <img src="{{ imageDomain }}/{{ photoPath }}/{{ photoImage }}">
+                </div>
+                <div class="architect-name">{{ name }}</div>
+                <div class="submit-contact">
+                    <button mat-raised-button class="btn-contact" (click)="popupContact()">{{'professional.contact_me' | translate}}</button>
+                </div>
+                <div class="content">
+                    <div class="description-content" *ngIf="lang === 'en'" [innerHtml]="contentEnglish"></div>
+                    <div class="description-content" *ngIf="lang === 'id'" [innerHtml]="contentIndonesia"></div>
+                </div>
+                <div class="content-architect" *ngIf="awards?.length > 0">
+                    <div class="arhitect-title">
+                        {{'professional.awards' | translate}}
+                    </div>
+                    <div class="architect-award-box">
+                        <swiper class="swiper" [config]="config">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" *ngFor="let award of album; let i = index">
+                                    <div class="box-award">
+                                        <div class="image" (click)="open(i)">
+                                            <img [src]="award.thumb">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </swiper>
+                    </div>
+                </div>
+                <div class="content-gallery" *ngIf="galleryImages?.length > 0">
+                    <div class="architect-award-box">
+                        <swiper class="swiper" [config]="configGallery">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" *ngFor="let banner of galleryImages">
+                                    <img src="{{ imageDomain }}/{{ banner.gallery_path }}/{{ banner.gallery_image }}" #logo (load)="onLoad()">
+                                    <div class="pin-tag" *ngFor="let pin of pinTag; let i = index" [ngStyle]="{'top.px':pin.long, 'left.px':pin.lat}" [ngClass]="{'not-product': banner.id !== pin.host_image_id}" (click)="getProductModal(i)">
+                                        <i class="fas fa-tag fa-w-12 fa-lg"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </swiper>
+                    </div>
+                </div>
+                <div class="content-architect" *ngIf="exhibitions?.length > 0">
+                    <div class="arhitect-title">
+                        {{'professional.exhibition' | translate}}
+                    </div>
+                    <div class="architect-award-box">
+                        <swiper class="swiper" [config]="configExhibition">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" *ngFor="let exhibition of exhibitions">
+                                    <a href="exhibitions/{{ exhibition.url }}">
+                                        <div class="box-exhibition-host">
+                                            <div class="image">
+                                                <img src="{{ imageDomain }}/{{ exhibition.thumb_path }}/{{ exhibition.thumb_image }}">
+                                            </div>
+                                            <div class="name">
+                                                {{ exhibition.name }}
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </swiper>
+                    </div>
+                </div>
+                <div class="content-architect" *ngIf="cookingClass?.length > 0">
+                    <div class="arhitect-title">
+                        {{'professional.cooking_class_demo' | translate}}
+                    </div>
+                    <div class="architect-award-box">
+                        <swiper class="swiper" [config]="configExhibition">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" *ngFor="let cooking of cookingClass">
+                                    <a href="cooking_class_demo/{{ cooking.url }}">
+                                        <div class="box-exhibition-host">
+                                            <div class="image">
+                                                <img src="{{ imageDomain }}/{{ cooking.thumb_path }}/{{ cooking.thumb_image }}">
+                                            </div>
+                                            <div class="name">
+                                                {{ cooking.name }}
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </swiper>
+                    </div>
+                </div>
+                <div class="content-architect" *ngIf="recipes?.length > 0">
+                    <div class="arhitect-title">
+                        {{'culinary.recipe' | translate}}
+                    </div>
+                    <div class="architect-award-box">
+                        <swiper class="swiper" [config]="configExhibition">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" *ngFor="let recipe of recipes">
+                                    <a href="recipes/{{ recipe.url }}">
+                                        <div class="box-exhibition-host">
+                                            <div class="image">
+                                                <img src="{{ imageDomain }}/{{ recipePath }}/{{ recipe.thumb_image }}">
+                                            </div>
+                                            <div class="name">
+                                                {{ recipe.title }}
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </swiper>
+                    </div>
+                </div>
+                <div class="content-architect" *ngIf="wineDines?.length > 0">
+                    <div class="arhitect-title">
+                        {{'culinary.wine' | translate}}
+                    </div>
+                    <div class="architect-award-box">
+                        <swiper class="swiper" [config]="configExhibition">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide" *ngFor="let wine of wineDines">
+                                    <a href="wine_dine/{{ wine.url }}">
+                                        <div class="box-exhibition-host">
+                                            <div class="image">
+                                                <img src="{{ imageDomain }}/{{ winePath }}/{{ wine.thumb_image }}">
+                                            </div>
+                                            <div class="name">
+                                                {{ wine.title }}
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </swiper>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div [@dialog] class="overlay-tag-product dialog" *ngIf="visible" (click)="closeTag()">
+    <div class="banner-tag">
+        <div class="close" (click)="closeTag()">
+            <i class="fa fa-close"></i>
+        </div>
+    </div>
+    <div class="content-product-tag">
+        <div class="box-product">
+            <div class="image" (click)="getProduct(product.url)">
+                <img src="{{ product.image_domain }}/{{ product.product_image_path }}/{{ product.product_image_name }}">
+            </div>
+            <div class="content" (click)="getProduct(product.url)">
+                <div class="brand">{{ product.brand_name }}</div> 
+                <div class="name">{{ product.name }}
+                    ({{product.code }})
+                </div>
+                <div *ngIf="product.price > 0">
+                    <div class="normal-price">{{ product.price | currency:'Rp':'true':'4.0-0' }}</div>
+                    <div class="diskon-price">{{ product.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+                </div>
+                <div *ngIf="product.price == null || product.price == 0">
+                    <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+                </div>
+            </div>
+            <div class="installment" *ngIf="product.stock_status_id == 1" (click)="getProduct(product.url)">
+                <span *ngIf="product.price > 0">
+                    {{ product.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+                </span>
+            </div>
+            <div class="installment color-red" *ngIf="product.stock_status_id != 1" (click)="getProduct(product.url)">{{ product.stock_status }}</div>
+            <div class="btn-action">
+                <button class="btn-add-chart" *ngIf="token !== null" (click)="addCart(product.product_id)">
+                    <i class="fas fa-cart-plus"></i>
+                </button>
+                <button class="btn-add-chart" *ngIf="token === null" (click)="addChartLocal(product.product_id, product.brand_name, product.discount_price, product.name, product.product_image_path, product.product_image_name)">
+                    <i class="fas fa-cart-plus"></i>
+                </button>
+                <button class="btn-add-wish" *ngIf="token !== null" (click)="addWishlist(product.product_id)">
+                    <i class="fas fa-heart"></i>
+                </button>
+                <button class="btn-add-wish" *ngIf="token === null" (click)="addWishListLocal(product.product_id)">
+                    <i class="fas fa-heart"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

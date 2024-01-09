@@ -1,0 +1,62 @@
+<div class="balance">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="title-withdraw">
+                    {{ 'account.withdraw_commision' | translate }}
+                </div>
+                <div class="sub-title-draw">
+                    {{ 'account.please_kindly_make_sure' | translate }}
+                </div>
+                <div class="commision">
+                    {{ 'account.your_commision' | translate }} : <span>{{ totalCommision | currency:'Rp':'true':'4.0-0' }}</span>
+                </div>
+                <form novalidate [formGroup]="withdrawForm">
+                    <div class="claim-container">
+                        <mat-form-field>
+                            <input matInput placeholder="{{ 'account.amount' | translate }}" class="claim-right-align" [type]="'tel'" formControlName="amount" required>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input matInput placeholder="Account Name" formControlName="account_name" required>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input matInput #accountNumber maxlength="16" placeholder="Account Number" formControlName="account_number" [type]="'tel'" required>
+                            <mat-hint align="end">{{accountNumber.value.length}} / 16</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-select placeholder="Bank" formControlName="bank_id" required>
+                                <mat-option *ngFor="let bank of banks" [value]="bank.id">
+                                    {{bank.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input matInput placeholder="Email Account" name="email" formControlName="email" required>
+                        </mat-form-field>
+
+                        <!-- <mat-form-field>
+                            <input matInput placeholder="kitchenart.id Password" [type]="'password'" formControlName="password" required>
+                        </mat-form-field> -->
+
+                        <mat-checkbox (click)="usingInformation()">{{'account.the_information_i_entered' | translate}}</mat-checkbox>
+
+                        <div class="button-withdrawl">
+                            <button *ngIf="checked === true" mat-raised-button class="btn-withdrwal" [disabled]="withdrawForm.invalid" (click)="claimCommission()">{{ 'account.claim' | translate }}</button>
+                            <button *ngIf="checked === false" mat-raised-button class="btn-withdrwal" [disabled]="true">{{ 'account.claim' | translate }}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="checkout-loading" *ngIf="commision">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>

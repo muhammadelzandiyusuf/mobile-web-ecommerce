@@ -1,0 +1,19 @@
+<div class="contractor-content" (scroll)="onScroll($event)">
+    <div class="container">
+        <div class="row">
+            <div class="col-6" *ngIf="contractors?.length === 0">
+              <p class="no-product">{{'professional.no_content' | translate}}</p>
+            </div>
+            <div class="col-6 col-sm-4 col-md-4" *ngFor="let contractor of contractors">
+                <div class="box-contractor" (click)="getDetailContractor(contractor.url)">
+                    <div class="tumbnail">
+                        <img src="{{ contractor.image_domain }}/{{ contractor.thumb_path }}/{{ contractor.thumb_image }}">
+                    </div>
+                    <div class="contractor-name">
+                      {{ contractor.name }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

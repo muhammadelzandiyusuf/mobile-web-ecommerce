@@ -1,0 +1,128 @@
+.technician-product{
+    background-color: #ffffff;
+    height: 554px;
+    overflow: scroll;
+}
+.menu-list{
+    background-color: #ffffff;
+    width: 100%;
+    margin-bottom: 10px;
+    position: fixed;
+    z-index: 9;
+}
+.menu-list ul{
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+.menu-list ul li{
+    list-style: none;
+    display: inline-block;
+    color: #666;
+    padding: 20px 25px;
+    font-size: 14px;
+    border-bottom: 2px solid #eeeeee;
+    transition: all 1s ease;
+    width: 50%;
+    text-align: center;
+}
+.active-menu{
+    color: #c3071c !important;
+    border-bottom: 2px solid #c3071c !important;
+}
+.content-technician{
+    margin-bottom: 0px;
+    padding: 5px 10px;
+}
+.content-technician:last-child{
+    margin-bottom: 0px;
+    padding: 5px 10px 15px;
+}
+.content-box-review{
+    border-bottom: 1px solid #dddddd;
+    padding-bottom: 10px;
+}
+.text-review{
+    color: #666666;
+    font-size: 14px;
+    line-height: 1.3rem;
+}
+.text-review span{
+    font-weight: bold
+}
+.content-photo{
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+.content-photo img{
+    height: 150px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.text-name-review{
+    font-size: 14px;
+    color: #666;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd
+}
+.text-name-review span{
+    font-weight: 600
+}
+.detail-product{
+    padding: 15px 0 0;
+}
+.text-detail{
+    font-size: 14px;
+    color: #666;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.product-review{
+    padding: 10px 0;
+    border-bottom: 1px solid #dddddd;
+}
+.product-review:last-child{
+    border-bottom: none
+}
+.image-review{
+    padding: 5px 5px 0 0;
+}
+.image-review img{
+    width: 100%   
+}
+.give-review{
+    text-align: center;
+}
+.give-review .btn-review{
+    background-color: #c3071c;
+    color: #ffffff;
+}
+.rivew-rating-technician{
+    padding-top: 5px;
+    text-align: center
+}
+.text-review-technician{
+    padding-top: 5px;
+    font-size: 13px;
+    color: #999999;
+}
+.container-product{
+    margin-top: 60px;
+    background-color: #ffffff;
+    width: 100%;
+    height: 549px;
+    overflow: scroll;
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+    .container-product{
+        height: 901px;
+    }
+}
+  
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .container-product{
+        height: 650px;
+    }
+}

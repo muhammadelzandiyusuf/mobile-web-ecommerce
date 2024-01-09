@@ -1,0 +1,32 @@
+export class HistoryOrder {
+    id: number
+    transaction_code: string
+    transaction_no: string
+    shipping_name: string
+    shipping_phone: string
+    shipping_province_id: number
+    shipping_province_name: string
+    shipping_city_id: number
+    shipping_city_name: string
+    shipping_subdistrict_id: number
+    shipping_subdistrict_name: string
+    shipping_address: string
+    shipping_zip: string
+    free_shipping: string
+    use_balance: string
+    courier: string
+    courier_service: string
+    promo: string
+    notes: string
+    cashback_amount: number
+    expired_at: string
+    finished_at: string
+    created_at: string
+    total_order: string
+    history_order: string
+    product_order: string
+    product_order_history: string
+    shipment_order: string
+    payment_order: string
+    product_review: string
+}

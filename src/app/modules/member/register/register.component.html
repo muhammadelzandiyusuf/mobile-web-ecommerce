@@ -1,0 +1,58 @@
+<div class="layout-spinner" *ngIf="spinner">
+    <div class="spinner">
+        <img src="assets/images/spin.gif">
+    </div>
+</div>
+<div class="form-register">
+    <div class="title-form">{{'form.create_new_account' | translate}}</div>
+    <form class="example-container" novalidate [formGroup]="registerForm" (ngSubmit)="addRegister()">
+        <mat-form-field>
+            <input matInput placeholder="{{'form.name' | translate}}" [(ngModel)]="model.name" name="name" formControlName="fname" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Email" [(ngModel)]="model.email" name="email" formControlName="email" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="{{'form.province' | translate}}" [(ngModel)]="model.province_id" name="province_id" formControlName="province" required>
+                <mat-option *ngFor="let province of provinces" [value]="province.province_id">
+                    {{province.province}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="dp3" placeholder="{{'form.birthday' | translate}}" [(ngModel)]="model.birthday" name="birthday" formControlName="birthday" disabled required>
+            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" [(ngModel)]="model.password" name="password" formControlName="password" required>
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="{{'form.confirm_your_password' | translate}}" [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" required>
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+        </mat-form-field>
+
+        <div class="button-row btn-register">
+            <button type="submit" [disabled]="registerForm.invalid" mat-raised-button color="kitchent">{{'form.register' | translate}}</button>
+        </div>
+
+        <div class="terms-text">
+          {{'form.by_clicking_the_submit_button' | translate}} <br> {{'footer.term_condition' | translate}}
+        </div>
+
+        <div class="button-row">
+            <button type="button" mat-raised-button color="facebook" (click)="socialLoginFb()">
+                <img src="/assets/images/facebook.png" class="img-facebook" />
+            </button>
+            <button type="button" mat-raised-button color="google" (click)="socialLoginGoogle()">
+                <fa name="google"></fa>
+            </button>
+        </div>
+    </form>
+</div>

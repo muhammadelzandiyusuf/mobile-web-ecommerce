@@ -1,0 +1,78 @@
+<div class="checkout-cart">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="header-checkout">
+                    <mat-icon class="back-icon" (click)="backToCheckout()">keyboard_backspace</mat-icon>
+                    <span>{{ 'order.shipping_address' | translate }}</span>
+                    <mat-icon class="plus-icon" (click)="addAddress()">add</mat-icon>
+                </div>
+            </div>
+            <div class="col-12" *ngIf="shippings?.length === 0">
+                <div class="not-address">
+                    {{ 'order.shipping_address_not_available' | translate }}
+                </div>
+            </div>
+            <div class="col-12" *ngIf="cekShipping">
+                <div class="load-gif">
+                    <img src="/assets/images/load.gif" alt="load" />
+                </div>
+            </div>
+            <div class="col-12" *ngFor="let shipping of shippings">
+                <div class="shipping-address" [ngClass]="{'chose-actived': shipping.as_default === 'T'}">
+                    <div class="header-text">
+                        <mat-icon class="icon-checkout">location_on</mat-icon>
+                        <span>{{ shipping.label }}</span>
+                        <button class="btn-delete-shipping">
+                            <mat-icon class="delete-icon" (click)="deleteAddressShow(shipping.label, shipping.id)">delete</mat-icon>
+                        </button>
+                    </div>
+                    <div class="content-address">
+                        <div class="text-customer">{{ shipping.receiver_name }} <span>({{ shipping.receiver_phone }})</span></div>
+                        <div class="text-address">{{ shipping.address }}</div>
+                        <div class="text-address">{{ shipping.province }}, {{ shipping.city }}, {{ shipping.subdistrict }}, {{ shipping.postal_zip }}</div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="addres-button">
+                                    <button class="btn-shipping-address" (click)="updateAddres(shipping.id)">
+                                        <fa name="edit"></fa> {{ 'order.change' | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="addres-button" *ngIf="shipping.as_default === 'T'">
+                                    <div class="text-actived">
+                                        <button class="btn-shipping-address text-actived btn-choose">
+                                            {{ 'order.active' | translate }}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="addres-button" *ngIf="shipping.as_default === 'F'">
+                                    <div class="text-actived">
+                                        <button class="btn-shipping-address btn-choose" (click)="updateShipping(shipping.id)">
+                                            <mat-icon class="choose-icon">touch_app</mat-icon> {{ 'order.choose' | translate }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="overlay-chart-delete" *ngIf="actionDelete" (click)="closeDelete()">
+    <div class="box-chart-delete">
+        <div class="header-title-delete">{{ 'order.are_you_sure_to_remove' | translate }} <b>{{ addressLabel }}</b> ?</div>
+        <div class="delete-whislist">
+            <button class="btn-remove" mat-button color="action" (click)="deleteAddress(addressId, token)">{{ 'order.remove' | translate }}</button>
+        </div>
+    </div>
+</div>
+<div class="checkout-loading" *ngIf="choseShipping">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>

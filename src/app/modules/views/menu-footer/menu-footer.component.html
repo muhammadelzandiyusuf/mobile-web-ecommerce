@@ -1,0 +1,15 @@
+<mat-toolbar color="default">
+  <mat-toolbar-row>
+    <span *ngIf="data.language == 'en'">{{ data.name_english }}</span>
+    <span *ngIf="data.language == 'id'">{{ data.name_indonesia }}</span>
+    <span class="example-spacer"></span>
+    <mat-icon class="example-icon" (click)="onNoClick()">clear</mat-icon>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-nav-list>
+  <mat-list-item *ngFor="let link of data.results">
+     <a matLine *ngIf="data.language == 'en'" (click)="goCareerJob(link.slug)">{{ link.name_english }}</a>
+     <a matLine *ngIf="data.language == 'id'" (click)="goCareerJob(link.slug)">{{ link.name_indonesia }}</a>
+     <mat-divider></mat-divider>     
+  </mat-list-item>
+</mat-nav-list>

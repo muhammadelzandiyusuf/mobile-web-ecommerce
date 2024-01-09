@@ -1,0 +1,19 @@
+<div class="contractor-content" (scroll)="onScroll($event)">
+    <div class="container">
+        <div class="row">
+            <div class="col-6" *ngIf="hosts?.length === 0">
+              <p class="no-product">{{'professional.no_content' | translate}}</p>
+            </div>
+            <div class="col-6 col-sm-4 col-md-4" *ngFor="let host of hosts">
+                <div class="box-contractor" (click)="getDetailHost(host.url)">
+                    <div class="tumbnail">
+                        <img src="{{ host.image_domain }}/{{ host.thumb_path }}/{{ host.thumb_image }}">
+                    </div>
+                    <div class="contractor-name">
+                      {{ host.name }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

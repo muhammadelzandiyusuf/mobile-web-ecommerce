@@ -1,0 +1,150 @@
+swiper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+swiper img {
+    width: 100%;
+    height: auto;
+}
+.container{
+    margin-bottom: 20px;
+}
+.banner-photo{
+    background-color: #ffffff
+}
+.container-product{
+    display: flex;
+    overflow: scroll;
+    width: 100%;
+}
+.box-products{
+    padding: 5px;
+    width: 25%;
+}
+.box-products .image{
+    overflow: hidden;
+}
+.box-products .image img{
+    width: 100%;
+    position: relative;
+}
+.box-products .name-product{
+    color: #666666;
+    font-size: 12px;
+    text-align: center;
+    padding: 5px;
+}
+.not-product{
+    display: none;
+}
+.content-description{
+    background-color: #ffffff;
+    margin-top: 10px;
+}
+.content-description .architect-name{
+    padding: 15px 10px 10px;
+    text-align: center;
+    color: #666666;
+    font-size: 18px;
+}
+.content-description .portfolio-title{
+    padding: 0 10px 10px;
+    text-align: center;
+    color: #999999;
+    font-size: 16px;
+}
+.content-portfolio{
+    padding: 20px;
+    line-height: 1.5rem;
+    font-size: 14px;
+}
+.box-product {
+    background-color: #ffffff;
+    margin: 5px;
+    padding: 0;
+    box-shadow: 0 0 10px 0 #dddddd;
+}
+
+.box-product .image {
+    overflow: hidden;
+    padding: 10px 10px 0;
+}
+
+.box-product .image img {
+    width: 100%;
+    position: relative;
+}
+
+.box-product .content {
+    height: 120px;
+    padding: 10px;
+}
+
+.box-product .content .brand {
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+}
+
+.box-product .content .name {
+    padding: 5px 0;
+    font-size: 12px;
+    color: #787878;
+}
+
+.box-product .content .normal-price {
+    font-size: 10px;
+    color: #ad2825;
+    text-decoration: line-through;
+}
+
+.box-product .content .diskon-price {
+    padding: 5px 0;
+    font-size: 12px;
+    color: #787878;
+}
+
+.box-product .installment {
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #787878;
+    font-weight: bold;
+}
+
+.btn-action{
+    padding: 10px;
+    z-index: 999999;
+}
+.btn-action .btn-add-chart{
+    width: 48%;
+    padding: 10px;
+    background-color: #c3071c;
+    color: #fff;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+}
+.btn-action .btn-add-wish{
+    width: 48%;
+    padding: 10px;
+    background-color: #c3071c;
+    color: #fff;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    float: right;
+}
+      
+@media (min-width: 768px) and (max-width: 1024px) {
+    .box-product {
+        margin: 0px 145px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .box-product {
+        margin: 50px 270px;
+    }
+}

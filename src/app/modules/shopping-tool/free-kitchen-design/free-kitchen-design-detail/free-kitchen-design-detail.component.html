@@ -1,0 +1,35 @@
+<div class="brand-gallery">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="gallery-detail">
+                    <div class="banner">
+                        <img src="{{ image_domain }}/{{ banner_path }}/{{ banner_image }}">
+                    </div>
+                    <div class="title-gallery">{{ title }}</div>
+                    <div class="description-gallery" *ngIf="lang === 'en'" [innerHtml]="content_english"></div>
+                    <div class="description-gallery" *ngIf="lang === 'id'" [innerHtml]="content_indonesia"></div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="box-product-apliance">
+                    <div class="title-brand-product">{{'shopping.appliances_in_this_kitchen' | translate}}</div>
+                    <swiper class="swiper" [config]="config">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" *ngFor="let product of kitchen_products">
+                                <div class="box-product" (click)="goProductDetail(product.url)">
+                                    <div class="image">
+                                        <img src="{{ product.image_domain }}/{{ product.product_image_path }}/{{ product.product_image_name }}">
+                                    </div>
+                                    <div class="name-product">
+                                        {{ product.name }} {{ product.code }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </swiper>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

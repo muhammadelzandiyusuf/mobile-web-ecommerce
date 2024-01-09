@@ -1,0 +1,161 @@
+<div class="cooking-registration">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="title-cooking">
+                    {{'culinary.registration_cooking_class_demo' | translate}}
+                </div>
+                <div class="sub-title-cooking">
+                    {{ title }}
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="box-information">
+                    <table>
+                        <tr>
+                            <td>{{'culinary.location' | translate}}</td>
+                            <td>:</td>
+                            <td class="color-link" (click)="getDetailShowroom(locationUrl)">{{ location }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'culinary.cost' | translate}}</td>
+                            <td>:</td>
+                            <td class="color-link" *ngIf="cost !== null">{{ cost | currency:'Rp':'true':'4.0-0' }}</td>
+                            <td class="color-link" *ngIf="cost === null">{{'culinary.free' | translate}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'culinary.host' | translate}}</td>
+                            <td>:</td>
+                            <td>
+                                <div class="list-host">
+                                    <div class="host" *ngFor="let item of hosts">
+                                        <a (click)="getDetailHost(item.url)">{{ item.name }}</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'culinary.date' | translate}}</td>
+                            <td>:</td>
+                            <td>
+                                {{ dateStart | date: 'd/MM/yyyy'}}
+                                {{'culinary.to' | translate}}
+                                {{ dateEnd | date: 'd/MM/yyyy'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'culinary.time' | translate}}</td>
+                            <td>:</td>
+                            <td>
+                                {{ timeOpen }}
+                                {{'culinary.to' | translate}}
+                                {{ timeClose }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-12">
+                <form novalidate [formGroup]="registerForm" enctype="multipart/form-data">
+                    <div class="form-registration-cooking">
+                        <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        {{'culinary.participant' | translate}} 1
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                            
+                                <mat-form-field>
+                                  <input matInput placeholder="{{'form.full_name' | translate}}" formControlName="name_1" required>
+                                </mat-form-field>
+                            
+                                <mat-form-field>
+                                  <input matInput placeholder="{{'form.mobile' | translate}}" [textMask]="{mask: mask}" formControlName="phone_1" required>
+                                </mat-form-field>
+    
+                                <mat-form-field>
+                                  <input matInput placeholder="Email" formControlName="email_1" required>
+                                </mat-form-field>
+                            </mat-expansion-panel>
+                          
+                            <mat-expansion-panel *ngIf="participant2" [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        {{'culinary.participant' | translate}} 2
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                            
+                                <mat-form-field>
+                                  <input matInput placeholder="{{'form.full_name' | translate}}" formControlName="name_2">
+                                </mat-form-field>
+                            
+                                <mat-form-field>
+                                  <input matInput placeholder="{{'form.mobile' | translate}}" [textMask]="{mask: mask}" formControlName="phone_2">
+                                </mat-form-field>
+    
+                                <mat-form-field>
+                                  <input matInput placeholder="Email" formControlName="email_2">
+                                </mat-form-field>
+                            </mat-expansion-panel>
+                          
+                            <mat-expansion-panel *ngIf="participant3" [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        {{'culinary.participant' | translate}} 3
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                            
+                                <mat-form-field>
+                                  <input matInput placeholder="{{'form.full_name' | translate}}" formControlName="name_3">
+                                </mat-form-field>
+                            
+                                <mat-form-field>
+                                  <input matInput placeholder="{{'form.mobile' | translate}}" [textMask]="{mask: mask}" formControlName="phone_3">
+                                </mat-form-field>
+    
+                                <mat-form-field>
+                                  <input matInput placeholder="Email" formControlName="email_3">
+                                </mat-form-field>
+                            
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <div class="box-add-participant">
+                            <button *ngIf="countParticipant > 1" type="button" class="add-participant" (click)="removeParticipant()">{{'culinary.remove_participant' | translate}}</button>
+                            <button *ngIf="2 >= countParticipant" type="button" class="add-participant" (click)="addParticipant()">{{'culinary.add_participant' | translate}}</button>
+                        </div>
+                    </div>
+                    <div class="box-method">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="grand-cost" *ngIf="cost !== null">
+                                        {{ grandCost | currency:'Rp':'true':'4.0-0' }}
+                                    </div>
+                                    <div class="grand-cost" *ngIf="cost === null">
+                                        {{'culinary.free' | translate}}
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <button class="btn-action-icon add-chart" *ngIf="cost !== null" (click)="saveRegister()">
+                                        {{'culinary.pay_register' | translate}}
+                                    </button>
+                                    <button class="btn-action-icon add-chart" *ngIf="cost === null" (click)="saveFreeRegister()">
+                                        {{'culinary.pay_register' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="checkout-loading" *ngIf="loading">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>

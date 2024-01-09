@@ -1,0 +1,17 @@
+<div class="shooping-tool">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6" *ngFor="let banner of terms">
+                <div class="banner-shopping" (click)="goLink(banner.slug)">
+                    <div class="image">
+                        <img src="{{ banner.image_domain }}/{{ banner.thumb_path }}/{{ banner.thumb_image }}">
+                    </div>
+                    <div class="term-name">
+                        <div class="name-title" *ngIf="lang === 'en'">{{ banner.name_english }}</div>
+                        <div class="name-title" *ngIf="lang === 'id'">{{ banner.name_indonesia }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

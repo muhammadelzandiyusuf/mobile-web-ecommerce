@@ -1,0 +1,128 @@
+<div class="account profile-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="profile-header">
+                    <mat-icon class="back-icon" (click)="backProfile()">keyboard_backspace</mat-icon>
+                    <span>{{'account.edit_profile' | translate}}</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="account-photo-profile-edit">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="image-profile">
+                                <img src="/assets/images/default.jpg" *ngIf="avatarImage === null && urlImage === null">
+                                <img src="{{ imageDomain }}/{{ avatarPath }}/{{ avatarImage }}" *ngIf="avatarImage !== null && urlImage === null">
+                                <img [src]="urlImage" *ngIf="urlImage !== null">
+                            </div>
+                            <div class="button-change">
+                                <div class="upload-btn-wrapper">
+                                    <button class="btn-change">{{'account.change' | translate}}</button>
+                                    <input type="file" accept="image/*" class="form-file" id="avatar_image" (change)="onFileChange($event)" #fileInput1>
+                                </div>    
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-data">
+                                <form novalidate [formGroup]="registerForm" enctype="multipart/form-data">
+                                    <div class="profile-form-data">
+                                        <div class="header-title-form">
+                                            {{'account.personal_data' | translate}}
+                                            <span (click)="changePassword()">
+                                                <fa name="edit"></fa> {{'account.change_password' | translate}}
+                                            </span>
+                                        </div>
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ 'form.mobile' | translate }}" [textMask]="{mask: mask}" formControlName="handphone" required>
+                                        </mat-form-field>                               
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ 'form.phone' | translate }}" [textMask]="{mask: mask}" formControlName="telephone">
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <textarea matInput placeholder="{{ 'form.address' | translate }}" formControlName="address"></textarea>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <mat-select placeholder="{{ 'form.province' | translate }}" formControlName="province_id" [compareWith]="compareProvince">
+                                                <mat-option *ngFor="let province of provinces" [value]="province.province_id" (click)="getCityByProvince(province.province_id)">
+                                                    {{province.province}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <mat-select placeholder="{{ 'form.city' | translate }}" [disabled]="cityDisabled" formControlName="city_id" [compareWith]="compareCity">
+                                                <mat-option *ngFor="let city of cities" [value]="city.city_id">
+                                                    {{ city.city_name }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ 'form.postal_code' | translate }}" [textMask]="{mask: postal}" formControlName="postal_code" disabled>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="profile-form-data">
+                                        <div class="header-title-form">
+                                            {{ 'form.company_information' | translate }}
+                                        </div>
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ 'form.company_name' | translate }}" formControlName="company_name">
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ 'form.company_title' | translate }}" formControlName="company_title">
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ 'form.company_website' | translate }}" formControlName="company_website">
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <mat-select placeholder="{{ 'form.industry' | translate }}" formControlName="company_industry" [compareWith]="compareIndustry">
+                                                <mat-option *ngFor="let industry of companyIndustry" [value]="industry.name">
+                                                    {{ industry.name }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ 'form.phone' | translate }}" [textMask]="{mask: mask}" formControlName="company_telephone">
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ 'form.fax' | translate }}" [textMask]="{mask: mask}" formControlName="company_fax">
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <textarea matInput placeholder="{{ 'form.address' | translate }}" formControlName="company_address"></textarea>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <mat-select placeholder="{{ 'form.province' | translate }}" formControlName="company_province_id" [compareWith]="compareCompanyProvince">
+                                                <mat-option *ngFor="let province of companyProvince" [value]="province.province_id" (click)="getCompanyCityByProvince(province.province_id)">
+                                                    {{province.province}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <mat-select placeholder="{{ 'form.city' | translate }}" [disabled]="companyCityDisabled" formControlName="company_city_id" [compareWith]="compareCompanyCity">
+                                                <mat-option *ngFor="let city of companyCities" [value]="city.city_id">
+                                                    {{ city.city_name }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ 'form.postal_code' | translate }}" formControlName="company_postal_code" [textMask]="{mask: postal}" disabled>
+                                        </mat-form-field>
+                                        <mat-action-row>
+                                            <button class="btn-profile-save" [disabled]="registerForm.invalid" (click)="updateProfile()">{{ 'form.save' | translate }}</button>
+                                        </mat-action-row>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="checkout-loading" *ngIf="cekProfile">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>

@@ -1,0 +1,118 @@
+<div class="product-discuss">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="menu-list">
+                    <ul>
+                        <li [ngClass]="{'active-menu': statusActive === 1}" (click)="getAllDiscussion(1)">
+                            {{'account.all' | translate}}
+                        </li>
+                        <li [ngClass]="{'active-menu': statusActive === 2}" (click)="getUnreadDiscussion(2)">
+                            {{'account.unread' | translate}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="box-not" *ngIf="countDiscuss === 0">
+                    <div class="not-found-data">{{'account.there_is_no_discussion_product' | translate}}</div>
+                </div>
+                <div class="discuss-content" *ngFor="let item of discussion">
+                    <div class="product-detail-discuss">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="image">
+                                        <img src="{{ item.asset_domain }}/{{ item.image_path }}/{{ item.product_image }}" alt="{{ item.product_name }}">
+                                    </div>
+                                </div>
+                                <div class="col-10">
+                                    <div class="product-name" (click)="getDetailProduct(item.product_url, item.product_type)">
+                                        {{ item.brand_name }} {{ item.product_name }} {{ item.product_code }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="customer-discuss">
+                        <div class="container">
+                          <div class="row">
+                              <div class="col-2">
+                                  <div class="image" *ngIf="item.avatar_image !== null">
+                                      <img src="{{ item.asset_domain }}/{{ item.avatar_path }}/{{ item.avatar_image }}" alt="{{ item.avatar_image }}">
+                                  </div>
+                                  <div class="image-icon" *ngIf="item.avatar_image === null">
+                                      <i class="fa fa-user"></i>
+                                  </div>
+                              </div>
+                              <div class="col-9">
+                                    <div class="content-discussion">
+                                        <div class="menu-delete">
+                                            <mat-icon class="btn-deleted" mat-list-icon (click)="menuPrimaryDelete(item.id)">more_vert</mat-icon>
+                                        </div>
+                                        <div class="text-name">{{ item.first_name }} {{ item.last_name }}</div>
+                                        <div class="text-date">{{ item.created_at.date | date : 'dd MMMM y' }}</div>
+                                        <div class="text-description">
+                                            {{ item.discuss_text }}
+                                        </div>
+        
+                                        <!-- Child Discussion -->
+                                        <div class="child-discuss" *ngFor="let child of item.product_discussions_child">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-2">
+                                                        <div class="image" *ngIf="child.avatar_image !== null">
+                                                            <img src="{{ item.asset_domain }}/{{ item.avatar_path }}/{{ child.avatar_image }}" alt="{{ child.avatar_image }}">
+                                                        </div>
+                                                        <div class="image-icon" *ngIf="child.avatar_image === null">
+                                                            <i class="fa fa-user"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-10">
+                                                        <div class="child-content-discuss">
+                                                            <div *ngIf="child.customer_id !== null">
+                                                                <div class="text-name" *ngIf="child.admin_reply_as === null">
+                                                                    {{ child.first_name }} {{ child.last_name }}
+                                                                </div>
+                                                            </div>
+                                                            <div *ngIf="child.admin_id !== null">
+                                                                <div class="text-name" *ngIf="child.admin_reply_as === null">
+                                                                    {{ child.user_first_name }} {{ child.user_last_name }}
+                                                                </div>
+                                                                <div class="text-name" *ngIf="child.admin_reply_as !== null">
+                                                                    {{ child.admin_reply_as }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-date">{{ child.created_at | date : 'dd MMMM y' }}</div>
+                                                            <div class="text-description">
+                                                                {{ child.discuss_text }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="see-comment" *ngIf="item.count_product_discuss === 0" (click)="getDetailDiscuss(item.id)">
+                        <i class="fa fa-comments"></i> {{'account.see_all_comments' | translate}}
+                    </div>
+                    <div class="see-comment" *ngIf="item.count_product_discuss > 0" (click)="getDetailDiscuss(item.id)">
+                        <i class="fa fa-comments"></i> {{'account.see_all' | translate}} {{ item.count_product_discuss }} {{'account.comments' | translate}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="overlay-discuss-delete" *ngIf="commetPrimaryDelete">
+    <div class="box-discuss-delete">
+        <div class="delete-text" (click)="deletePrimaryDiscuss()">
+            {{'account.delete_comment' | translate}}
+        </div>
+        <div class="delete-text cancel" (click)="closeDelete()">
+            {{'account.cancel' | translate}}
+        </div>
+    </div>
+</div>

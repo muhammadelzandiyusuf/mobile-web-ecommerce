@@ -1,0 +1,102 @@
+.product {
+    margin: 0;
+    background-color: #fff;
+    padding: 0 0 10px;
+}
+
+.box-product {
+    background-color: #ffffff;
+    margin: 10px;
+    padding: 0;
+    box-shadow: 0 0 4px 1px #eee;
+}
+
+.box-product .image {
+    padding: 10px 10px 0;
+}
+
+.box-product .image img {
+    width: 100%;
+}
+
+.box-product .content {
+    height: 100px;
+    padding: 10px;
+}
+
+.box-product .content .brand {
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+}
+
+.box-product .content .name {
+    padding: 5px 0;
+    font-size: 12px;
+    color: #787878;
+}
+
+.box-product .content .normal-price {
+    font-size: 10px;
+    color: #ad2825;
+    text-decoration: line-through;
+}
+
+.box-product .content .diskon-price {
+    padding: 5px 0;
+    font-size: 12px;
+    color: #787878;
+}
+
+.box-product .installment {
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #787878;
+    font-weight: bold;
+}
+.box-tab{
+    position: fixed;
+    width: 100%;
+    background-color: #ffffff;
+    z-index: 9;
+}
+.wishlist-tab {
+    float: left;
+    width: 50%;
+    padding: 15px;
+    text-align: center;
+    color: #c3071c;
+    border-bottom: 2px solid #c3071c;
+    font-size: 16px;
+}
+.lastview-tab {
+    float: right;
+    width: 50%;
+    padding: 15px;
+    text-align: center;
+    font-size: 16px;
+    color: #666666;
+    border-bottom: 2px solid #dddddd;
+}
+.clear {
+    clear: both;
+}
+.container-product{
+    margin-top: 50px;
+    background-color: #ffffff;
+    width: 100%;
+    height: 549px;
+    overflow: scroll;
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+    .container-product{
+        height: 901px;
+    }
+}
+  
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .container-product{
+        height: 650px;
+    }
+}

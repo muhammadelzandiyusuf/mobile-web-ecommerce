@@ -1,0 +1,62 @@
+.careers{
+    background-color: #fff
+}
+.content-jobs {
+    padding: 0;
+}
+.content-jobs .title-jobs{
+    margin: 5px;
+    padding: 5px;
+    background-color: #ddd;
+    color: #666;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 5px;
+    height: 100px;
+}
+.job{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+}
+.content-internship{
+    margin: 10px 10px 0;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+.mat-form-field {
+    width: 100%;
+}
+.form-file {
+    width: 50%;
+    height: 30px;
+    margin-bottom: 10px;
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 5px 0;
+    margin-top: 5px;
+    color: #666;
+    outline: none
+}
+.document-files{
+    margin-top: 10px;
+}
+.document-files .title-files{
+    font-size: 14px;
+    color: #666;
+}
+.riquired-files{
+    color: red;
+    font-size: 12px !important;
+}
+.action{
+    text-align: right;
+}
+.btn-default{
+    background-color: #ad2825;
+    color: #fff;
+}

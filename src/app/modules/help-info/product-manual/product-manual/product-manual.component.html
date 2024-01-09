@@ -1,0 +1,54 @@
+<div class="form-modal-overlay" *ngIf="formModalCategory">
+  <div class="form-modal">
+    <div class="filter">
+      <mat-toolbar color="filter">
+        <mat-toolbar-row>
+          <span>{{'helpinfo.filter_category' | translate}}</span>
+          <span class="example-spacer"></span>
+          <button mat-raised-button="mat-raised-button" (click)="closeModal()">{{'product.done' | translate}}</button>
+        </mat-toolbar-row>
+      </mat-toolbar>
+    </div>
+    <div class="content-filter">
+      <div class="sortby-items">
+        <mat-list>
+          <mat-list-item *ngFor="let category of categories">
+            <mat-checkbox class="example-margin" [(ngModel)]="category.checked" (click)="category.checked ? filterCategoryArr.splice(filterCategoryArr.indexOf(category.id), 1) : filterCategoryArr.push(category.id)">
+              <span *ngIf="lang === 'en'">{{ category.title_english }}</span>
+              <span *ngIf="lang === 'id'">{{ category.title_indonesia }}</span>
+            </mat-checkbox>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="exhibition" (scroll)="onScroll($event)">
+  <div class="content-list-recipe">
+    <div class="filter-province">
+      <div class="button-row">
+        <button mat-raised-button (click)="getFilterCategory()">{{'helpinfo.category' | translate}}</button>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12" *ngIf="productManuals?.length === 0">
+          <div class="no-product">
+            {{'helpinfo.content_no' | translate}}
+          </div>
+        </div>
+        <div class="col-6" *ngFor="let manual of productManuals">
+            <div class="box-recipe" (click)="getDetailManual(manual.url)">
+              <div class="images">
+                <img src="{{ manual.image_domain }}/{{ manual.thumb_path }}/{{ manual.thumb_image }}">
+              </div>
+              <div class="title-recipe">
+                {{ manual.title }}
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

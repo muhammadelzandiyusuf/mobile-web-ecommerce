@@ -1,0 +1,42 @@
+<div class="account profile-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="profile-header">
+                    <mat-icon class="back-icon" (click)="backHistory()">keyboard_backspace</mat-icon>
+                    <span>{{'account.review_product' | translate}}</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="box-reviews">
+                    <div class="image">
+                        <img src="{{ domainAsset }}/{{ imagePath }}/{{ productImage }}">
+                    </div>
+                    <div class="form-review">
+                        <form [formGroup]="reviewForm">
+                          <div class="text-name-product">
+                              {{ productBrand }} {{ productName }} {{ productCode }}
+                          </div>
+                          <ngx-input-star-rating class="rating-form" formControlName="rating" required></ngx-input-star-rating>
+                          <mat-form-field>
+                              <input matInput placeholder="{{'account.title' | translate}}" formControlName="title" required>
+                          </mat-form-field>
+                          <mat-form-field>
+                              <textarea matInput placeholder="{{'account.message' | translate}}" formControlName="message" required></textarea>
+                          </mat-form-field>
+                          <mat-action-row>
+                              <button type="submit" class="btn-profile-save" mat-raised-button [disabled]="reviewForm.invalid" (click)="sendReview()">Submit</button>
+                          </mat-action-row>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="checkout-loading" *ngIf="cekProfile">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>

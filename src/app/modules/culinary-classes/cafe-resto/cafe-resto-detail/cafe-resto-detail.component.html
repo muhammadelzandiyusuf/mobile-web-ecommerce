@@ -1,0 +1,176 @@
+<div class="showroom-detail">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12" *ngIf="bannerImage !== null">
+        <div class="banner">
+          <img src="{{ imageDomain }}/{{ bannerTagPath }}/{{ bannerImage }}" #logo (load)="onLoad()">
+          <div class="pin-tag" *ngFor="let pin of pinTag; let i = index" [ngStyle]="{'top.px':pin.long, 'left.px':pin.lat}" (click)="getProduct(i)">
+              <i class="fas fa-tag fa-w-12 fa-lg"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12" *ngIf="bannerImage == null">
+        <swiper class="swiper" [config]="config">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" *ngFor="let banner of images">
+              <img src="{{ imageDomain }}/{{ bannerPath }}/{{ banner.image }}">
+            </div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </swiper>
+      </div>
+
+      <div class="col-12" *ngIf="bannerImage !== null">
+        <div class="date-time-detail" *ngIf="album?.length > 0">
+            <div class="title-exhibition center">{{name}}</div>
+            <div class="list-host">
+                <swiper class="swiper" [config]="configExhibition">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"  *ngFor="let photo of album; let i=index">
+                            <div class="photo-image" (click)="open(i)">
+                                <img [src]="photo.thumb">
+                            </div>
+                        </div>
+                    </div>
+                </swiper>
+            </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="showroom-detail-content">
+          <div class="detail-contact">
+            <div class="contact-title">{{'culinary.detail_contact' | translate}}</div>
+            <div class="table-contact">
+              <div class="box-contact-detail">
+                <div class="contact-name">{{'form.name' | translate}}</div>
+                <div class="contact-content">{{ name }}</div>
+              </div>
+              <div class="box-contact-detail">
+                <div class="contact-name">{{'form.address' | translate}}</div>
+                <div class="contact-content" [innerHtml]="address"></div>
+              </div>
+              <div class="box-contact-detail">
+                <div class="contact-name">{{'form.phone' | translate}}</div>
+                <div class="contact-content">{{ phone }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="showroom-video">
+          <div class="video">
+            <div class="video-url" *ngIf="videoUrl != null">
+              <iframe class="e2e-iframe-trusted-src" width="100%" height="{{heightVideo}}" [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div class="showroom-map">
+          <div class="maps">
+              <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15">
+                <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+              </agm-map>
+          </div>
+        </div>
+      </div>
+
+      <div class="showroom-video" *ngIf="wineDine?.length > 0">
+          <div class="contact-title">{{'culinary.event_resturant' | translate}}</div>
+          <swiper class="swiper" [config]="configExhibition">
+              <div class="swiper-wrapper">
+                  <div class="swiper-slide" *ngFor="let wine of wineDine">
+                      <div class="box-exhibition-host" (click)="goWineDine(wine.event_url)">
+                          <div class="image">
+                              <img src="{{ imageDomain }}/{{ wine.thumb_path }}/{{ wine.thumb_image }}">
+                          </div>
+                          <div class="name">
+                              {{ wine.title }}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </swiper>
+      </div>
+
+      <div class="brand-gallery-next" *ngIf="nextRestaurants?.length > 0 || prevRestaurants?.length > 0">
+          <div class="contact-title">More Cafe & Resto</div>
+          <div class="more-resto">
+            <swiper class="swiper" [config]="configExhibition">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" *ngFor="let prev of prevRestaurants">
+                        <a href="cafe_resto/{{ prev.url }}">
+                            <div class="brand-design">
+                                <div class="image">
+                                    <img src="{{ imageDomain }}/{{ prev.thumb_path }}/{{ prev.thumb_image }}">
+                                </div>
+                            </div> 
+                            <div class="brand-title">{{ prev.name }}</div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide" *ngFor="let next of nextRestaurants">
+                      <a href="cafe_resto/{{ next.url }}">
+                          <div class="brand-design">
+                              <div class="image">
+                                  <img src="{{ imageDomain }}/{{ next.thumb_path }}/{{ next.thumb_image }}">
+                              </div>
+                          </div> 
+                          <div class="brand-title">{{ next.name }}</div>
+                      </a>
+                  </div>
+                </div>
+            </swiper>
+          </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div [@dialog] class="overlay-tag-product dialog" *ngIf="visible" (click)="closeTag()">
+  <div class="banner-tag">
+      <div class="close" (click)="closeTag()">
+          <i class="fa fa-close"></i>
+      </div>
+  </div>
+  <div class="content-product-tag" *ngIf="pinEnable">
+      <div class="box-product">
+          <div class="image" (click)="goToProductDetail(product.url)">
+              <img src="{{ product.image_domain }}/{{ product.product_image_path }}/{{ product.product_image_name }}">
+          </div>
+          <div class="content" (click)="goToProductDetail(product.url)">
+              <div class="brand">{{ product.brand_name }}</div> 
+              <div class="name">{{ product.name }}
+                  ({{product.code }})
+              </div>
+              <div *ngIf="product.price > 0">
+                  <div class="normal-price">{{ product.price | currency:'Rp':'true':'4.0-0' }}</div>
+                  <div class="diskon-price">{{ product.discount_price | currency:'Rp':'true':'4.0-0' }}</div>
+              </div>
+              <div *ngIf="product.price == null || product.price == 0">
+                  <div class="diskon-price color-red">{{'product.price_not_yet_available' | translate}}</div>
+              </div>
+          </div>
+          <div class="installment" *ngIf="product.stock_status_id == 1" (click)="goToProductDetail(product.url)">
+              <span *ngIf="product.price > 0">
+                  {{ product.installment | currency:'Rp':'true':'4.0-0' }} x 12 Bln
+              </span>
+          </div>
+          <div class="installment color-red" *ngIf="product.stock_status_id != 1" (click)="goToProductDetail(product.url)">{{ product.stock_status }}</div>
+          <div class="btn-action">
+              <button class="btn-add-chart" *ngIf="token !== null" (click)="addCart(product.id)">
+                  <i class="fas fa-cart-plus"></i>
+              </button>
+              <button class="btn-add-chart" *ngIf="token === null" (click)="addChartLocal(product.id, product.brand_name, product.discount_price, product.name, product.product_image_path, product.product_image_name)">
+                  <i class="fas fa-cart-plus"></i>
+              </button>
+              <button class="btn-add-wish" *ngIf="token !== null" (click)="addWishlist(product.id)">
+                  <i class="fas fa-heart"></i>
+              </button>
+              <button class="btn-add-wish" *ngIf="token === null" (click)="addWishListLocal(product.id)">
+                  <i class="fas fa-heart"></i>
+              </button>
+          </div>
+      </div>
+  </div>
+</div>

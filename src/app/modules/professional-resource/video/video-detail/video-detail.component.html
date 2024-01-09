@@ -1,0 +1,17 @@
+<div class="detail-video">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="video">
+                    <iframe width="100%" height="{{heightVideo}}" [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-title">{{ title }}</div>
+                <div class="text-description">
+                    {{'culinary.description' | translate}}
+                </div>
+                <div class="description" *ngIf="lang === 'en'" [innerHtml]="descriptionEnglish"></div>
+                <div class="description" *ngIf="lang === 'id'" [innerHtml]="descriptionIndonesia"></div>
+            </div>
+        </div>
+    </div>
+</div>

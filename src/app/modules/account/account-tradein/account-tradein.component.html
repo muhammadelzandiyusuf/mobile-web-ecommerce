@@ -1,0 +1,102 @@
+<div class="account profile-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="profile-header">
+                    <mat-icon class="back-icon" (click)="backAccount()">keyboard_backspace</mat-icon>
+                    <span>{{'account.tradein' | translate}}</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="menu-list">
+                    <ul>
+                        <li *ngFor="let status of statusTradeins" [ngClass]="{'active-menu': statusActive === status.value}" (click)="getTradein(status.value)">
+                          {{ status.name }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="box-tradein">
+                    <mat-accordion>
+                        <mat-expansion-panel *ngFor="let trade of trades">
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                # {{ trade.registration_no }}
+                            </mat-panel-title>
+                          </mat-expansion-panel-header>
+
+                          <div class="box-product-trade">
+                              <div class="container">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <div class="product-trade">
+                                          <div class="image-product">
+                                              <img src="{{ trade.image_domain }}/{{ trade.image_path }}/{{ trade.image }}">
+                                          </div>
+                                          <div class="text-trade-in">
+                                              <div class="brand">{{ trade.brand }}</div>
+                                              <div class="category">{{ trade.category }}</div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-1">
+                                        <div class="exchange-icon">
+                                            <i class="fa fa-exchange-alt"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="product-trade">
+                                          <div class="image-product">
+                                              <img src="{{ trade.image_domain }}/{{ trade.product_image_path }}/{{ trade.product_image }}">
+                                          </div>
+                                          <div class="text-trade-in">
+                                              <div class="brand">{{ trade.product_brand }}</div>
+                                              <div class="category">{{ trade.product_name }} {{ trade.product_code }}</div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div *ngIf="trade.value > 0">
+                                            <div class="trade-price-available">
+                                                {{ trade.product_price | currency:'Rp':'true':'4.0-0' }}
+                                            </div>
+                                            <div class="trade-price">
+                                                {{ trade.value | currency:'Rp':'true':'4.0-0' }}
+                                            </div>
+                                        </div>
+                                        <div *ngIf="trade.value === 0">
+                                            <div class="trade-price">
+                                                {{ trade.product_price | currency:'Rp':'true':'4.0-0' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="note-reject" *ngIf="trade.reject_note">
+                              {{ trade.reject_note }}
+                          </div>
+                          <div *ngIf="statusActive === 'A'">
+                              <div *ngIf="trade.already_used === 'F'">
+                                  <div *ngIf="datNow >= trade.date_expired">
+                                      <div class="note-reject">{{'account.already_expired' | translate}}</div>
+                                  </div>
+                                  <div *ngIf="trade.date_expired >= datNow">
+                                      <button class="btn-profile-save" mat-raised-button (click)="buyNow(trade.registration_no)">{{'account.buy_now' | translate}}</button>
+                                  </div>
+                              </div>
+                              <div *ngIf="trade.already_used === 'T'">
+                                  <div class="note-reject">{{'account.already_bought' | translate}}</div>
+                              </div>
+                          </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    <div class="box-not" *ngIf="countTrade === 0">
+                        <div class="not-found-data">{{'account.there_is_no_data' | translate}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

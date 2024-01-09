@@ -1,0 +1,92 @@
+<div class="detail-kitchen">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="banner-kitchen">
+          <div class="banner" *ngIf="banner_type == 'IMG'">
+            <img src="{{ kitchenDetail.image_domain }}/{{ kitchenDetail.banner_path }}/{{ kitchenDetail.banner_image }}">
+          </div>
+          <div class="banner" *ngIf="banner_type == 'VID'">
+              <iframe class="e2e-iframe-trusted-src" width="100%" height="{{heightVideo}}" [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="content-detail">
+            <div class="content-default" *ngIf="more">
+                <div *ngIf="lang === 'en'" innerHtml="{{content_english | slice:0:500}}"></div>
+                <div *ngIf="lang === 'id'" innerHtml="{{content_indonesia | slice:0:500}}"></div>
+                <div class="read-more" *ngIf="more">
+                  <a (click)="readMore()" class="btn-read-more">{{'shopping.read_more' | translate}} ...</a>
+                </div>
+            </div>
+            <div class="content-kitchen" *ngIf="visible" [@slideInOut]>
+              <div *ngIf="lang === 'en'" [innerHtml]="content_english"></div>
+              <div *ngIf="lang === 'id'" [innerHtml]="content_indonesia"></div>
+            </div>
+        </div>
+      </div>
+      <div class="col-12" *ngIf="freeKitchen?.length > 0">
+        <div class="free-kitchen-design">
+          <div class="title-kitchen">{{'shopping.free_kitchen_design' | translate}}</div>
+          <swiper class="swiper" [config]="config">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" *ngFor="let design of freeKitchen">
+                    <div class="kitchen-design" (click)="goKitchenDesignDetail(design.url)">
+                        <div class="image">
+                            <img src="{{ design.image_domain }}/{{ design.thumb_path }}/{{ design.thumb_image }}">
+                        </div>
+                        <div class="title">{{ design.title }}</div>
+                    </div> 
+                </div>
+            </div>
+          </swiper>
+          <div class="show-mores">
+            <a (click)="goKitchenDesign()">{{'home.show_more' | translate}}</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12" *ngIf="brandGalleries?.length > 0">
+          <div class="free-kitchen-design">
+            <div class="title-kitchen">{{'shopping.kitchen_gallery' | translate}}</div>
+            <swiper class="swiper" [config]="config">
+              <div class="swiper-wrapper">
+                  <div class="swiper-slide" *ngFor="let design of brandGalleries">
+                      <div class="kitchen-design" (click)="goBrandGalleryDetail(design.brand_url, design.url)">
+                          <div class="image">
+                              <img src="{{ design.image_domain }}/{{ design.thumb_path }}/{{ design.thumb_image }}">
+                          </div>
+                          <div class="title">{{ design.title }}</div>
+                      </div> 
+                  </div>
+              </div>
+            </swiper>
+            <!-- <div class="show-mores">
+              <a (click)="goBrandGallery()">Show More</a>
+            </div> -->
+          </div>
+      </div>
+      <div class="col-12" *ngIf="projectPreferences?.length > 0">
+        <div class="free-kitchen-design">
+          <div class="title-kitchen">{{'professional.project_preference' | translate}}</div>
+          <swiper class="swiper" [config]="config">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" *ngFor="let design of projectPreferences">
+                    <div class="kitchen-design" (click)="goProjectPreference(design.url)">
+                        <div class="image">
+                            <img src="{{ imageDomain }}/{{ thumbProject }}/{{ design.thumb_image }}">
+                        </div>
+                        <div class="title">{{ design.title }}</div>
+                    </div> 
+                </div>
+            </div>
+          </swiper>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="submit-contact">
+            <button mat-raised-button class="btn-contact" (click)="goFreeKitchenForm()">{{'shopping.submit_your_contact_here' | translate}}</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

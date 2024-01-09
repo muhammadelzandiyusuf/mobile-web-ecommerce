@@ -1,0 +1,112 @@
+.tradein{
+    background-color: #ffffff
+}
+.tradein .banner img{
+    width: 100%;
+}
+
+.box-product {
+    background-color: #ffffff;
+    margin: 5px;
+    padding: 0;
+    box-shadow: 0 0 5px 2px #ddd;
+}
+
+.box-product .image {
+    padding: 15px;
+}
+
+.box-product .image img {
+    width: 100%;
+}
+
+.box-product .content {
+    height: 120px;
+    padding: 10px;
+}
+
+.box-product .content .brand {
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+}
+
+.box-product .content .name {
+    padding: 5px 0;
+    font-size: 12px;
+    color: #787878;
+}
+
+.box-product .content .normal-price {
+    font-size: 10px;
+    color: #ad2825;
+    text-decoration: line-through;
+}
+
+.box-product .content .diskon-price {
+    padding: 5px 0;
+    font-size: 12px;
+    color: #787878;
+}
+
+.box-product .action {
+    text-align: center;
+}
+
+.mat-raised-button.mat-primary{
+    width: 100%;
+    font-size: 12px;
+}
+
+.title{
+    font-size: 18px;
+    color: #666666;
+    text-align: center;
+    padding: 20px;
+}
+.term-condition{
+    padding: 15px 10px;
+}
+.mat-form-field {
+    width: 100%;
+}
+.layout-form{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    top: 0;
+    left: 0;
+    z-index: 99;
+}
+.layout-form .title-tradein-request{
+    font-size: 22px;
+    color: #666666;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+.layout-form .title-tradein-request span{
+    position: absolute;
+    right: 20px;
+}
+.layout-form .layout-form-input{
+    padding: 15px;
+}
+.layout-form .layout-form-input .button-submit{
+    padding-top: 15px;
+}
+.layout-form .layout-form-input .button-submit button{
+    width: 100%;
+}
+.title-request-prod{
+    font-size: 13px;
+    color: #666666;
+    padding: 10px;
+}
+.title-request-prod span{
+    background-color: #ec041f;
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+    font-size: 11px;
+}

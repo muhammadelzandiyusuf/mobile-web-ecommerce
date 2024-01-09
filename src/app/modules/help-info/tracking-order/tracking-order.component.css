@@ -1,0 +1,21 @@
+.mat-form-field {
+    width: 100%;
+}
+.btn-profile-save{
+    font-size: 14px;
+    color: #fff;
+    background-color: #c3071c;
+    width: 100%
+}
+.track-shipping{
+    background-color: #fff;
+    margin-top: 65px;
+}
+.form-track{
+    padding: 0 15px 0
+}
+.message-track{
+    font-size: 14px;
+    color: #c3071c;
+    padding: 10px 0;
+}

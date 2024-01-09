@@ -1,0 +1,35 @@
+<div class="video-list">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="video-category" *ngIf="lang === 'en'">
+                    {{ titleEnglish }}
+                </div>
+                <div class="video-category" *ngIf="lang === 'id'">
+                    {{ titleIndonesia }}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- <div class="contractor-content" (scroll)="onScroll($event)"> -->
+    <div class="contractor-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-12" *ngIf="listVideo?.length === 0">
+                    <p class="no-product">{{'professional.no_content' | translate}}</p>
+                </div>
+                <div class="col-6 col-sm-4 col-md-4" *ngFor="let video of embedVideo">
+                    <div class="box-contractor" (click)="getDetailVideo(video.id)">
+                        <div class="tumbnail">
+                            <img src="http://img.youtube.com/vi/{{ video.embed_url }}/mqdefault.jpg">
+                        </div>
+                        <div class="contractor-name">
+                            {{ video.title }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

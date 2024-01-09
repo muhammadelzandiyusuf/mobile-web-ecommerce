@@ -1,0 +1,90 @@
+.tarde-form{
+    margin: 0;
+    background-color: #ffffff;
+    padding: 10px;
+}
+.mat-form-field {
+    width: 100%;
+}
+.file-document {
+    padding: 10px 0;
+}
+.file-document img {
+    width: 80%;
+}
+.upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+.upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+.form-textrea{
+    height: 70px;
+}
+.action{
+    float: right;
+}
+.title{
+    padding: 20px;
+    font-size: 14px;
+    color: #666;
+    text-transform: uppercase;
+    text-align: center;
+}
+.banner img{
+    width: 100%;
+}
+.active{
+    display: none;
+}
+
+.example-headers-align .mat-expansion-panel-header-title, 
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+.example-option-img {
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+[dir='rtl'] .example-option-img {
+    margin-right: 0;
+    margin-left: 8px;
+}
+.warranty-number-box .mat-form-field {
+    width: 48%;
+}
+.icon-code-success{
+    color: green;
+    position: relative;
+    top: 5px;
+}
+.icon-code-error{
+    color: red;
+    position: relative;
+    top: 5px;
+}
+.warranty-number-box .spinner-loading{
+    position: relative;
+    top: 5px;
+}
+.warranty-number-box .spinner-loading img{
+    width: 20px;
+}
+.button-add-product{
+    padding: 10px 0;
+}
+.button-add-product button{
+    font-size: 12px !important;
+}

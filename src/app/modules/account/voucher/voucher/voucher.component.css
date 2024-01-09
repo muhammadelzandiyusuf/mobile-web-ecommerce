@@ -1,0 +1,45 @@
+.content-voucher-account{
+    margin-top: 54px;
+    height: 608px;
+    overflow: scroll;
+}
+.content-voucher-account .box-content-voucher{
+    box-shadow: 0 0 8px 0 #dddddd;
+    margin-bottom: 15px;
+}
+.box-content-voucher .header-image img{
+    width: 100%;
+}
+.voucher-description{
+    padding: 15px;
+    font-size: 15px;
+    color: #666;
+    line-height: 1.4rem;
+}
+.voucher-description p{
+    margin-bottom: 15px;
+}
+.action-expired{
+    padding: 15px;
+    border-top: 1px solid #dddddd
+}
+.action-expired .text-expired{
+    font-size: 12px;
+    color: #999999;
+    margin-bottom: 5px;
+}
+.action-expired .date-expired{
+    font-size: 14px;
+    color: #666666;
+}
+.btn-use-voucher{
+    background-color: #c3071c;
+    color: #fff;
+    font-size: 12px;
+    border: 1px solid #c3071c;
+    padding: 8px 10px;
+    border-radius: 5px;
+}
+.notfound{
+    padding: 10px;
+}

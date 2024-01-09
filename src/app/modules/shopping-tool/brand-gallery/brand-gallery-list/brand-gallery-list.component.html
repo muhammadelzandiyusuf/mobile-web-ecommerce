@@ -1,0 +1,31 @@
+<div class="brand-gallery" (scroll)="onScroll($event)">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12"> 
+                <div class="title-kitchen">
+                    Brand Gallery
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-galery">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-sm-4 col-md-4" *ngFor="let list of brandGallery">
+                    <div class="box-gallery">
+                        <a href="brand_galleries/{{ params }}/{{ list.url }}">
+                            <div class="content-gallery">
+                                <div class="image">
+                                    <img src="{{ list.image_domain }}/{{ list.thumb_path }}/{{ list.thumb_image }}">
+                                    <div class="title-gallery">
+                                        <div class="text-title">{{ list.title }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

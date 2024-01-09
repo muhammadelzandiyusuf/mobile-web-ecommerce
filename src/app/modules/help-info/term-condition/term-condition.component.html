@@ -1,0 +1,11 @@
+<div class="information">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="info-title">{{ title }}</div>
+                <div class="description" *ngIf="lang === 'en'" [innerHtml]="contentEnglish"></div>
+                <div class="description" *ngIf="lang === 'id'" [innerHtml]="contentIndonesia"></div>
+            </div>
+        </div>
+    </div>
+</div>

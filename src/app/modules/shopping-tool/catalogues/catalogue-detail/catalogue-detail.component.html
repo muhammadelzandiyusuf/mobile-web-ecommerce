@@ -1,0 +1,15 @@
+<div class="catalogue-detail">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="issue" *ngIf="videoUrl !== null">
+                    <iframe style="width:100%; height:500px;" [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="content">
+                    <div class="brand">{{ brandName }}</div>
+                    <div class="title">{{ title }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+.faq-detail{
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+.title-faq{
+    font-size: 16px;
+    color: #666666;
+    font-weight: 600;
+    line-height: 1.5rem;
+    padding: 15px 15px 10px;
+}
+.content-faq{
+    font-size: 14px;
+    color: #999999;
+    line-height: 1.5rem;
+    word-wrap: break-word;
+    padding: 0 15px 15px;
+}
+.header-title-faq-related{
+    font-size: 16px;
+    color: #666666;
+    font-weight: bold;
+    padding: 15px;
+}
+.related-question{
+    font-size: 16px;
+    color: #999999;
+    padding: 0 15px 15px;
+    line-height: 1.5rem;
+    border-bottom: 1px solid #dddddd;
+}
+.related-question:last-child{
+    border-bottom: none !important
+}

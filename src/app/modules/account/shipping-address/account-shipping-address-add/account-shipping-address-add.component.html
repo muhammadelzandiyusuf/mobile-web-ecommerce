@@ -1,0 +1,73 @@
+<div class="shipping-address">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <form novalidate [formGroup]="shippingForm">
+                    <mat-form-field>
+                        <input matInput placeholder="{{ 'form.address_label' | translate }}" formControlName="label" required>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="{{ 'form.receiver_name' | translate }}" formControlName="receiver_name" required>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput placeholder="{{ 'form.receiver_phone' | translate }}" [textMask]="{mask: mask}" formControlName="receiver_phone" required>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <textarea matInput placeholder="{{ 'form.address' | translate }}" formControlName="address" required></textarea>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select placeholder="{{ 'form.province' | translate }}" formControlName="province_id" required>
+                            <mat-option *ngFor="let province of provinces" [value]="province.province_id" (click)="getCityByProvince(province.province_id)">
+                            {{province.province}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select placeholder="{{ 'form.city' | translate }}" [disabled]="cityDisabled" formControlName="city_id" required>
+                            <mat-option *ngFor="let city of cities" [value]="city.city_id" (click)="getSubdistrict(city.city_id)">
+                            {{ city.city_name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select placeholder="{{ 'form.subdistrict' | translate }}" [disabled]="subdistrictDisabled" formControlName="subdistrict_id" required>
+                            <mat-option *ngFor="let subdistrict of subdistricts" [value]="subdistrict.id" (click)="getPostalCode(subdistrict.name)">
+                            {{ subdistrict.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select placeholder="{{'form.postal_code' | translate}}" [disabled]="postalCodeShow" formControlName="postal_zip" required>
+                            <mat-option *ngFor="let destiny of destinations" [value]="destiny.zip_code">
+                            {{ destiny.full_address }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- <mat-form-field>
+                        <input matInput placeholder="{{ 'form.postal_code' | translate }}" [textMask]="{mask: postal}" formControlName="postal_zip" required>
+                    </mat-form-field> -->
+                    <!-- <mat-form-field class="example-full-width">
+                        <input matInput placeholder="{{'form.postal_code' | translate}}" [matAutocomplete]="auto" formControlName='postal_zip' required>
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                            <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="20"></mat-spinner></mat-option>
+                            <ng-container *ngIf="!isLoading">
+                                <mat-option *ngFor="let destiny of destinations" [value]="destiny">
+                                    <span>{{ destiny.full_address }}</span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+                    </mat-form-field> -->
+                    <div class="button-row">
+                        <button *ngIf="spinner === false" type="button" class="save-btn" mat-raised-button [disabled]="shippingForm.invalid"
+                            (click)="registerShipping()">
+                            {{ 'form.save' | translate }}
+                        </button>
+                        <button *ngIf="spinner" type="button" mat-raised-button disabled="true">
+                            <img src="assets/images/spin.gif" class="image-spinner">
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

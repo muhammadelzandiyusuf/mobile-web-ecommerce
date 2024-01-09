@@ -1,0 +1,35 @@
+<div class="architect">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="navigate">
+                    <ul>
+                        <li *ngFor="let category of categories" [ngClass]="{'active-navigate':selectedIndex === category.position}" (click)="getArchitect(category.position, category.id)">
+                            <span *ngIf="lang === 'en'">{{ category.name_english }}</span>
+                            <span *ngIf="lang === 'id'">{{ category.name_indonesia }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="architect-content" (scroll)="onScroll($event)">
+    <div class="container">
+        <div class="row">
+            <div class="col-6" *ngIf="architects?.length === 0">
+              <p class="no-product">{{'culinary.content_no' | translate}}</p>
+            </div>
+            <div class="col-6 col-sm-4 col-md-4" *ngFor="let architect of architects">
+                <div class="box-architect" (click)="getDetailArchitect(architect.url)">
+                    <div class="tumbnail">
+                        <img src="{{ architect.image_domain }}/{{ architect.thumb_path }}/{{ architect.thumb_image }}">
+                    </div>
+                    <div class="arhitect-name">
+                      {{ architect.name }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

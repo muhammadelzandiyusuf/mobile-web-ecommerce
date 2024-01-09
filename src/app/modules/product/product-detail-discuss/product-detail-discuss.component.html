@@ -1,0 +1,73 @@
+<div class="account profile-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="profile-header">
+                    <mat-icon class="back-icon" (click)="backToDiscuss()">keyboard_backspace</mat-icon>
+                    <span>{{'product.product_discussion' | translate}}</span>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="discuss-content">
+                    <div class="product-detail-discuss">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="image">
+                                        <img src="{{ assetDomain }}/{{ imagePath }}/{{ productImage }}" alt="{{ productName }}">
+                                    </div>
+                                </div>
+                                <div class="col-10">
+                                    <div class="product-name" (click)="backToDiscuss()">
+                                        {{ brandName }} {{ productName }} {{ productCode }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="customer-discuss">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12" *ngFor="let discuss of contents">
+                                <div class="customer-discuss-content">
+                                    <mat-chip-list class="mat-chip-list-stacked">
+                                        <mat-chip  selected color="primary" class="parent-discuss customer">
+                                            {{discuss.discuss_text}}
+                                            <div class="right">{{discuss.created_at.date | date : 'd/MM/y'}}</div>
+                                        </mat-chip>
+                                        <mat-chip *ngFor="let chip of discuss.product_discussions_child" selected color="acent" [ngClass]="{'customer' : chip.customer_id !== null}">
+                                            {{chip.discuss_text}}
+                                            <div class="right">{{chip.created_at | date : 'd/MM/y'}}</div>
+                                        </mat-chip>
+                                    </mat-chip-list>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Discussion -->
+                <div class="box-message-discuss">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-11">
+                                <input type="text" class="form-text" [formControl]="message" placeholder="{{'product.write_your_comment' | translate}}">
+                            </div>
+                            <div class="col-1">
+                                <mat-icon class="btn-send" mat-list-icon *ngIf="token" (click)="postComment()">send</mat-icon>
+                                <mat-icon class="btn-send" mat-list-icon *ngIf="token === null" (click)="alertDiscussion()">send</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="checkout-loading" *ngIf="commentPost">
+    <div class="loading-io">
+        <img src="assets/images/loading.gif">
+        <span>Loading ...</span>
+    </div>
+</div>

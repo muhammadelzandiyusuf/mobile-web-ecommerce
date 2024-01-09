@@ -1,0 +1,190 @@
+<div class="referral-program">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="text-referal-program">
+                    {{'account.referral_program' | translate}}
+                </div>
+            </div>
+            <div class="col-12" *ngIf="notLoad === false">
+                <div class="load-gif">
+                    <img src="/assets/images/load.gif" alt="load" />
+                </div>
+            </div>
+            <div class="col-4" *ngIf="show">
+                <div class="box-banner">
+                    <div class="image">
+                        <img src="{{ domain_image + '/' + path_image + '/' + image_code }}" alt="Program Referral">
+                    </div>
+                    <div class="title">
+                        {{'referral.title_one' | translate}}
+                    </div>
+                    <div class="description">
+                        {{'referral.step_one' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-4" *ngIf="show">
+                <div class="box-banner">
+                    <div class="image">
+                        <img src="{{ domain_image + '/' + path_image + '/' + image_send }}" alt="Program Referral">
+                    </div>
+                    <div class="title">
+                        {{'referral.title_two' | translate}}
+                    </div>
+                    <div class="description">
+                        {{'referral.step_two' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-4" *ngIf="show">
+                <div class="box-banner">
+                    <div class="image">
+                        <img src="{{ domain_image + '/' + path_image + '/' + image_get }}" alt="Program Referral">
+                    </div>
+                    <div class="title">
+                        {{'referral.title_three' | translate}}
+                    </div>
+                    <div class="description">
+                        {{'referral.step_three' | translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6" *ngFor="let referral of referrals">
+                <div class="box-product">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-4" (click)="goProductDetail(referral.url)">
+                                <div class="image">
+                                    <img src="{{ referral.image_domain + '/' + referral.image_path + '/' + referral.image }}" alt="{{ referral.name }}">
+                                </div>
+                            </div>
+                            <div class="col-8" (click)="goProductDetail(referral.url)">
+                                <div class="content">
+                                    <div class="brand">{{ referral.brand_name }}</div>
+                                    <div class="name-code">{{ referral.name }} {{ referral.code }}</div>
+                                    <div class="price">
+                                        {{ referral.discount_price | currency:'Rp':'true':'4.0-0' }} 
+                                        <span>{{ referral.price | currency:'Rp':'true':'4.0-0' }}</span>
+                                    </div>
+                                    <table>
+                                        <!-- <tr>
+                                            <td>{{'referral.stock' | translate}}</td>
+                                            <td>:</td>
+                                            <td>{{ referral.quantity }}</td>
+                                        </tr> -->
+                                        <tr>
+                                            <td>{{'referral.commission' | translate}}</td>
+                                            <td>:</td>
+                                            <td>
+                                                <span>{{ referral.commission | currency:'Rp':'true':'0.0-0' }}</span> / {{'referral.sold_product' | translate}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Period</td>
+                                            <td>:</td>
+                                            <td>{{ referral.date_start | date : 'd MMM' }} - {{ referral.date_end | date : 'd MMM y' }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <!-- <div class="get-code">
+                                    <div class="input-text">
+                                        <input class="form-input" type="text" value="{{ domain + '/invite/' + referral.code + '/' + referralCode }}" readonly>
+                                    </div>
+                                    <div class="button-code">
+                                        <button (click)="copyInputMessage(domain + '/invite/' + referral.code + '/' + referralCode)">
+                                            <i class="fas fa-clone"></i>
+                                        </button>
+                                    </div>
+                                </div> -->
+                                <div class="share-link-btn">
+                                    <button 
+                                        (click)="shareLinkHandler(websiteDomain + '/invite/' + referral.code + '/' + referralCode, referral.facebook_title, referral.facebook_image, referral.facebook_site, referral.facebook_description, referral.facebook_enable, referral.twitter_text, referral.twitter_enable)">
+                                        {{'referral.referral_link' | translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="term-condition">
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    {{'footer.term_condition' | translate}}
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div *ngIf="lang === 'en'" class="term-condition-referral" [innerHtml]="termEnglish"></div>
+                            <div *ngIf="lang === 'id'" class="term-condition-referral" [innerHtml]="termIndonesia"></div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="overlay-ref" *ngIf="shareLink">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="box-ref">
+                    <div class="close" (click)="shareLinkCloseHandler()">
+                        <i class="fa fa-times"></i>
+                    </div>
+                    <div class="title-ref">
+                        {{'referral.share_link' | translate}}
+                    </div>
+                    <div class="box-gmail">
+                        <div class="input-gmail">
+                            <input type="email" [formControl]="gmail" required placeholder="example@gmail.com" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+                        </div>
+                        <div class="button-gmail">
+                            <button (click)="shareButtonGoogle()">{{'referral.send_invites' | translate}}</button>
+                        </div>
+                        <div class="info">
+                            Import from: <span>Gmail</span> 
+                        </div>
+                    </div>
+                    <div class="content-link">
+                        <button (click)="copyLinkHandler()">
+                            <span>
+                                <i class="fas fa-clone"></i>
+                            </span>
+                            Copy Link
+                        </button>
+                    </div>
+                    <div class="content-link">
+                        <button (click)="shareButtonWA()">
+                            <span class="wa">
+                                <i class="fab fa-whatsapp"></i>
+                            </span>
+                            Whatsapp
+                        </button>
+                    </div>
+                    <div class="content-link" *ngIf="fbEnable === 'T'">
+                        <button (click)="shareButtonFB()">
+                            <span class="fb">
+                                <i class="fab fa-facebook"></i>
+                            </span>
+                            Facebook
+                        </button>
+                    </div>
+                    <div class="content-link" *ngIf="twEnable === 'T'">
+                        <button (click)="shareButtonTW()">
+                            <span class="tw">
+                                <i class="fab fa-twitter"></i>
+                            </span>
+                            Twitter
+                        </button>
+                    </div>
+                </div>      
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+.faq-list{
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    min-height: auto;
+    max-height: 1000px;
+    overflow: scroll;
+}
+.title-question{
+    padding: 15px 15px;
+    font-size: 16px;
+    color: #999999;
+    box-shadow: 0 0 8px 0 #dddddd;
+    margin: 5px 10px 10px;
+    line-height: 1.5rem
+  }
